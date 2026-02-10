@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8" standalone="no" ?>
+<gameSettings revision="15">
+    <modsDirectoryOverride active="false" directory="C:/Temp"/>
+    <defaultMultiplayerPort>10823</defaultMultiplayerPort>
+    <motorStopTimerDuration>180</motorStopTimerDuration>
+    <horseAbandonTimerDuration>1800</horseAbandonTimerDuration>
+    <invertYLook>false</invertYLook>
+    <isHeadTrackingEnabled>true</isHeadTrackingEnabled>
+    <forceFeedback>0.500000</forceFeedback>
+    <isGamepadEnabled>true</isGamepadEnabled>
+    <cameraSensitivity>1.000000</cameraSensitivity>
+    <vehicleArmSensitivity>1.000000</vehicleArmSensitivity>
+    <realBeaconLightBrightness>1.000000</realBeaconLightBrightness>
+    <steeringBackSpeed>5.000000</steeringBackSpeed>
+    <steeringSensitivity>1.000000</steeringSensitivity>
+    <inputHelpMode>1</inputHelpMode>
+    <easyArmControl>true</easyArmControl>
+    <gyroscopeSteering>false</gyroscopeSteering>
+    <hints>true</hints>
+    <cameraTilting>false</cameraTilting>
+    <frameLimit>60</frameLimit>
+    <showAllMods>true</showAllMods>
+    <onlinePresenceName>Server</onlinePresenceName>
+    <player lastPlayerStyleMale="true"/>
+    <mpLanguage>0</mpLanguage>
+    <createGame password="" name="Werewolf Red - red -redneck" port="10823" useUpnp="false" autoAccept="false" allowOnlyFriends="false" allowCrossPlay="true" capacity="6" bandwidth="5"/>
+    <volume>
+        <music>0.450000</music>
+        <vehicle>1.000000</vehicle>
+        <environment>0.700000</environment>
+        <radio>0.600000</radio>
+        <gui>0.500000</gui>
+        <voice>1.000000</voice>
+        <voiceInput>1.000000</voiceInput>
+    </volume>
+    <soundPlayer allowStreams="false"/>
+    <radioIsActive>false</radioIsActive>
+    <radioVehicleOnly>true</radioVehicleOnly>
+    <voice mode="2" inputSensitivity="1"/>
+    <units>
+        <money>1</money>
+        <miles>false</miles>
+        <fahrenheit>false</fahrenheit>
+        <acre>false</acre>
+    </units>
+    <isTrainTabbable>true</isTrainTabbable>
+    <showTriggerMarker>true</showTriggerMarker>
+    <showHelpTrigger>true</showHelpTrigger>
+    <showFieldInfo>true</showFieldInfo>
+    <showHelpIcons>true</showHelpIcons>
+    <showHelpMenu>true</showHelpMenu>
+    <resetCamera>false</resetCamera>
+    <activeSuspensionCamera>false</activeSuspensionCamera>
+    <cameraCheckCollision>true</cameraCheckCollision>
+    <useWorldCamera>true</useWorldCamera>
+    <ingameMapState>2</ingameMapState>
+    <ingameMapFilters>0</ingameMapFilters>
+    <directionChangeMode>1</directionChangeMode>
+    <gearShiftMode>1</gearShiftMode>
+    <hudSpeedGauge>1</hudSpeedGauge>
+    <woodHarvesterAutoCut>true</woodHarvesterAutoCut>
+    <shownFreemodeWarning>false</shownFreemodeWarning>
+    <showMultiplayerNames>true</showMultiplayerNames>
+    <ingameMapGrowthFilter>-1</ingameMapGrowthFilter>
+    <ingameMapSoilFilter>-1</ingameMapSoilFilter>
+    <ingameMapFruitFilter></ingameMapFruitFilter>
+    <useColorblindMode>false</useColorblindMode>
+    <maxNumMirrors>0</maxNumMirrors>
+    <lightsProfile>1</lightsProfile>
+    <fovY>60.000000</fovY>
+    <uiScale>1.000000</uiScale>
+    <realBeaconLights>false</realBeaconLights>
+    <cameraBobbing>true</cameraBobbing>
+    <precisionFarming initialized="true">
+        <settings>
+            <inputHelpDisplay state="true"/>
+        </settings>
+    </precisionFarming>
+</gameSettings>
