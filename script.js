@@ -1,52 +1,108 @@
 /**
- * FS TOTAL TELEMETRY ENGINE v1.11
- * Mandate: Deep XML Parsing (Fuel, Damage, Crops, Animals)
- * Authors: werewolf3788 & raymystro
+ * FS HYBRID MASTER COMMAND v1.16
+ * Image Integration: Scans Saved Game folders for png/jpg/jpeg
+ * Priority: G-Portal Live Feed
  */
 
-const RAW_URL = "https://raw.githubusercontent.com/KFruti88/Farming-Simulator/main/saved-game-5";
+const GPORTAL_STATS = "http://176.57.165.81:8080/feed/dedicated-server-stats.xml?code=DIaoyx8jutkGtlDr";
+const GPORTAL_ECON = "http://176.57.165.81:8080/feed/dedicated-server-savegame.html?code=DIaoyx8jutkGtlDr&file=economy";
+const GITHUB_RAW = "https://raw.githubusercontent.com/KFruti88/Farming-Simulator/main";
 
 document.addEventListener('DOMContentLoaded', () => {
-    syncFullDashboard();
-    // Refresh every 5 minutes to stay accurate
-    setInterval(syncFullDashboard, 300000); 
+    const saveSelector = document.getElementById('saveSelector');
+    
+    // Initial Sync
+    syncFullDashboard(saveSelector.value);
+
+    // Dynamic Slot Transition
+    saveSelector.addEventListener('change', (e) => syncFullDashboard(e.target.value));
+    
+    // Refresh Logic (60s)
+    setInterval(() => syncFullDashboard(saveSelector.value), 60000);
 });
 
-async function syncFullDashboard() {
-    updateSystemStatus("Synchronizing Live Data...");
+async function syncFullDashboard(slot) {
+    const gitPath = `${GITHUB_RAW}/saved-game-${slot}`;
+    document.getElementById('currentSlotLabel').textContent = `SLOT ${slot}`;
     
     await Promise.all([
-        fetchXML(`${RAW_URL}/farms.xml`, parseFarms),
-        fetchXML(`${RAW_URL}/vehicles.xml`, parseVehicles),
-        fetchXML(`${RAW_URL}/fields.xml`, parseFields),
-        fetchXML(`${RAW_URL}/careerSavegame.xml`, parseGlobal),
-        fetchXML(`${RAW_URL}/players.xml`, parseTeam),
-        fetchXML(`${RAW_URL}/placeables.xml`, parseInfra),
-        fetchXML(`${RAW_URL}/precisionFarming.xml`, parseSoil)
+        // DYNAMIC IMAGE FETCH
+        updateSlotImage(slot),
+        
+        // G-PORTAL DIRECT (Priority 1)
+        fetchDirectXML(GPORTAL_STATS, parseLiveServer),
+        fetchDirectHTML(GPORTAL_ECON, 'liveEconomy'),
+        
+        // GITHUB REPO (Priority 2)
+        fetchGitXML(`${gitPath}/vehicles.xml`, parseVehicles),
+        fetchGitXML(`${gitPath}/fields.xml`, parseFields),
+        fetchGitXML(`${gitPath}/placeables.xml`, parseInfra),
+        fetchGitXML(`${gitPath}/careerSavegame.xml`, parseGlobal),
+        fetchGitXML(`${gitPath}/players.xml`, parseTeam),
+        fetchGitXML(`${gitPath}/animals.xml`, parseAnimals)
     ]);
-
-    updateSystemStatus("System Synchronized");
 }
 
-async function fetchXML(url, parser) {
+/**
+ * IMAGE LOGIC: Attempts to find an image in the current slot folder
+ */
+async function updateSlotImage(slot) {
+    const extensions = ['jpg', 'png', 'jpeg'];
+    const imgElement = document.getElementById('activeSlotImage');
+    const folderPath = `${GITHUB_RAW}/saved-game-${slot}`;
+
+    // Based on User Input, we check for images. 
+    // Since we don't have the exact name, we search for common patterns or the map image
+    for (let ext of extensions) {
+        let testUrl = `${folderPath}/preview.${ext}`; 
+        // We also check for the map image specifically if uploaded
+        if (slot === "5") testUrl = `${folderPath}/alma-2C-missouri-us-v1.0.0.3-fs22-1.jpg`;
+
+        try {
+            const res = await fetch(testUrl, { method: 'HEAD' });
+            if (res.ok) {
+                imgElement.src = testUrl;
+                return;
+            }
+        } catch (e) { /* Continue to next extension */ }
+    }
+}
+
+async function fetchDirectXML(url, parser) {
     try {
         const res = await fetch(url);
-        if (!res.ok) throw new Error("404");
-        const text = await res.text();
-        const xml = new DOMParser().parseFromString(text, "text/xml");
+        const xml = new DOMParser().parseFromString(await res.text(), "text/xml");
         parser(xml);
-    } catch (e) { console.warn(`N/A for: ${url}`); }
+    } catch (e) { console.warn("Live Server Feed N/A"); }
 }
 
-function parseFarms(xml) {
-    const farms = xml.getElementsByTagName("farm");
-    for (let i = 0; i < 2; i++) {
-        const container = document.getElementById(`farm${i+1}Stats`);
-        if (farms[i]) {
-            const money = parseInt(farms[i].getAttribute("money")).toLocaleString();
-            const name = farms[i].getAttribute("name") || `Operations ${i+1}`;
-            container.innerHTML = `<div class="telemetry-row"><span>${name}</span> <strong style="color:var(--safe)">$${money}</strong></div>`;
-        } else { container.innerHTML = "N/A - Slot Inactive"; }
+async function fetchDirectHTML(url, elementId) {
+    try {
+        const res = await fetch(url);
+        document.getElementById(elementId).innerHTML = await res.text();
+    } catch (e) { document.getElementById(elementId).innerHTML = "G-Portal Feed Offline"; }
+}
+
+async function fetchGitXML(url, parser) {
+    try {
+        const res = await fetch(url);
+        if (!res.ok) throw new Error();
+        const xml = new DOMParser().parseFromString(await res.text(), "text/xml");
+        parser(xml);
+    } catch (e) { console.warn(`GitHub File N/A: ${url}`); }
+}
+
+/* --- PARSERS --- */
+
+function parseLiveServer(xml) {
+    const server = xml.getElementsByTagName("Server")[0];
+    if (server) {
+        document.getElementById('serverName').textContent = `Server: ${server.getAttribute('name')}`;
+        document.getElementById('liveServerStats').innerHTML = `
+            <div class="telemetry-row"><span>Status:</span> <strong style="color:var(--safe)">ONLINE</strong></div>
+            <div class="telemetry-row"><span>Players:</span> <strong>${server.getAttribute('numPlayers')}/${server.getAttribute('capacity')}</strong></div>
+            <div class="telemetry-row"><span>Map Name:</span> <strong>${server.getAttribute('mapName')}</strong></div>
+        `;
     }
 }
 
@@ -54,61 +110,37 @@ function parseVehicles(xml) {
     const list = document.getElementById('fleetLog');
     const units = xml.getElementsByTagName("vehicle");
     let html = "";
-
     for (let u of units) {
-        const name = u.getAttribute("filename").split('/').pop().replace('.xml', '');
+        const name = u.getAttribute("filename").split('/').pop().replace('.xml', '').toUpperCase();
         const fuel = parseFloat(u.getElementsByTagName("fuelConsumer")[0]?.getAttribute("fillLevel") || 0).toFixed(0);
         const damage = (parseFloat(u.getAttribute("damage") || 0) * 100).toFixed(0);
-        
         html += `
             <div class="telemetry-row">
-                <span>${name.toUpperCase()}</span>
-                <div>${fuel}% <div class="stat-bar-bg"><div class="stat-bar-fill" style="width:${fuel}%; background:var(--fuel)"></div></div></div>
-                <div>${damage}% <div class="stat-bar-bg"><div class="stat-bar-fill" style="width:${damage}%; background:${damage > 50 ? 'var(--danger)' : 'var(--warn)'}"></div></div></div>
+                <span>${name}</span>
+                <div>${fuel}% <div class="bar-bg"><div class="bar-fill" style="width:${fuel}%; background:var(--fuel)"></div></div></div>
+                <div>${damage}% <div class="bar-bg"><div class="bar-fill" style="width:${damage}%; background:${damage > 50 ? 'var(--danger)' : 'var(--warn)'}"></div></div></div>
             </div>`;
     }
-    list.innerHTML = html || "No Units Detected";
+    list.innerHTML = html || "No Fleet Data Found";
 }
 
 function parseFields(xml) {
     const list = document.getElementById('fieldLog');
     const fields = xml.getElementsByTagName("field");
     let html = "";
-
     for (let f of fields) {
         const id = f.getAttribute("fieldId");
-        const fruit = f.getAttribute("fruitType") || "Fallow";
-        html += `
-            <div class="telemetry-row">
-                <span>FIELD ${id}</span>
-                <span style="color:var(--farm-gold)">${fruit.toUpperCase()}</span>
-                <span style="color:var(--safe)">Growth Active</span>
-            </div>`;
+        const fruit = (f.getAttribute("fruitType") || "FALLOW").toUpperCase();
+        html += `<div class="telemetry-row"><span>FIELD ${id}</span> <span style="color:var(--gold)">${fruit}</span> <span style="color:var(--safe)">GROWTH</span></div>`;
     }
-    list.innerHTML = html || "No Active Crops Detected";
-}
-
-function parseSoil(xml) {
-    const fields = xml.getElementsByTagName("field");
-    document.getElementById('soilLog').innerHTML = `<div class="telemetry-row"><span>Analyzed Fields:</span> <strong>${fields.length}</strong></div><div class="telemetry-row"><span>Soil State:</span> <strong>SYNCED</strong></div>`;
-}
-
-function parseInfra(xml) {
-    const list = document.getElementById('infraLog');
-    const items = xml.getElementsByTagName("placeable");
-    let html = "";
-    for (let i of items) {
-        const name = i.getAttribute("filename").split('/').pop().replace('.xml', '');
-        html += `<div class="telemetry-row"><span>🏗️ ${name}</span> <span>Operational</span></div>`;
-    }
-    list.innerHTML = html;
+    list.innerHTML = html || "No Field Data Found";
 }
 
 function parseGlobal(xml) {
     const time = xml.getElementsByTagName("dayTime")[0]?.textContent || 0;
     const hours = Math.floor(time / 3600000);
     const min = Math.floor((time % 3600000) / 60000);
-    document.getElementById('gameClock').textContent = `Time: ${hours}:${min.toString().padStart(2, '0')}`;
+    document.getElementById('gameClock').textContent = `Time: ${hours.toString().padStart(2, '0')}:${min.toString().padStart(2, '0')}`;
 }
 
 function parseTeam(xml) {
@@ -116,6 +148,18 @@ function parseTeam(xml) {
     document.getElementById('activeTeam').textContent = `Team: ${names || 'werewolf3788 & raymystro'}`;
 }
 
-function updateSystemStatus(msg) {
-    document.getElementById('systemStatus').textContent = `● ${msg}`;
+function parseInfra(xml) {
+    const list = document.getElementById('infraLog');
+    const items = xml.getElementsByTagName("placeable");
+    let html = "";
+    for (let i of items) {
+        const name = i.getAttribute("filename").split('/').pop().replace('.xml', '').toUpperCase();
+        html += `<div class="telemetry-row"><span>🏗️ ${name}</span> <span>OPERATIONAL</span></div>`;
+    }
+    list.innerHTML = html;
+}
+
+function parseAnimals(xml) {
+    const total = xml.getElementsByTagName("animal").length;
+    document.getElementById('animalLog').innerHTML = `<div class="telemetry-row"><span>Live Count:</span> <strong>${total} Units</strong></div>`;
 }
