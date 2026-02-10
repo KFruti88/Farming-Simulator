@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8" standalone="no" ?>
+<gameserver>
+    <settings>
+        <game_name>Werewolf Red - red -redneck</game_name>
+        <admin_password>6184030779</admin_password>
+        <game_password/>
+        <savegame_index>2</savegame_index>
+        <max_player>6</max_player>
+        <ip>176.57.165.81</ip>
+        <port>10823</port>
+        <language>en</language>
+        <auto_save_interval>15.000000</auto_save_interval>
+        <stats_interval>45.000000</stats_interval>
+        <use_upnp>false</use_upnp>
+        <crossplay_allowed>true</crossplay_allowed>
+        <difficulty>2</difficulty>
+        <pause_game_if_empty>1</pause_game_if_empty>
+        <mapID>Competitive Farming Map</mapID>
+        <mapFilename>FS22_BigFlatsTexas.zip</mapFilename>
+    </settings>
+    <mods>
+        <mod filename="FS22_precisionFarming" isDlc="false"/>
+        <mod filename="agiPack" isDlc="true"/>
+        <mod filename="forestryPack" isDlc="true"/>
+        <mod filename="premiumExpansion" isDlc="true"/>
+        <mod filename="FS22_Alma_Missouri" isDlc="false"/>
+        <mod filename="FS22_AmericanShedWithLounge" isDlc="false"/>
+        <mod filename="FS22_AutomaticWater_Animals_Greenhouses" isDlc="false"/>
+        <mod filename="FS22_BigFlatsTexas" isDlc="false"/>
+        <mod filename="FS22_CaseIH_Puma_Series" isDlc="false"/>
+        <mod filename="FS22_John_Deere_CP_770" isDlc="false"/>
+        <mod filename="FS22_KuhnAxis402" isDlc="false"/>
+        <mod filename="FS22_Lizard_SM72_SM82" isDlc="false"/>
+        <mod filename="FS22_Lizard_Trex_600" isDlc="false"/>
+        <mod filename="FS22_Multifruit_Buying_Station" isDlc="false"/>
+        <mod filename="FS22_Pack_Autoload" isDlc="false"/>
+        <mod filename="FS22_PlaceableSymbols" isDlc="false"/>
+        <mod filename="FS22_Pro_Bale_Fork_Autoload" isDlc="false"/>
+        <mod filename="FS22_Quickbale" isDlc="false"/>
+        <mod filename="FS22_R3_HarvestProfit" isDlc="false"/>
+        <mod filename="FS22_RM_Subsidy" isDlc="false"/>
+        <mod filename="FS22_Rake_Lizard_R90" isDlc="false"/>
+        <mod filename="FS22_Refillable_Tanks" isDlc="false"/>
+        <mod filename="FS22_Silo_Pack" isDlc="false"/>
+        <mod filename="FS22_SolarFarmsLizard" isDlc="false"/>
+        <mod filename="FS22_T4_40_Multi_Harvester_Pack" isDlc="false"/>
+        <mod filename="FS22_TLX_X52_Tipper" isDlc="false"/>
+        <mod filename="FS22_TreeBGone" isDlc="false"/>
+        <mod filename="FS22_WindTurbinePackage" isDlc="false"/>
+        <mod filename="FS22_WirelessWasher" isDlc="false"/>
+        <mod filename="FS22_dropdeckTrailer53Ft_AutoPack_crossplay" isDlc="false"/>
+        <mod filename="FS22_freefuel" isDlc="false"/>
+        <mod filename="FS22_kinzeMultiFruitPlanterPack" isDlc="false"/>
+        <mod filename="FS22_precisionFarming_extension" isDlc="false"/>
+        <mod filename="FS22_sellEverything" isDlc="false"/>
+        <mod filename="FS22_strawHarvestPack" isDlc="false"/>
+        <mod filename="FS22_tardisLoader" isDlc="false"/>
+    </mods>
+</gameserver>
