@@ -1,0 +1,401 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<Server version="2" gameVersion="25" modVersion="1.0.0.2" lastUpdate="2025/12/01 11:27:25" paused="false" mapName="Big Flats Texas">
+    <Players>
+        <Player id="2" uptime="9" name="Werewolf3788"/>
+    </Players>
+    <Vehicles>
+        <Vehicle id="237" name="Diesel Locomotive" hotSpotType="TRAIN" x="1970.160645" z="1071.469360" r="0.147102"/>
+        <Vehicle id="252" name="XUV865M" hotSpotType="CAR" x="454.714020" z="-383.443542" r="3.204985"/>
+        <Vehicle id="253" name="Super-Liner 6x4" hotSpotType="TRUCK" x="-144.367264" z="61.302620" r="0.050305"/>
+        <Vehicle id="261" name="IDEAL 10T" hotSpotType="HARVESTER" x="104.970375" z="-58.105686" r="3.328862"/>
+        <Vehicle id="262" name="8280 TTV" hotSpotType="TRACTOR" x="-57.292797" z="52.679531" r="1.052275"/>
+        <Vehicle id="264" name="TGS 18.500 4x4" hotSpotType="TRUCK" x="604.175842" z="-407.577759" r="1.292410"/>
+        <Vehicle id="265" name="IDEAL 9PL" hotSpotType="HARVESTER" x="-8.250576" z="76.332359" r="5.720030"/>
+        <Vehicle id="267" name="Trident 5550" hotSpotType="TRACTOR" controller="Werewolf3788" x="999.754333" z="-498.379822" r="4.712734"/>
+        <Vehicle id="269" name="Trident 5550" hotSpotType="TRACTOR" x="546.182190" z="-497.635437" r="1.628462"/>
+        <Vehicle id="271" name="6250 R" hotSpotType="TRACTOR" x="-958.345947" z="-911.735596" r="4.881745"/>
+        <Vehicle id="275" name="4940 Self-Propelled Sprayer" hotSpotType="TRACTOR" x="-165.290802" z="47.950516" r="5.252752"/>
+        <Vehicle id="276" name="4940 Self-Propelled Sprayer" hotSpotType="TRACTOR" x="-198.994583" z="70.616585" r="5.583232"/>
+        <Vehicle id="279" name="8280 TTV" hotSpotType="TRACTOR" x="951.770081" z="-619.884094" r="4.712691"/>
+    </Vehicles>
+    <Weathers>
+        <Hourly id="0" label="September 8" type="SUN" temperature="20.000000" windRotation="0.785398" windVelocity="2"/>
+        <Hourly id="1" label="10:00" type="SUN" temperature="21.000000" windRotation="7.452556" windVelocity="2"/>
+        <Hourly id="2" label="11:00" type="SUN" temperature="22.000000" windRotation="7.452556" windVelocity="2"/>
+        <Hourly id="3" label="12:00" type="SUN" temperature="23.000000" windRotation="7.452556" windVelocity="2"/>
+        <Hourly id="4" label="13:00" type="SUN" temperature="24.000000" windRotation="7.452556" windVelocity="2"/>
+        <Hourly id="5" label="14:00" type="SUN" temperature="24.000000" windRotation="7.452556" windVelocity="2"/>
+        <Hourly id="6" label="15:00" type="SUN" temperature="24.000000" windRotation="7.452556" windVelocity="2"/>
+        <Hourly id="7" label="16:00" type="SUN" temperature="24.000000" windRotation="7.452556" windVelocity="2"/>
+        <Hourly id="8" label="17:00" type="SUN" temperature="18.000000" windRotation="8.761553" windVelocity="3"/>
+        <Hourly id="9" label="18:00" type="SUN" temperature="18.000000" windRotation="8.761553" windVelocity="3"/>
+        <Hourly id="10" label="19:00" type="SUN" temperature="16.000000" windRotation="8.761553" windVelocity="3"/>
+        <Daily id="1" label="September 9" type="CLOUDY" lowTemperature="8.000000" highTemperature="19.000000" windRotation="8.639380" windVelocity="4"/>
+        <Daily id="2" label="September 10" type="RAIN" lowTemperature="7.000000" highTemperature="25.000000" windRotation="7.068583" windVelocity="5"/>
+        <Daily id="3" label="September 11" type="RAIN" lowTemperature="14.000000" highTemperature="26.000000" windRotation="7.068583" windVelocity="5"/>
+        <Daily id="4" label="September 12" type="MIXED" lowTemperature="12.000000" highTemperature="25.000000" windRotation="7.853981" windVelocity="3"/>
+        <Daily id="5" label="September 13" type="RAIN" lowTemperature="12.000000" highTemperature="28.000000" windRotation="7.068583" windVelocity="7"/>
+        <Daily id="6" label="September 14" type="RAIN" lowTemperature="7.000000" highTemperature="21.000000" windRotation="7.853981" windVelocity="6"/>
+        <Daily id="7" label="September 15" type="RAIN" lowTemperature="11.000000" highTemperature="27.000000" windRotation="5.497787" windVelocity="5"/>
+    </Weathers>
+    <Calendar progress="52.083332">
+        <Fruit/>
+        <Fruit id="1" name="Wheat">
+            <Periodicities>
+                <Periodicity/>
+                <Periodicity id="1" name="March" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="2" name="April" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="3" name="May" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="4" name="June" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="5" name="July" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="6" name="August" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="7" name="September" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="8" name="October" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="9" name="November" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="10" name="December" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="11" name="January" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="12" name="February" bePlanted="true" beHarvested="true"/>
+            </Periodicities>
+        </Fruit>
+        <Fruit id="2" name="Barley">
+            <Periodicities>
+                <Periodicity/>
+                <Periodicity id="1" name="March" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="2" name="April" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="3" name="May" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="4" name="June" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="5" name="July" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="6" name="August" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="7" name="September" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="8" name="October" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="9" name="November" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="10" name="December" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="11" name="January" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="12" name="February" bePlanted="true" beHarvested="true"/>
+            </Periodicities>
+        </Fruit>
+        <Fruit id="3" name="Canola">
+            <Periodicities>
+                <Periodicity/>
+                <Periodicity id="1" name="March" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="2" name="April" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="3" name="May" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="4" name="June" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="5" name="July" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="6" name="August" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="7" name="September" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="8" name="October" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="9" name="November" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="10" name="December" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="11" name="January" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="12" name="February" bePlanted="true" beHarvested="true"/>
+            </Periodicities>
+        </Fruit>
+        <Fruit id="4" name="Oat">
+            <Periodicities>
+                <Periodicity/>
+                <Periodicity id="1" name="March" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="2" name="April" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="3" name="May" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="4" name="June" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="5" name="July" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="6" name="August" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="7" name="September" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="8" name="October" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="9" name="November" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="10" name="December" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="11" name="January" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="12" name="February" bePlanted="true" beHarvested="true"/>
+            </Periodicities>
+        </Fruit>
+        <Fruit id="5" name="Corn">
+            <Periodicities>
+                <Periodicity/>
+                <Periodicity id="1" name="March" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="2" name="April" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="3" name="May" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="4" name="June" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="5" name="July" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="6" name="August" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="7" name="September" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="8" name="October" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="9" name="November" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="10" name="December" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="11" name="January" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="12" name="February" bePlanted="true" beHarvested="true"/>
+            </Periodicities>
+        </Fruit>
+        <Fruit id="6" name="Sunflowers">
+            <Periodicities>
+                <Periodicity/>
+                <Periodicity id="1" name="March" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="2" name="April" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="3" name="May" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="4" name="June" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="5" name="July" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="6" name="August" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="7" name="September" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="8" name="October" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="9" name="November" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="10" name="December" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="11" name="January" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="12" name="February" bePlanted="true" beHarvested="true"/>
+            </Periodicities>
+        </Fruit>
+        <Fruit id="7" name="Soybeans">
+            <Periodicities>
+                <Periodicity/>
+                <Periodicity id="1" name="March" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="2" name="April" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="3" name="May" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="4" name="June" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="5" name="July" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="6" name="August" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="7" name="September" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="8" name="October" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="9" name="November" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="10" name="December" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="11" name="January" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="12" name="February" bePlanted="true" beHarvested="true"/>
+            </Periodicities>
+        </Fruit>
+        <Fruit id="8" name="Potatoes">
+            <Periodicities>
+                <Periodicity/>
+                <Periodicity id="1" name="March" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="2" name="April" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="3" name="May" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="4" name="June" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="5" name="July" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="6" name="August" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="7" name="September" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="8" name="October" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="9" name="November" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="10" name="December" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="11" name="January" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="12" name="February" bePlanted="true" beHarvested="true"/>
+            </Periodicities>
+        </Fruit>
+        <Fruit id="9" name="Sugar Beet">
+            <Periodicities>
+                <Periodicity/>
+                <Periodicity id="1" name="March" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="2" name="April" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="3" name="May" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="4" name="June" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="5" name="July" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="6" name="August" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="7" name="September" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="8" name="October" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="9" name="November" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="10" name="December" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="11" name="January" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="12" name="February" bePlanted="true" beHarvested="true"/>
+            </Periodicities>
+        </Fruit>
+        <Fruit id="10" name="Sugarcane">
+            <Periodicities>
+                <Periodicity/>
+                <Periodicity id="1" name="March" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="2" name="April" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="3" name="May" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="4" name="June" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="5" name="July" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="6" name="August" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="7" name="September" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="8" name="October" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="9" name="November" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="10" name="December" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="11" name="January" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="12" name="February" bePlanted="true" beHarvested="true"/>
+            </Periodicities>
+        </Fruit>
+        <Fruit id="11" name="Cotton">
+            <Periodicities>
+                <Periodicity/>
+                <Periodicity id="1" name="March" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="2" name="April" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="3" name="May" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="4" name="June" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="5" name="July" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="6" name="August" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="7" name="September" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="8" name="October" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="9" name="November" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="10" name="December" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="11" name="January" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="12" name="February" bePlanted="true" beHarvested="true"/>
+            </Periodicities>
+        </Fruit>
+        <Fruit id="12" name="Sorghum">
+            <Periodicities>
+                <Periodicity/>
+                <Periodicity id="1" name="March" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="2" name="April" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="3" name="May" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="4" name="June" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="5" name="July" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="6" name="August" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="7" name="September" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="8" name="October" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="9" name="November" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="10" name="December" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="11" name="January" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="12" name="February" bePlanted="true" beHarvested="true"/>
+            </Periodicities>
+        </Fruit>
+        <Fruit id="13" name="Grapes">
+            <Periodicities>
+                <Periodicity/>
+                <Periodicity id="1" name="March" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="2" name="April" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="3" name="May" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="4" name="June" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="5" name="July" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="6" name="August" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="7" name="September" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="8" name="October" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="9" name="November" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="10" name="December" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="11" name="January" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="12" name="February" bePlanted="true" beHarvested="true"/>
+            </Periodicities>
+        </Fruit>
+        <Fruit id="14" name="Olives">
+            <Periodicities>
+                <Periodicity/>
+                <Periodicity id="1" name="March" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="2" name="April" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="3" name="May" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="4" name="June" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="5" name="July" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="6" name="August" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="7" name="September" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="8" name="October" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="9" name="November" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="10" name="December" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="11" name="January" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="12" name="February" bePlanted="true" beHarvested="true"/>
+            </Periodicities>
+        </Fruit>
+        <Fruit id="15" name="Poplar">
+            <Periodicities>
+                <Periodicity/>
+                <Periodicity id="1" name="March" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="2" name="April" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="3" name="May" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="4" name="June" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="5" name="July" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="6" name="August" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="7" name="September" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="8" name="October" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="9" name="November" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="10" name="December" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="11" name="January" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="12" name="February" bePlanted="true" beHarvested="true"/>
+            </Periodicities>
+        </Fruit>
+        <Fruit id="16" name="Grass">
+            <Periodicities>
+                <Periodicity/>
+                <Periodicity id="1" name="March" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="2" name="April" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="3" name="May" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="4" name="June" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="5" name="July" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="6" name="August" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="7" name="September" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="8" name="October" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="9" name="November" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="10" name="December" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="11" name="January" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="12" name="February" bePlanted="true" beHarvested="true"/>
+            </Periodicities>
+        </Fruit>
+        <Fruit id="17" name="Oilseed Radish">
+            <Periodicities>
+                <Periodicity/>
+                <Periodicity id="1" name="March" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="2" name="April" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="3" name="May" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="4" name="June" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="5" name="July" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="6" name="August" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="7" name="September" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="8" name="October" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="9" name="November" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="10" name="December" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="11" name="January" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="12" name="February" bePlanted="true" beHarvested="true"/>
+            </Periodicities>
+        </Fruit>
+        <Fruit id="18" name="Grass">
+            <Periodicities>
+                <Periodicity/>
+                <Periodicity id="1" name="March" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="2" name="April" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="3" name="May" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="4" name="June" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="5" name="July" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="6" name="August" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="7" name="September" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="8" name="October" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="9" name="November" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="10" name="December" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="11" name="January" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="12" name="February" bePlanted="true" beHarvested="true"/>
+            </Periodicities>
+        </Fruit>
+        <Fruit id="19" name="Red Beet">
+            <Periodicities>
+                <Periodicity/>
+                <Periodicity id="1" name="March" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="2" name="April" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="3" name="May" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="4" name="June" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="5" name="July" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="6" name="August" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="7" name="September" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="8" name="October" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="9" name="November" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="10" name="December" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="11" name="January" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="12" name="February" bePlanted="true" beHarvested="true"/>
+            </Periodicities>
+        </Fruit>
+        <Fruit id="20" name="Carrots">
+            <Periodicities>
+                <Periodicity/>
+                <Periodicity id="1" name="March" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="2" name="April" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="3" name="May" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="4" name="June" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="5" name="July" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="6" name="August" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="7" name="September" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="8" name="October" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="9" name="November" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="10" name="December" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="11" name="January" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="12" name="February" bePlanted="true" beHarvested="true"/>
+            </Periodicities>
+        </Fruit>
+        <Fruit id="21" name="Parsnip">
+            <Periodicities>
+                <Periodicity/>
+                <Periodicity id="1" name="March" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="2" name="April" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="3" name="May" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="4" name="June" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="5" name="July" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="6" name="August" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="7" name="September" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="8" name="October" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="9" name="November" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="10" name="December" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="11" name="January" bePlanted="true" beHarvested="true"/>
+                <Periodicity id="12" name="February" bePlanted="true" beHarvested="true"/>
+            </Periodicities>
+        </Fruit>
+    </Calendar>
+</Server>
