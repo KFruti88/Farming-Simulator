@@ -1,15 +1,10 @@
-/* FARM Theme: Gold (#ffd700), Dark Nature (#0d0a00) [cite: 2026-02-08]
-   Mandate: 90% Width, Full-Page Responsive Coverage [cite: 2026-01-26]
-*/
-
 :root {
     --gold: #ffd700;
     --bg: #0d0a00;
-    --glass: rgba(255, 255, 255, 0.04);
+    --glass: rgba(255, 255, 255, 0.05);
     --border: rgba(255, 215, 0, 0.3);
     --safe: #7cfc00;
     --fuel: #00d4ff;
-    --warn: #ffcc00;
     --danger: #ff4d4d;
 }
 
@@ -26,7 +21,7 @@ body {
 }
 
 .dashboard-container {
-    width: 90%; /* Standard Mandate [cite: 2026-01-26] */
+    width: 90%; 
     max-width: 1920px; 
     padding: 20px 0;
     display: flex;
@@ -36,8 +31,7 @@ body {
 
 .glass-panel {
     background: var(--glass);
-    backdrop-filter: blur(25px);
-    -webkit-backdrop-filter: blur(25px);
+    backdrop-filter: blur(20px);
     border: 1px solid var(--border);
     border-radius: 12px;
     padding: 15px;
@@ -47,7 +41,7 @@ body {
 .header-content { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px; }
 
 .map-branding { display: flex; align-items: center; gap: 25px; }
-.image-container { position: relative; width: 220px; height: 140px; }
+.image-container { position: relative; width: 200px; height: 130px; }
 #activeMapImage { width: 100%; height: 100%; border: 2px solid var(--gold); border-radius: 6px; object-fit: cover; }
 
 .slot-badge {
@@ -57,43 +51,35 @@ body {
     background: var(--gold);
     color: #000;
     font-weight: 900;
-    font-size: 0.75rem;
-    padding: 3px 10px;
+    font-size: 0.7rem;
+    padding: 3px 8px;
     border-radius: 4px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.6);
 }
 
-.header-text h1 { font-size: 1.6rem; color: var(--gold); text-transform: uppercase; text-shadow: 0 0 10px rgba(255,215,0,0.3); }
-.status-bar { font-size: 0.85rem; color: #aaa; margin-top: 10px; }
+.header-text h1 { font-size: 1.6rem; color: var(--gold); text-transform: uppercase; }
 
 .pulse { color: var(--safe); animation: pulse-glow 2s infinite; }
 @keyframes pulse-glow { 0% { opacity: 1; } 50% { opacity: 0.4; } 100% { opacity: 1; } }
 
-/* Layout Grids [cite: 2026-01-26] */
+select { background: #221a00; color: var(--gold); border: 1px solid var(--gold); padding: 8px 12px; border-radius: 6px; font-weight: 600; cursor: pointer; }
+
 .operations-grid, .farm-row { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
-.telemetry-matrix { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; flex-grow: 1; }
-.fleet-panel { grid-column: span 2; }
+.telemetry-matrix { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; flex-grow: 1; }
 
 .farm-card { border-top: 4px solid var(--gold); }
-.card-tag, .card-label { font-size: 0.75rem; color: var(--gold); font-weight: 900; margin-bottom: 12px; text-transform: uppercase; }
+.card-tag, .card-label { font-size: 0.75rem; color: var(--gold); font-weight: 900; margin-bottom: 12px; }
 
-/* Dynamic List Logic */
-.telemetry-header { display: grid; grid-template-columns: 2fr 1.2fr 1.5fr; font-size: 0.75rem; color: var(--gold); font-weight: 900; margin-bottom: 15px; border-bottom: 1px solid var(--border); padding-bottom: 8px; }
-.scroll-list { height: 450px; overflow-y: auto; padding-right: 12px; font-size: 0.85rem; }
-.telemetry-row { display: grid; grid-template-columns: 2fr 1.2fr 1.5fr; padding: 15px 0; border-bottom: 1px solid rgba(255,255,255,0.05); align-items: center; }
+.telemetry-header { display: grid; grid-template-columns: 2fr 1.2fr 1.5fr; font-size: 0.75rem; color: var(--gold); margin-bottom: 15px; border-bottom: 1px solid var(--border); padding-bottom: 8px; font-weight: 900; }
+.scroll-list { height: 400px; overflow-y: auto; padding-right: 10px; font-size: 0.85rem; }
+.telemetry-row { display: grid; grid-template-columns: 2fr 1.2fr 1.5fr; padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.05); align-items: center; }
 
-/* Visual Bars [cite: 2026-02-08] */
-.bar-bg { height: 6px; background: #222; border-radius: 3px; margin-top: 6px; overflow: hidden; }
-.bar-fill { height: 100%; transition: width 1.2s ease-in-out; }
-
-@media (max-width: 1400px) {
-    .telemetry-matrix { grid-template-columns: 1fr 1fr; }
-    .fleet-panel { grid-column: span 1; }
-}
+.bar-bg { height: 6px; background: #222; border-radius: 3px; margin-top: 8px; overflow: hidden; }
+.bar-fill { height: 100%; transition: width 1.2s ease; }
 
 @media (max-width: 1000px) {
-    .dashboard-container { width: 95%; }
     .operations-grid, .farm-row, .telemetry-matrix { grid-template-columns: 1fr; }
     .header-content { flex-direction: column; text-align: center; }
     .map-branding { flex-direction: column; }
 }
+
+.footer-grid { display: flex; justify-content: space-between; font-size: 0.75rem; color: #666; border-top: 1px solid var(--border); padding-top: 15px; }
