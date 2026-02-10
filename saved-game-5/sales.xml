@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<sales>
+    <item timeLeft="16" isGenerated="true" xmlFilename="data/vehicles/farmtech/supercis800/supercis800.xml" age="38" price="7860" damage="0.329271" wear="0.655654" operatingTime="124957.968750"/>
+    <item timeLeft="26" isGenerated="true" xmlFilename="data/vehicles/nordsten/ns3030/ns3030.xml" age="10" price="19600" damage="0.599720" wear="0.346271" operatingTime="33914.675781"/>
+    <item timeLeft="14" isGenerated="true" xmlFilename="data/vehicles/kemper/plus345/plus345_newHolland.xml" age="24" price="26726" damage="0.216086" wear="0.906387" operatingTime="51213.058594"/>
+    <item timeLeft="18" isGenerated="true" xmlFilename="D:/home/sid_1896081/farmingSim_2022/game/pdlc/premiumExpansion/vehicles/bednar/tn3000Profi/tn3000Profi.xml" age="18" price="11481" damage="0.558336" wear="0.254787" operatingTime="36737.015625"/>
+    <item timeLeft="39" isGenerated="true" xmlFilename="data/vehicles/amazone/zgts10001/zgts10001.xml" age="36" price="23816" damage="0.322657" wear="0.280717" operatingTime="162711.453125"/>
+</sales>
