@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" standalone="no" ?>
+<game>
+    <language>-1</language>
+    <graphic>
+        <display>
+            <width>0</width>
+            <height>0</height>
+            <brightness>1</brightness>
+            <fullscreenMode>windowed_fullscreen</fullscreenMode>
+            <vsync adaptive="true">true</vsync>
+            <userConfirmed>true</userConfirmed>
+            <previousWidth>1280</previousWidth>
+            <previousHeight>720</previousHeight>
+        </display>
+        <scalability>
+            <performanceClass>auto</performanceClass>
+        </scalability>
+        <renderer>D3D_12</renderer>
+    </graphic>
+    <audio enable="true" volume="1.000000"/>
+    <input>
+        <joystick enable="true" vibration="false" deadzone="0.14"/>
+        <mouse enable="true"/>
+        <keyboard enable="true"/>
+        <headTracking active="true" trackir="true" tobiieyex="true"/>
+    </input>
+    <usbBeaconLight enable="true"/>
+    <logging>
+        <file enable="true" filename="log.txt"/>
+        <console enable="true"/>
+    </logging>
+    <development>
+        <controls>false</controls>
+        <openDevConsole onWarnings="false" onErrors="false"/>
+    </development>
+</game>
