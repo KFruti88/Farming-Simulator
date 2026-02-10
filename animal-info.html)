@@ -1,0 +1,111 @@
+<div id="animalModule" class="animal-data-blade">
+    <div class="blade-header">
+        <h2>🐾 MODULE 2: LIVESTOCK BIOMETRICS & PRODUCTION</h2>
+        <span id="animalCount" class="badge">SCANNING...</span>
+    </div>
+
+    <div id="animalMatrixContainer" class="matrix-grid scroll-list main-scroll">
+        <div class="loading-state">Analyzing Species Requirements & Production Outputs...</div>
+    </div>
+</div>
+
+<script>
+/**
+ * ULTIMATE ANIMAL & PALLET BLADE v1.42
+ * Tracking: Bees, Chickens, Sheep, Pigs, Cows, and Horses.
+ */
+async function syncAnimalBlade(gitPath) {
+    try {
+        const [animRes, placeRes] = await Promise.all([
+            fetch(`${gitPath}/animals.xml?v=${new Date().getTime()}`),
+            fetch(`${gitPath}/placeables.xml?v=${new Date().getTime()}`)
+        ]);
+        
+        const animXml = new DOMParser().parseFromString(await animRes.text(), "text/xml");
+        const placeXml = new DOMParser().parseFromString(await placeRes.text(), "text/xml");
+        
+        const animals = Array.from(animXml.getElementsByTagName("animal"));
+        const placeables = Array.from(placeXml.getElementsByTagName("placeable"));
+        
+        document.getElementById('animalCount').textContent = `${animals.length} ACTIVE HEAD`;
+        
+        const container = document.getElementById('animalMatrixContainer');
+        container.innerHTML = animals.map(a => {
+            const type = a.getAttribute("type")?.split('_').pop().toUpperCase() || "LIVESTOCK";
+            const health = (parseFloat(a.getAttribute("health") || 0) * 100).toFixed(0);
+            const food = parseFloat(a.getAttribute("foodLevel") || 0).toFixed(0);
+            const water = parseFloat(a.getAttribute("waterLevel") || 0).toFixed(0);
+            const prod = (parseFloat(a.getAttribute("reproductionWeight") || 0) * 100).toFixed(0);
+            
+            // Production Logic (Milk/Wool)
+            const milk = parseFloat(a.getAttribute("milkLevel") || 0).toFixed(0);
+            const wool = parseFloat(a.getAttribute("woolLevel") || 0).toFixed(0);
+
+            // Requirement Mapping based on Species
+            let reqs = "";
+            if(type === "COW") reqs = "TMR / HAY";
+            if(type === "CHICKEN") reqs = "WHEAT / BARLEY";
+            if(type === "PIG") reqs = "CORN / SORGHUM";
+            if(type === "SHEEP") reqs = "GRASS / HAY";
+            if(type === "HORSE") reqs = "OATS / SORGHUM";
+
+            return `
+                <div class="animal-card ${health < 50 ? 'warning' : ''}">
+                    <div class="card-top">
+                        <span class="type-tag">${type}</span>
+                        <span class="prod-tag">PROD: ${prod}%</span>
+                    </div>
+                    
+                    <div class="telemetry-bars">
+                        <label>VITAL HEALTH: ${health}%</label>
+                        <div class="bar-bg"><div class="bar-fill" style="width:${health}%; background:var(--safe)"></div></div>
+                        
+                        <label>DIET (${reqs}): ${food}L</label>
+                        <div class="bar-bg"><div class="bar-fill" style="width:${(food/1000)*100}%; background:var(--gold)"></div></div>
+                    </div>
+
+                    <div class="production-stats">
+                        ${milk > 0 ? `<div class="stat-line">🥛 MILK: <strong>${milk}L</strong></div>` : ''}
+                        ${wool > 0 ? `<div class="stat-line">🧶 WOOL: <strong>${wool}L</strong></div>` : ''}
+                        <div class="stat-line">💧 WATER: <strong>${water}L</strong></div>
+                    </div>
+                </div>
+            `;
+        }).join('');
+
+        // BEES & PALLET SCANNER
+        const beeHives = placeables.filter(p => p.getAttribute("filename")?.includes("beeHive"));
+        if(beeHives.length > 0) {
+            container.innerHTML += `
+                <div class="animal-card bee-card">
+                    <div class="card-top"><span class="type-tag">BEES</span> <span class="prod-tag">AUTO</span></div>
+                    <div class="production-stats">
+                        <div class="stat-line">🍯 HIVES ACTIVE: <strong>${beeHives.length}</strong></div>
+                        <div class="stat-line">📦 PALLET SPAWNER: <strong>ACTIVE</strong></div>
+                    </div>
+                </div>
+            `;
+        }
+    } catch (e) { console.warn("Animal telemetry secured."); }
+}
+</script>
+
+<style>
+.animal-data-blade { color: #fff; }
+.blade-header { display: flex; justify-content: space-between; border-bottom: 2px solid var(--gold); padding-bottom: 10px; margin-bottom: 20px; }
+.matrix-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 15px; }
+
+.animal-card { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,215,0,0.1); border-radius: 10px; padding: 15px; }
+.warning { border-color: var(--danger); }
+.bee-card { border-color: var(--gold); background: rgba(255, 215, 0, 0.05); }
+
+.card-top { display: flex; justify-content: space-between; font-weight: 900; font-size: 0.75rem; margin-bottom: 12px; }
+.type-tag { color: var(--gold); letter-spacing: 1px; }
+
+.telemetry-bars label { font-size: 0.6rem; color: #aaa; margin-top: 8px; display: block; }
+.bar-bg { height: 4px; background: #222; border-radius: 2px; overflow: hidden; margin-top: 4px; }
+.bar-fill { height: 100%; transition: width 1.5s ease; }
+
+.production-stats { margin-top: 15px; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 10px; font-size: 0.75rem; }
+.stat-line { display: flex; justify-content: space-between; margin-bottom: 4px; }
+</style>
