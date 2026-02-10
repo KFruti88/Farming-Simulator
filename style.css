@@ -1,12 +1,12 @@
-/* FARM Theme: Gold (#ffd700), Dark Background (#0d0a00)
-   Mandate: Full Page Coverage & Cross-Device Responsiveness
+/* FARM Theme: Gold (#ffd700), Dark Nature (#0d0a00)
+   Mandate: 90% Width, 1280x720 Broadcast Optimization
 */
 
 :root {
-    --farm-gold: #ffd700;
-    --farm-bg: #0d0a00;
-    --glass: rgba(255, 255, 255, 0.04);
-    --border: rgba(255, 215, 0, 0.2);
+    --gold: #ffd700;
+    --bg: #0d0a00;
+    --glass: rgba(255, 255, 255, 0.05);
+    --border: rgba(255, 215, 0, 0.3);
     --safe: #7cfc00;
     --warn: #ffcc00;
     --danger: #ff4d4d;
@@ -16,8 +16,8 @@
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
 body {
-    background-color: var(--farm-bg);
-    background-image: radial-gradient(circle at top right, #1a1400 0%, #0d0a00 100%);
+    background-color: var(--bg);
+    background-image: radial-gradient(circle at center, #1a1400 0%, #0d0a00 100%);
     font-family: 'Inter', sans-serif;
     color: #fff;
     min-height: 100vh;
@@ -26,8 +26,8 @@ body {
 }
 
 .dashboard-container {
-    width: 95%; /* Expands to cover page */
-    max-width: 1920px; /* Supports Ultra-Wide monitors */
+    width: 90%; /* Standard Mandate */
+    max-width: 1920px;
     padding: 20px 0;
     display: flex;
     flex-direction: column;
@@ -36,67 +36,68 @@ body {
 
 .glass-panel {
     background: var(--glass);
-    backdrop-filter: blur(15px);
-    -webkit-backdrop-filter: blur(15px);
+    backdrop-filter: blur(25px);
     border: 1px solid var(--border);
-    border-radius: 8px;
+    border-radius: 12px;
     padding: 15px;
 }
 
-/* Header Overhaul - No longer scrunched */
-.header-main { border-left: 6px solid var(--farm-gold); }
-.header-content { display: flex; align-items: center; gap: 25px; }
+.header-main { border-left: 8px solid var(--gold); }
+.header-content { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px; }
 
-.map-frame img {
-    width: 140px;
-    height: 90px;
-    object-fit: cover;
-    border: 2px solid var(--farm-gold);
+.map-branding { display: flex; align-items: center; gap: 25px; }
+
+.image-container { position: relative; width: 180px; height: 120px; }
+#activeSlotImage { 
+    width: 100%; 
+    height: 100%; 
+    border: 2px solid var(--gold); 
+    border-radius: 6px; 
+    object-fit: cover; 
+}
+
+.slot-badge {
+    position: absolute;
+    bottom: -10px;
+    right: -10px;
+    background: var(--gold);
+    color: #000;
+    font-weight: 900;
+    font-size: 0.7rem;
+    padding: 2px 8px;
     border-radius: 4px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.5);
 }
 
-.header-text h1 { font-size: 1.8rem; letter-spacing: 2px; color: var(--farm-gold); }
-.meta-stats { font-size: 0.9rem; color: #ccc; margin-top: 5px; }
-.status-ok { color: var(--safe); }
+.header-text h1 { font-size: 1.6rem; letter-spacing: 1px; color: var(--gold); text-transform: uppercase; }
+.status-bar { font-size: 0.85rem; color: #aaa; margin-top: 10px; }
 
-/* Multi-Farm Column Logic */
-.farm-row { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
-.farm-card { border-top: 3px solid var(--farm-gold); }
-.card-tag { font-size: 0.7rem; color: var(--farm-gold); font-weight: 800; margin-bottom: 5px; }
+.pulse { color: var(--safe); animation: pulse-glow 2s infinite; }
+@keyframes pulse-glow { 0% { opacity: 1; } 50% { opacity: 0.4; } 100% { opacity: 1; } }
 
-/* Responsive Matrix Grid */
-.data-matrix {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: auto;
-    gap: 15px;
-    flex-grow: 1; /* Pushes content to fill vertical space */
-}
+/* Grid Layouts */
+.operations-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+.telemetry-matrix { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; }
+.fleet-panel { grid-column: span 2; }
 
-/* Specific Card Rules */
-.fleet-card { grid-column: span 2; }
-.card h2 { color: var(--farm-gold); font-size: 0.85rem; margin-bottom: 12px; border-bottom: 1px solid var(--border); padding-bottom: 5px; }
+.farm-card { border-top: 4px solid var(--gold); }
+.card-tag { font-size: 0.75rem; color: var(--gold); font-weight: 900; margin-bottom: 10px; }
 
-/* Telemetry Lists */
-.telemetry-header { display: grid; grid-template-columns: 2fr 1fr 1fr; font-size: 0.7rem; color: var(--farm-gold); font-weight: 600; margin-bottom: 8px; }
-.scrollable-content { height: 350px; overflow-y: auto; padding-right: 5px; }
+/* Dynamic List Logic */
+.scroll-list { height: 400px; overflow-y: auto; padding-right: 10px; font-size: 0.85rem; }
+.telemetry-header { display: grid; grid-template-columns: 2fr 1fr 1fr; font-size: 0.75rem; color: var(--gold); font-weight: 800; margin-bottom: 12px; }
+.telemetry-row { display: grid; grid-template-columns: 2fr 1fr 1fr; padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.05); align-items: center; }
 
-.telemetry-row { display: grid; grid-template-columns: 2fr 1fr 1fr; font-size: 0.8rem; padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.05); align-items: center; }
+.bar-bg { height: 6px; background: #222; border-radius: 3px; margin-top: 6px; overflow: hidden; }
+.bar-fill { height: 100%; transition: width 1s ease; }
 
-/* Progress Bars (Fuel/Condition) */
-.stat-bar-bg { height: 6px; background: #222; border-radius: 3px; margin-top: 4px; overflow: hidden; }
-.stat-bar-fill { height: 100%; transition: width 0.8s ease; }
-
-/* RESPONSIVENESS MANDATE */
 @media (max-width: 1400px) {
-    .data-matrix { grid-template-columns: 1fr 1fr; }
-    .fleet-card { grid-column: span 1; }
+    .telemetry-matrix { grid-template-columns: 1fr 1fr; }
+    .fleet-panel { grid-column: span 1; }
 }
 
 @media (max-width: 900px) {
-    .data-matrix, .farm-row { grid-template-columns: 1fr; }
+    .dashboard-container { width: 95%; }
+    .operations-grid, .telemetry-matrix { grid-template-columns: 1fr; }
     .header-content { flex-direction: column; text-align: center; }
-    .scrollable-content { height: auto; max-height: 400px; }
 }
-
-.footer-grid { display: flex; justify-content: space-between; font-size: 0.75rem; color: #888; }
