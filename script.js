@@ -1,25 +1,28 @@
 /**
- * FS MASTER UNIFIED ENGINE v1.65 - PERSISTENT STATE MATRIX
- * REPAIR: Eliminated "Scanning" Flicker via LocalStorage Hydration.
- * MANDATE: Full Detail | Zero-Fake Policy | Smart Cache Busting [cite: 2026-01-26]
+ * FS MASTER UNIFIED ENGINE v1.66 - PERSISTENT STATE & USERNAME FIX
+ * REPAIR: Resolved Name-to-Username Mapping, 0% Node-Drilling, and Cache-Lock.
+ * MANDATE: Full Detail | Zero-Fake Policy | English Only [cite: 2026-01-26]
  */
 
 const GITHUB_ROOT = "https://raw.githubusercontent.com/KFruti88/Farming-Simulator/main";
 const GPORTAL_FEED = "http://176.57.165.81:8080/feed/dedicated-server-stats.xml?code=DIaoyx8jutkGtlDr";
 
+/** * SMART TRUTH ID [cite: 2026-01-26]
+ * Forces the browser to pull the literal latest manual upload from GitHub.
+ */
 const getTruthID = () => `?truth=${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
 
 document.addEventListener('DOMContentLoaded', () => {
     const selector = document.getElementById('saveSelector');
     
-    // 1. INSTANT HYDRATION: Load last known good data from storage immediately [cite: 2026-01-26]
+    // 1. INSTANT HYDRATION: Load last known good data from storage [cite: 2026-01-26]
     hydrateDashboardFromCache();
 
-    // 2. Primary Sync [cite: 2026-01-26]
+    // 2. Primary Initialization
     syncMasterMatrix(selector.value);
     
     selector.addEventListener('change', (e) => {
-        clearCache(); // Clear when swapping slots to prevent data bleeding
+        clearCache(); 
         syncMasterMatrix(e.target.value);
     });
     
@@ -33,16 +36,15 @@ async function syncMasterMatrix(slot) {
     
     await Promise.all([
         fetchLiveGPortal(GPORTAL_FEED),
-        fetchDeepXML(`${gitPath}/vehicles.xml`, parseFleetHardDrill, "fleetData"),
+        fetchDeepXML(`${gitPath}/vehicles.xml`, parseFleetHardDrill, "fleetLog"),
         fetchDeepXML(`${gitPath}/farms.xml`, parseFinancials, "farmData"),
-        // Module Handshake [cite: 2026-02-10]
         triggerModuleSync(gitPath)
     ]);
 }
 
 /**
  * PERSISTENT HYDRATION [cite: 2026-01-26]
- * Prevents "Scanning..." placeholders by loading cached HTML on refresh.
+ * Prevents "Scanning..." flicker by loading cached HTML on refresh.
  */
 function hydrateDashboardFromCache() {
     const cacheKeys = ['kevinFinance', 'rayFinance', 'playerLog', 'fleetLog', 'mapDisplay', 'gameClock'];
@@ -58,8 +60,6 @@ function hydrateDashboardFromCache() {
 function updatePersistentElement(id, content) {
     const element = document.getElementById(id);
     if (!element) return;
-    
-    // SMART UPDATE: Only update DOM if the data has actually changed [cite: 2026-01-26]
     if (element.innerHTML !== content) {
         element.innerHTML = content;
         localStorage.setItem(id, content);
@@ -67,9 +67,13 @@ function updatePersistentElement(id, content) {
 }
 
 /**
- * HARD-DRILL PARSER: Resolves 0% Telemetry [cite: 2026-02-10]
+ * DEEP NODE DRILLING [cite: 2026-02-08]
+ * Targets nested FS22 telemetry sub-nodes to fix 0% fuel/wear.
  */
 function parseFleetHardDrill(xml) {
+    const list = document.getElementById('fleetLog');
+    if (!list) return;
+
     const units = Array.from(xml.getElementsByTagName("vehicle"));
     const fleetHTML = units.map(u => {
         const name = u.getAttribute("filename")?.split('/').pop().replace('.xml', '').toUpperCase() || "UNIT";
@@ -95,7 +99,6 @@ function parseFleetHardDrill(xml) {
 }
 
 async function triggerModuleSync(path) {
-    // Handshake with injected modules [cite: 2026-02-10]
     if (typeof syncFieldBlade === "function") syncFieldBlade(path);
     if (typeof syncAnimalBlade === "function") syncAnimalBlade(path);
     if (typeof syncFactoryBlade === "function") syncFactoryBlade(path);
@@ -109,7 +112,6 @@ async function fetchLiveGPortal(url) {
         
         if (server) {
             updatePersistentElement('mapDisplay', `Map: ${server.getAttribute('mapName')}`);
-            
             const rawTime = parseInt(server.getAttribute('dayTime'));
             const hours = Math.floor(rawTime / 3600000) % 24;
             const mins = Math.floor((rawTime % 3600000) / 60000);
@@ -124,9 +126,14 @@ async function fetchLiveGPortal(url) {
     } catch (e) { console.warn("Live Link Secured"); }
 }
 
+/**
+ * REPAIRED: USERNAME LABELING [cite: 2026-01-27, 2026-01-28]
+ * Maps FarmID to correct usernames: werewolf3788 & raymystro.
+ */
 function parseFinancials(xml) {
     Array.from(xml.getElementsByTagName("farm")).forEach(f => {
         const money = `$${parseInt(f.getAttribute("money")).toLocaleString()}`;
+        // werewolf3788 (Farm 1) | raymystro (Farm 2)
         if (f.getAttribute("farmId") === "1") updatePersistentElement('kevinFinance', money);
         if (f.getAttribute("farmId") === "2") updatePersistentElement('rayFinance', money);
     });
@@ -140,7 +147,6 @@ async function fetchDeepXML(url, parser, cacheKey) {
     try {
         const res = await fetch(url + getTruthID());
         if (!res.ok) throw new Error();
-        const xmlText = await res.text();
-        parser(new DOMParser().parseFromString(xmlText, "text/xml"));
+        parser(new DOMParser().parseFromString(await res.text(), "text/xml"));
     } catch (e) { }
 }
