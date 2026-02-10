@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<fields>
+    <field id="1" plannedFruit="MAIZE"/>
+    <field id="2" plannedFruit="MAIZE"/>
+    <field id="3" plannedFruit="OAT"/>
+    <field id="4" plannedFruit="BEETROOT"/>
+    <field id="5" plannedFruit="GRASS"/>
+    <field id="6" plannedFruit="GRASS"/>
+    <field id="7" plannedFruit="COTTON"/>
+    <field id="8" plannedFruit="POTATO"/>
+    <field id="9" plannedFruit="SORGHUM"/>
+    <field id="10" plannedFruit="SUNFLOWER"/>
+    <field id="11" plannedFruit="PARSNIP"/>
+    <field id="12" plannedFruit="SORGHUM"/>
+    <field id="13" plannedFruit="COTTON"/>
+    <field id="14" plannedFruit="BARLEY"/>
+    <field id="15" plannedFruit="BARLEY"/>
+    <field id="16" plannedFruit="SUNFLOWER"/>
+</fields>
