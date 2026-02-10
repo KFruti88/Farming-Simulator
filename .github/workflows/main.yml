@@ -1,45 +1,81 @@
 # Farming Simulator Live Sync Workflow
 # Mandate: Hyper-Realism & Accuracy | Zero-Fake Policy
 # Source: G-Portal FTP (176.57.165.81)
+# Goal: Maintain 1:1 synchronization for slots 1-5
 # Author: werewolf3788
 
 name: G-Portal Live Sync
 
 on:
   schedule:
-    - cron: '*/30 * * * *' # Synchronizes every 30 minutes
-  workflow_dispatch:      # Allows Kevin or Ray to trigger a manual sync
+    - cron: '*/30 * * * *' # Synchronizes every 30 minutes to ensure live accuracy
+  workflow_dispatch:      # Allows Kevin or Ray to trigger a manual sync at any time
 
 jobs:
   sync-gportal:
     runs-on: ubuntu-latest
     steps:
       - name: 🛰️ Checkout Repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
-      - name: 🚜 Sync Saved Game 5 (Primary)
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.4
+      - name: 🚜 Sync Saved Game 1
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
           server: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
           port: 50021
-          # G-Portal path to Save 5
-          server-dir: /savegame5/ 
-          local-dir: ./saved-game-5/
+          server-dir: /savegame1/ 
+          local-dir: ./saved-game-1/
           method: ftp
-          # 'dangerous-clean-slate: false' ensures we don't delete local files if FTP fails
+          dangerous-clean-slate: false
+
+      - name: 🚜 Sync Saved Game 2
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          port: 50021
+          server-dir: /savegame2/ 
+          local-dir: ./saved-game-2/
+          method: ftp
+          dangerous-clean-slate: false
+
+      - name: 🚜 Sync Saved Game 3
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          port: 50021
+          server-dir: /savegame3/ 
+          local-dir: ./saved-game-3/
+          method: ftp
           dangerous-clean-slate: false
 
       - name: 🚜 Sync Saved Game 4
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.4
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
           server: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
           port: 50021
-          server-dir: /savegame4/
+          server-dir: /savegame4/ 
           local-dir: ./saved-game-4/
+          method: ftp
+          dangerous-clean-slate: false
+
+      - name: 🚜 Sync Saved Game 5
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          port: 50021
+          server-dir: /savegame5/ 
+          local-dir: ./saved-game-5/
           method: ftp
           dangerous-clean-slate: false
 
@@ -47,7 +83,7 @@ jobs:
         run: |
           git config --global user.name "Werewolf-Automation"
           git config --global user.email "kevin@ourflora.com"
-          git add saved-game-5/ saved-game-4/
+          git add saved-game-1/ saved-game-2/ saved-game-3/ saved-game-4/ saved-game-5/
           # Only commit if actual game changes (money, hours, etc.) are detected
-          git commit -m "Live Update: Farm Stats Synchronized from G-Portal" || exit 0
+          git commit -m "Live Update: All 5 Save Slots Synchronized from G-Portal" || exit 0
           git push
