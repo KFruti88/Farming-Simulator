@@ -9,7 +9,7 @@
     
     <title>FS MASTER COMMAND | TOTAL BIOMETRIC MATRIX</title>
     
-    <link rel="stylesheet" href="style.css?v=1.40">
+    <link rel="stylesheet" href="style.css?v=1.41">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;900&display=swap" rel="stylesheet">
 </head>
 <body>
@@ -63,14 +63,10 @@
                 </div>
             </article>
 
-            <article class="glass-panel card">
-                <h2>🐾 ANIMAL HEALTH & REPRODUCTION</h2>
-                <div class="telemetry-header animal-header">
-                    <span>SPECIES</span>
-                    <span>HEALTH %</span>
-                    <span>FOOD / WATER</span>
+            <article class="glass-panel card master-module-container">
+                <div id="module-2-animal-info">
+                    <div class="loading-state">Loading Module 2: Livestock Biometrics...</div>
                 </div>
-                <div id="animalLog" class="scroll-list main-scroll">Analyzing animals.xml...</div>
             </article>
 
             <article class="glass-panel card">
@@ -89,44 +85,45 @@
             <div class="footer-grid">
                 <span>Thematic Engine: FARM [cite: 2026-02-08]</span>
                 <span>Network Operators: werewolf3788 & raymystro</span>
-                <span>Version: 1.40-MASTER-INJECT</span>
+                <span>Version: 1.41-MASTER-SYNC</span>
             </div>
         </footer>
     </div>
 
-    <script src="script.js?v=1.40"></script>
+    <script src="script.js?v=1.41"></script>
     
     <script>
     /**
-     * MODULE 1 INJECTOR Logic
-     * Injects the detailed field-info.html and triggers its internal sync.
+     * MASTER INJECTOR Logic v1.41
+     * Consolidates Module 1 & 2 injections
      */
-    async function loadModuleOne(slot) {
-        const container = document.getElementById('module-1-field-info');
+    async function loadMasterModules(slot) {
         const gitPath = `https://raw.githubusercontent.com/KFruti88/Farming-Simulator/main/saved-game-${slot}`;
         
+        // Load Module 1: Field Info
         try {
-            // Using a cache-busting query to ensure Module 1 stays updated
-            const response = await fetch('field-info.html?v=' + new Date().getTime());
-            if (!response.ok) throw new Error();
-            container.innerHTML = await response.text();
-            
-            // Wait for DOM and then trigger the external blade sync
-            setTimeout(() => {
-                if (typeof syncFieldBlade === "function") {
-                    syncFieldBlade(gitPath);
-                }
-            }, 100);
-        } catch (e) { 
-            container.innerHTML = "<p style='color:var(--danger)'>Module 1: field-info.html sync secured.</p>"; 
-        }
+            const fieldRes = await fetch('field-info.html?v=' + new Date().getTime());
+            if (fieldRes.ok) {
+                document.getElementById('module-1-field-info').innerHTML = await fieldRes.text();
+                if (typeof syncFieldBlade === "function") syncFieldBlade(gitPath);
+            }
+        } catch (e) { console.warn("Module 1 failed to load."); }
+
+        // Load Module 2: Animal Info
+        try {
+            const animalRes = await fetch('animal-info.html?v=' + new Date().getTime());
+            if (animalRes.ok) {
+                document.getElementById('module-2-animal-info').innerHTML = await animalRes.text();
+                if (typeof syncAnimalBlade === "function") syncAnimalBlade(gitPath);
+            }
+        } catch (e) { console.warn("Module 2 failed to load."); }
     }
 
     // Global Sync Trigger [cite: 2026-01-26]
     document.addEventListener('DOMContentLoaded', () => {
         const selector = document.getElementById('saveSelector');
-        loadModuleOne(selector.value);
-        selector.addEventListener('change', (e) => loadModuleOne(e.target.value));
+        loadMasterModules(selector.value);
+        selector.addEventListener('change', (e) => loadMasterModules(e.target.value));
     });
     </script>
 </body>
