@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Farming Simulator Dashboard | Werewolf3788</title>
+    
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+
+    <link rel="stylesheet" href="style.css?v=1.01">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <div class="dashboard-container">
+        <header class="glass-panel header-main">
+            <h1>🚜 Farming Simulator Live Stats 🌻</h1>
+            <p>Real-time data synchronization from GitHub Repository</p>
+        </header>
+
+        <section class="glass-panel controls">
+            <div class="control-group">
+                <label for="saveSelector">Select Saved Game Slot:</label>
+                <select id="saveSelector">
+                    <option value="5">Saved Game 5 (Current)</option>
+                    <option value="4">Saved Game 4</option>
+                    <option value="3">Saved Game 3 (Placeholder)</option>
+                    <option value="2">Saved Game 2 (Placeholder)</option>
+                    <option value="1">Saved Game 1 (Placeholder)</option>
+                </select>
+            </div>
+            <div id="statusIndicator" class="status-online">System Status: Synchronized</div>
+        </section>
+
+        <main class="data-grid">
+            <article class="glass-panel card">
+                <h2>⚙️ Game Settings</h2>
+                <div id="gameSettingsData" class="data-content">Loading XML data...</div>
+            </article>
+
+            <article class="glass-panel card">
+                <h2>🖥️ Dedicated Server</h2>
+                <div id="serverData" class="data-content">Loading XML data...</div>
+            </article>
+
+            <article class="glass-panel card wide-card">
+                <h2>🌾 Career Progress & Farm Info</h2>
+                <div id="savegameData" class="data-content">Select a save game to view details.</div>
+            </article>
+
+            <article class="glass-panel card">
+                <h2>📦 Extra Content (DLC)</h2>
+                <div id="extraContentData" class="data-content">Loading XML data...</div>
+            </article>
+        </main>
+
+        <footer class="glass-panel footer-info">
+            <p>Data Source: KFruti88/Farming-Simulator | Theme: FARM (Gold/Nature)</p>
+        </footer>
+    </div>
+
+    <script src="script.js?v=1.01"></script>
+</body>
+</html>
