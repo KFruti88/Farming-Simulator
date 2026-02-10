@@ -67,11 +67,12 @@
     <script src="script.js?v=1.66"></script>
     <script>
         /**
-         * TRUTH-ENABLED MODULE LOADER
-         * Prevents 404s and ensures all blades update with the Truth ID [cite: 2026-01-26]
+         * 2. ACTIVE SMART CACHE BUSTER [cite: 2026-01-26]
+         * Prevents 404s and ensures all blades update with the Truth ID.
          */
         async function loadModules(slot) {
             const gitPath = `https://raw.githubusercontent.com/KFruti88/Farming-Simulator/main/saved-game-${slot}`;
+            // Unique Truth ID forces GitHub to serve live data [cite: 2026-01-26]
             const truthID = `?truth=${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
             
             const modules = [
