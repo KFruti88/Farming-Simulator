@@ -1,117 +1,129 @@
 /**
- * FS MASTER TELEMETRY v1.30
- * MANDATE: Full Effect | Zero-Fake Policy [cite: 2026-01-26]
- * FEATURE: Automatic Profile Sync for Ray (Farm 2)
+ * FS MASTER TELEMETRY v1.37
+ * FULL MATRIX: Animals, Field Growth, and Total Fleet.
  */
 
-const GPORTAL_URL = "http://176.57.165.81:8080/feed/dedicated-server-stats.xml?code=DIaoyx8jutkGtlDr";
 const GITHUB_ROOT = "https://raw.githubusercontent.com/KFruti88/Farming-Simulator/main";
-const RAYS_REPO = "https://raw.githubusercontent.com/KFruti88/Rays-Page/main";
+const GPORTAL_STATS = "http://176.57.165.81:8080/feed/dedicated-server-stats.xml?code=DIaoyx8jutkGtlDr";
 
 document.addEventListener('DOMContentLoaded', () => {
     const selector = document.getElementById('saveSelector');
-    syncMultiUserMatrix(selector.value);
-    selector.addEventListener('change', (e) => syncMultiUserMatrix(e.target.value));
-    setInterval(() => syncMultiUserMatrix(selector.value), 30000);
+    syncFullMatrix(selector.value);
+    selector.addEventListener('change', (e) => syncFullMatrix(e.target.value));
+    setInterval(() => syncFullMatrix(selector.value), 30000);
 });
 
-async function syncMultiUserMatrix(slot) {
+async function syncFullMatrix(slot) {
     const gitPath = `${GITHUB_ROOT}/saved-game-${slot}`;
+    document.getElementById('currentSlotLabel').textContent = `SLOT ${slot}`;
     
     await Promise.all([
-        fetchLiveFeed(GPORTAL_URL),
-        fetchDeepXML(`${gitPath}/farms.xml`, parseFarmsAndIdentifyRay),
-        fetchDeepXML(`${gitPath}/vehicles.xml`, parseFullFleet),
-        fetchDeepXML(`${gitPath}/fields.xml`, parseFullFields),
-        fetchDeepXML(`${GITHUB_ROOT}/dedicated_server/dedicatedServerConfig.xml`, parseFullConfig)
+        fetchLiveTelemetry(GPORTAL_STATS),
+        fetchDeepXML(`${gitPath}/animals.xml`, parseAnimalsMatrix),
+        fetchDeepXML(`${gitPath}/fields.xml`, parseFieldsMatrix),
+        fetchDeepXML(`${gitPath}/vehicles.xml`, parseFleetMatrix),
+        fetchDeepXML(`${gitPath}/farms.xml`, parseFarmsMatrix)
     ]);
 }
 
-/**
- * FEATURE: Identify Ray and Sync Profile
- *
+/** * 1. ANIMAL BIOMETRICS
  */
-function parseFarmsAndIdentifyRay(xml) {
-    const farms = Array.from(xml.getElementsByTagName("farm"));
-    const accountMatrix = document.getElementById('farmAccountMatrix');
+function parseAnimalsMatrix(xml) {
+    const list = document.getElementById('animalLog');
+    const animals = Array.from(xml.getElementsByTagName("animal"));
     
-    accountMatrix.innerHTML = farms.map(farm => {
-        const farmId = farm.getAttribute('farmId');
-        const name = farm.getAttribute('name');
-        const money = parseInt(farm.getAttribute('money')).toLocaleString();
-        
-        // If Farm 2 is identified, trigger Ray's profile sync
-        if (farmId === "2" || name.toLowerCase().includes("ray")) {
-            syncRaysProfile();
-        }
-        
-        return `<div class="telemetry-row"><span>${name}:</span> <strong style="color:var(--safe)">$${money}</strong></div>`;
-    }).join('');
+    list.innerHTML = animals.map(a => {
+        const type = a.getAttribute("type") || "Livestock";
+        const health = (parseFloat(a.getAttribute("health") || 0)).toFixed(0);
+        const age = a.getAttribute("age") || 0;
+        const food = (parseFloat(a.getAttribute("foodLevel") || 0)).toFixed(0);
+
+        return `<div class="telemetry-row">
+            <span>${type.split('_').pop().toUpperCase()}</span>
+            <div>
+                ${health}% Health <div class="bar-bg"><div class="bar-fill" style="width:${health}%; background:var(--safe)"></div></div>
+            </div>
+            <span>Age: ${age}m / Food: ${food}L</span>
+        </div>`;
+    }).join('') || "No Animals Found";
 }
 
-async function syncRaysProfile() {
-    try {
-        // Example: Syncing Ray's profile status or image from his repo
-        // This confirms the connection to Rays-Page
-        console.log("[FS-SYNC] Syncing Ray's Profile from Rays-Page...");
-        const res = await fetch(`${RAYS_REPO}/index.html`);
-        if (res.ok) {
-            document.getElementById('rayStatus').textContent = "ACTIVE OPERATOR";
-            document.getElementById('rayStatus').style.color = "var(--safe)";
-        }
-    } catch (e) { console.warn("Ray's profile sync secured"); }
+/** * 2. FIELD GROWTH & HARVEST
+ */
+function parseFieldsMatrix(xml) {
+    const list = document.getElementById('fieldLog');
+    const fields = Array.from(xml.getElementsByTagName("field"));
+    
+    list.innerHTML = fields.map(f => {
+        const id = f.getAttribute("id") || f.getAttribute("fieldId");
+        const crop = (f.getAttribute("fruitType") || "FALLOW").toUpperCase();
+        // Growth Stage 6-7 is usually harvest-ready in FS22
+        const stage = parseInt(f.getAttribute("growthState") || 0);
+        const owner = f.getAttribute("owner") === "2" ? "RAY" : "KEVIN";
+        const isReady = stage >= 6;
+
+        return `<div class="telemetry-row">
+            <span>ZONE ${id}</span>
+            <span>${crop}</span>
+            <div style="display:flex; flex-direction:column; gap:4px;">
+                <span style="color:${isReady?'var(--safe)':'#999'}">${isReady ? 'READY TO HARVEST' : 'GROWING'}</span>
+                <span style="font-size:0.7rem; color:#666">Owner: ${owner}</span>
+            </div>
+        </div>`;
+    }).join('') || "No Field Data Detected";
 }
 
-function parseFullFleet(xml) {
+/** * 3. TOTAL FLEET [cite: 2026-02-08]
+ */
+function parseFleetMatrix(xml) {
     const list = document.getElementById('fleetLog');
-    list.innerHTML = Array.from(xml.getElementsByTagName("vehicle")).map(u => {
-        const name = u.getAttribute("filename").split('/').pop().replace('.xml', '').toUpperCase();
-        const fuel = u.getElementsByTagName("fuelConsumer")[0]?.getAttribute("fillLevel") || 0;
-        const wear = (u.getElementsByTagName("wearable")[0]?.getAttribute("damage") || 0) * 100;
+    const units = Array.from(xml.getElementsByTagName("vehicle"));
+    list.innerHTML = units.map(u => {
+        const name = u.getAttribute("filename")?.split('/').pop().replace('.xml', '').toUpperCase() || "UNIT";
+        const wear = (parseFloat(u.getElementsByTagName("wearable")[0]?.getAttribute("damage") || 0) * 100).toFixed(0);
+        const fuel = (parseFloat(u.getElementsByTagName("fuelConsumer")[0]?.getAttribute("fillLevel") || 0) * 100).toFixed(0);
         const cargo = u.getElementsByTagName("fillUnit")[0]?.getAttribute("fillLevel") || 0;
+
         return `<div class="telemetry-row">
             <span>${name}</span>
-            <span style="color:var(--gold)">${parseFloat(cargo).toFixed(0)}L</span>
+            <span>${parseFloat(cargo).toFixed(0)}L</span>
             <div>
-                ${parseFloat(fuel).toFixed(0)}% FUEL <div class="bar-bg"><div class="bar-fill" style="width:${fuel}%; background:var(--fuel)"></div></div>
-                ${parseFloat(wear).toFixed(0)}% WEAR <div class="bar-bg"><div class="bar-fill" style="width:${wear}%; background:${wear > 50 ? 'var(--danger)' : 'var(--safe)'}"></div></div>
+                ${fuel}% Fuel <div class="bar-bg"><div class="bar-fill" style="width:${fuel}%; background:var(--fuel)"></div></div>
+                ${wear}% Wear <div class="bar-bg"><div class="bar-fill" style="width:${wear}%; background:${wear > 50 ? 'var(--danger)' : 'var(--safe)'}"></div></div>
             </div>
         </div>`;
     }).join('');
 }
 
-function parseFullFields(xml) {
-    const list = document.getElementById('fieldLog');
-    list.innerHTML = Array.from(xml.getElementsByTagName("field")).map(f => {
-        const crop = (f.getAttribute("fruitType") || "FALLOW").toUpperCase();
-        const owned = f.getAttribute("isOwned") === "true" ? "OWNED" : "VACANT";
-        return `<div class="telemetry-row"><span>FIELD ${f.getAttribute('fieldId')}</span> <span>${crop}</span> <strong style="color:${owned==='OWNED'?'var(--safe)':'#777'}">${owned}</strong></div>`;
-    }).join('');
+function parseFarmsMatrix(xml) {
+    Array.from(xml.getElementsByTagName("farm")).forEach(f => {
+        const money = `$${parseInt(f.getAttribute("money")).toLocaleString()}`;
+        if (f.getAttribute("farmId") === "1") document.getElementById('kevinFinance').textContent = money;
+        if (f.getAttribute("farmId") === "2") document.getElementById('rayFinance').textContent = money;
+    });
 }
 
-function parseFullConfig(xml) {
-    const s = xml.getElementsByTagName("settings")[0];
-    document.getElementById('serverConfig').innerHTML = `<div class="telemetry-row"><span>IP:</span> <strong>${s.getElementsByTagName('ip')[0]?.textContent}</strong></div>`;
-    document.getElementById('modLog').innerHTML = Array.from(xml.getElementsByTagName("mod")).map(m => `<div>📦 ${m.getAttribute('filename')}</div>`).join('');
-}
-
-async function fetchLiveFeed(url) {
+async function fetchLiveTelemetry(url) {
     try {
         const res = await fetch(url);
         const xml = new DOMParser().parseFromString(await res.text(), "text/xml");
         const server = xml.getElementsByTagName("Server")[0];
         if (server) {
             document.getElementById('mapDisplay').textContent = `Map: ${server.getAttribute('mapName')}`;
+            document.getElementById('serverNameDisplay').textContent = server.getAttribute('name');
+            const rawTime = parseInt(server.getAttribute('dayTime'));
+            const hours = Math.floor(rawTime / 3600000) % 24;
+            const mins = Math.floor((rawTime % 3600000) / 60000);
+            document.getElementById('gameClock').textContent = `Time: ${hours.toString().padStart(2, '0')}:${mins.toString().padStart(2, '0')}`;
             const players = Array.from(xml.getElementsByTagName("Player")).filter(p => p.getAttribute('isUsed') === 'true');
-            document.getElementById('playerLog').innerHTML = players.map(p => `<div class="telemetry-row"><span>👤 ${p.textContent}</span> <strong style="color:var(--safe)">ONLINE</strong></div>`).join('');
+            document.getElementById('playerLog').innerHTML = players.map(p => `<div class="telemetry-row"><span>👤 ${p.textContent}</span> <strong style="color:var(--safe)">ONLINE</strong></div>`).join('') || "No Players Online";
         }
-    } catch (e) { /* Secure sync */ }
+    } catch (e) { console.warn("Live feed check..."); }
 }
 
 async function fetchDeepXML(url, parser) {
     try {
         const res = await fetch(url);
-        if (!res.ok) throw new Error();
         parser(new DOMParser().parseFromString(await res.text(), "text/xml"));
-    } catch (e) { /* Exhaustive capture */ }
+    } catch (e) { /* Error Handling */ }
 }
