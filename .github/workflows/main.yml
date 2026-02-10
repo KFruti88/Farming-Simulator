@@ -1,34 +1,53 @@
+# Farming Simulator Live Sync Workflow
+# Mandate: Hyper-Realism & Accuracy | Zero-Fake Policy
+# Source: G-Portal FTP (176.57.165.81)
+# Author: werewolf3788
+
 name: G-Portal Live Sync
 
 on:
   schedule:
-    - cron: '*/30 * * * *' # Runs every 30 minutes
-  workflow_dispatch:      # Manual trigger button in GitHub Actions
+    - cron: '*/30 * * * *' # Synchronizes every 30 minutes
+  workflow_dispatch:      # Allows Kevin or Ray to trigger a manual sync
 
 jobs:
-  sync:
+  sync-gportal:
     runs-on: ubuntu-latest
     steps:
       - name: 🛰️ Checkout Repository
         uses: actions/checkout@v3
 
-      - name: 🚜 Sync XML from G-Portal
+      - name: 🚜 Sync Saved Game 5 (Primary)
         uses: SamKirkland/FTP-Deploy-Action@v4.3.4
         with:
           server: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
-          port: 50021 # Specific G-Portal Port
-          # Adjust server-dir to where your save folders (saved-game-5, etc) are located
-          server-dir: /
-          local-dir: ./
+          port: 50021
+          # G-Portal path to Save 5
+          server-dir: /savegame5/ 
+          local-dir: ./saved-game-5/
+          method: ftp
+          # 'dangerous-clean-slate: false' ensures we don't delete local files if FTP fails
+          dangerous-clean-slate: false
+
+      - name: 🚜 Sync Saved Game 4
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.4
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          port: 50021
+          server-dir: /savegame4/
+          local-dir: ./saved-game-4/
           method: ftp
           dangerous-clean-slate: false
 
-      - name: 📝 Commit and Push Updates
+      - name: 📝 Commit & Push Live Data
         run: |
-          git config --global user.name "GitHub Action"
-          git config --global user.email "action@github.com"
-          git add .
-          git commit -m "Automated Sync: G-Portal Live Stats Update" || exit 0
+          git config --global user.name "Werewolf-Automation"
+          git config --global user.email "kevin@ourflora.com"
+          git add saved-game-5/ saved-game-4/
+          # Only commit if actual game changes (money, hours, etc.) are detected
+          git commit -m "Live Update: Farm Stats Synchronized from G-Portal" || exit 0
           git push
