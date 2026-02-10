@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<players>
+    <player uniqueUserId="gRW7V4FYUiqAL1ULDQBlO/MHwWYKWt7ISjEnuYEwnZI=" timeLastConnected="2025/12/30 08:14">
+        <style filename="dataS/character/humans/player/player01.xml" bottomConfigId="jeans" bottomConfigColor="1" faceConfigId="head01" faceConfigColor="1" footwearConfigId="workBoots2" footwearConfigColor="1" hairStyleConfigId="hair02" hairStyleConfigColor="6" topConfigId="denimJacket" topConfigColor="1"/>
+    </player>
+    <player uniqueUserId="9CtOVu0WAR2i29PfI9RQmIR+ax+hY+U0ShVJisU1CQc=" timeLastConnected="2025/12/30 08:14">
+        <style filename="dataS/character/humans/player/player01.xml" bottomConfigId="jeans" bottomConfigColor="1" faceConfigId="head01" faceConfigColor="1" footwearConfigId="workBoots2" footwearConfigColor="1" hairStyleConfigId="hair02" hairStyleConfigColor="6" topConfigId="denimJacket" topConfigColor="1"/>
+    </player>
+    <player uniqueUserId="NE0DifHeTEE3XiAha2XqNE99mfJhUP5lNhHcjUe16qw=" timeLastConnected="2025/12/30 01:07">
+        <style filename="dataS/character/humans/player/player01.xml" beardConfigId="goatee_head02" beardConfigColor="8" bottomConfigId="leather" bottomConfigColor="2" faceConfigId="head02" faceConfigColor="1" footwearConfigId="eltenArborist" footwearConfigColor="2" glassesConfigId="vintage" glassesConfigColor="1" glovesConfigId="racing" glovesConfigColor="3" hairStyleConfigId="hair11" hairStyleConfigColor="8" headgearConfigId="outback" headgearConfigColor="3" mustacheConfigId="goatee_head02" mustacheConfigColor="8" topConfigId="leather" topConfigColor="2"/>
+    </player>
+</players>
