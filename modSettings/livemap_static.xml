@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<Server version="2" gameVersion="25" modVersion="1.0.0.2" mapName="Big Flats Texas" size="2048">
+    <Fields>
+        <Field id="1" price="todo" fruitColor="rgba(129, 133, 46, 255)" fruitName="SOYBEAN" farmland="14" farmlandPrice="223615" farmlandArea="17.889200">
+            <P pts="-958.8,-47.2 -958.8,-876.9 -822.2,-877.0 -822.2,-47.3"/>
+            <P pts="-1012.9,-106.2 -1012.9,-877.4 -958.0,-877.0 -958.0,-105.8"/>
+        </Field>
+        <Field id="2" price="todo" fruitColor="rgba(234, 203, 34, 255)" fruitName="SUNFLOWER" farmland="13" farmlandPrice="730620" farmlandArea="58.449600">
+            <P pts="-792.7,-48.2 -793.1,-1009.9 -277.3,-1010.0 -276.9,-48.3"/>
+        </Field>
+        <Field id="3" price="todo" fruitColor="rgba(217, 163, 143, 255)" fruitName="SUGARBEET" farmland="12" farmlandPrice="804420" farmlandArea="64.353600" farmlandOwner="Werewolf3788">
+            <P pts="-182.6,-48.1 -182.7,-1003.7 432.9,-1003.7 432.9,-48.1"/>
+        </Field>
+        <Field id="4" price="todo" fruitColor="rgba(179, 106, 47, 255)" fruitName="OAT" farmland="11" farmlandPrice="313800" farmlandArea="25.104000" farmlandOwner="Werewolf3788">
+            <P pts="449.3,-592.3 449.2,-946.1 981.6,-946.1 981.7,-592.2"/>
+            <P pts="523.9,-945.7 524.0,-1013.8 981.8,-1014.1 981.6,-946.0"/>
+        </Field>
+        <Field id="5" price="todo" fruitColor="rgba(58, 98, 44, 255)" fruitName="GRASS" farmland="9" farmlandPrice="154050" farmlandArea="12.324000" farmlandOwner="Werewolf3788">
+            <P pts="640.1,-271.0 639.7,-497.1 983.6,-497.0 984.0,-270.9"/>
+        </Field>
+        <Field id="6" price="todo" fruitColor="rgba(58, 98, 44, 255)" fruitName="GRASS" farmland="10" farmlandPrice="76630" farmlandArea="6.130400" farmlandOwner="Werewolf3788">
+            <P pts="454.0,-270.7 453.9,-377.2 628.9,-377.4 628.9,-270.9"/>
+        </Field>
+        <Field id="7" price="todo" fruitColor="rgba(140, 99, 79, 255)" fruitName="POTATO" farmland="8" farmlandPrice="170820" farmlandArea="13.665600" farmlandOwner="Werewolf3788">
+            <P pts="453.0,-43.1 452.9,-263.0 983.9,-263.0 984.0,-43.1"/>
+        </Field>
+        <Field id="8" price="todo" fruitColor="rgba(232, 154, 45, 255)" fruitName="MAIZE" farmland="7" farmlandPrice="624880" farmlandArea="49.990398">
+            <P pts="447.2,809.7 447.2,-26.8 983.7,-26.8 983.7,809.8"/>
+        </Field>
+        <Field id="9" price="todo" fruitColor="rgba(112, 80, 66, 255)" fruitName="SORGHUM" farmland="4" farmlandPrice="367500" farmlandArea="29.400000">
+            <P pts="100.2,790.8 100.2,-32.7 433.7,-32.9 433.7,790.7"/>
+        </Field>
+        <Field id="10" price="todo" fruitColor="rgba(232, 154, 45, 255)" fruitName="MAIZE" farmland="3" farmlandPrice="266965" farmlandArea="21.357201">
+            <P pts="-181.8,784.6 -182.1,87.2 81.4,87.6 81.7,784.9"/>
+        </Field>
+        <Field id="11" price="todo" fruitColor="rgba(232, 154, 45, 255)" fruitName="MAIZE" farmland="16" farmlandPrice="427640" farmlandArea="34.211201">
+            <P pts="-791.9,500.8 -791.8,-32.7 -279.1,-32.7 -279.2,500.8"/>
+        </Field>
+        <Field id="12" price="todo" fruitColor="rgba(232, 154, 45, 255)" fruitName="MAIZE" farmland="17" farmlandPrice="166465" farmlandArea="13.317200">
+            <P pts="-790.8,791.8 -790.9,626.2 -275.2,626.3 -275.1,791.8"/>
+            <P pts="-729.1,628.6 -728.9,562.1 -274.9,560.7 -275.1,627.2"/>
+        </Field>
+        <Field id="13" price="todo" fruitColor="rgba(234, 203, 34, 255)" fruitName="SUNFLOWER" farmland="15" farmlandPrice="231660" farmlandArea="18.532801">
+            <P pts="-1006.8,795.8 -1007.2,32.1 -818.4,31.9 -818.0,795.6"/>
+        </Field>
+        <Field id="14" price="todo" fruitColor="rgba(242, 232, 230, 255)" fruitName="COTTON" farmland="18" farmlandPrice="142050" farmlandArea="11.364000">
+            <P pts="-789.0,1013.9 -788.8,870.2 -313.0,870.3 -313.2,1014.0"/>
+            <P pts="-622.2,870.6 -622.0,828.0 -312.8,828.1 -313.0,870.7"/>
+        </Field>
+        <Field id="15" price="todo" fruitColor="rgba(112, 80, 66, 255)" fruitName="SORGHUM" farmland="5" farmlandPrice="193705" farmlandArea="15.496400">
+            <P pts="-123.7,1010.6 -124.0,827.1 432.5,827.2 432.7,1010.7"/>
+        </Field>
+        <Field id="16" price="todo" fruitColor="rgba(242, 232, 230, 255)" fruitName="COTTON" farmland="6" farmlandPrice="146955" farmlandArea="11.756400">
+            <P pts="448.3,1010.8 448.2,827.2 873.6,828.2 873.7,1011.8"/>
+        </Field>
+    </Fields>
+    <HotSpots>
+        <HotSpot/>
+        <HotSpot name="Sell Everything Container" type="UNLOADING" id="1" x="-979.120972" z="-891.811218"/>
+        <HotSpot name="TrainSystem" type="TRAIN" id="2" x="-688.633972" z="834.906982"/>
+        <HotSpot name="Greenville" type="UNLOADING_TRAIN" id="3" x="-1019.216003" z="820.913025"/>
+        <HotSpot name="BF Grains Gate 01" type="UNLOADING" id="4" x="-939.000000" z="929.700012"/>
+        <HotSpot name="BF Grains Gate 02" type="UNLOADING" id="5" x="-943.099976" z="924.200012"/>
+        <HotSpot name="Lonestar Goods" type="UNLOADING" id="6" x="-951.200012" z="-998.669983"/>
+        <HotSpot name="Lonestar Bales" type="UNLOADING" id="7" x="-861.479980" z="-920.950012"/>
+        <HotSpot name="AG Land Train Depot" type="UNLOADING_TRAIN" id="8" x="-689.601990" z="820.854980"/>
+        <HotSpot name="AG Land Train Depot" type="UNLOADING" id="9" x="-691.966248" z="851.306824"/>
+        <HotSpot name="Big Flats Flour Mill" type="PRODUCTION_POINT" id="10" x="-932.887024" z="1012.049988"/>
+        <HotSpot name="Bakery" type="PRODUCTION_POINT" id="11" x="-919.801025" z="1010.460022"/>
+        <HotSpot name="Gas Station" type="FUEL" id="12" x="-837.760010" z="982.630005"/>
+        <HotSpot name="Farm House" type="FARM" id="13" x="60.690163" z="51.728722"/>
+        <HotSpot name="Fertilizer Tank" type="LOADING" id="14" x="-188.604218" z="-789.863708"/>
+        <HotSpot name="Lime Tank" type="LOADING" id="15" x="-192.762100" z="-813.446899"/>
+        <HotSpot name="Seed Tank" type="LOADING" id="16" x="-926.612976" z="-930.301331"/>
+        <HotSpot name="American Shed with Lounge and Workshop" type="SHOP" id="17" x="-43.455154" z="40.330589"/>
+        <HotSpot name="Animal Food Buying Station" type="LOADING" id="18" x="611.757874" z="-409.100708"/>
+        <HotSpot name="Free Fuel Large Tank 2" type="LOADING" id="19" x="-198.611374" z="-731.771301"/>
+    </HotSpots>
+</Server>
