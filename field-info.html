@@ -1,0 +1,121 @@
+<div id="fieldModule" class="field-data-blade">
+    <div class="blade-header">
+        <h2>🌾 MODULE 1: LAND & BIOMETRIC GROWTH MATRIX</h2>
+        <span id="fieldCount" class="badge">INITIALIZING DEEP SCAN...</span>
+    </div>
+
+    <div id="fieldMatrixContainer" class="matrix-grid scroll-list main-scroll">
+        <div class="loading-state">Performing Deep Telemetry Pass on Fields...</div>
+    </div>
+</div>
+
+<script>
+/**
+ * ULTIMATE FIELD BLADE v1.39
+ * Deep-Scanning: Growth, Weeds, Stone, Lime, Fert, Slurry & Deeds.
+ */
+async function syncFieldBlade(gitPath) {
+    try {
+        const [fieldsRes, landRes] = await Promise.all([
+            fetch(`${gitPath}/fields.xml`),
+            fetch(`${gitPath}/farmland.xml`)
+        ]);
+        
+        const fieldsXml = new DOMParser().parseFromString(await fieldsRes.text(), "text/xml");
+        const landXml = new DOMParser().parseFromString(await landRes.text(), "text/xml");
+        
+        const fieldData = Array.from(fieldsXml.getElementsByTagName("field"));
+        const landData = Array.from(landXml.getElementsByTagName("farmland"));
+        
+        document.getElementById('fieldCount').textContent = `${fieldData.length} ACTIVE ZONES`;
+        
+        const container = document.getElementById('fieldMatrixContainer');
+        container.innerHTML = fieldData.map(f => {
+            // Data Extraction
+            const id = f.getAttribute("id") || f.getAttribute("fieldId");
+            const crop = (f.getAttribute("fruitType") || "FALLOW").toUpperCase();
+            const stage = parseInt(f.getAttribute("growthState") || 0);
+            
+            // Percentage Mappings (0.0 to 1.0 -> 0 to 100)
+            const fert = (parseFloat(f.getAttribute("fertilizedLevel") || 0) * 100).toFixed(0);
+            const weeds = (parseFloat(f.getAttribute("weedState") || 0) * 100).toFixed(0);
+            const stones = (parseFloat(f.getAttribute("stoneLevel") || 0) * 100).toFixed(0);
+            
+            // Boolean Status Checks
+            const needsLime = f.getAttribute("needsLime") === "true";
+            const needsPlowing = f.getAttribute("needsPlowing") === "true";
+            const slurryPot = f.getAttribute("slurryFactor") || "0"; 
+
+            // Ownership Cross-Reference [cite: 2026-01-27]
+            const ownerId = f.getAttribute("owner");
+            const ownerName = ownerId === "2" ? "RAY" : (ownerId === "1" ? "KEVIN" : "VACANT");
+            const isReady = stage >= 6; 
+
+            return `
+                <div class="field-card ${isReady ? 'harvest-ready' : ''}">
+                    <div class="field-top">
+                        <span class="field-id">ZONE ${id}</span>
+                        <span class="owner-tag ${ownerName === 'RAY' ? 'gold' : 'green'}">${ownerName}</span>
+                    </div>
+                    
+                    <div class="field-main-info">
+                        <div class="field-crop">${crop}</div>
+                        <div class="field-status" style="color:${isReady ? 'var(--safe)' : '#999'}">
+                            ${isReady ? '● READY TO HARVEST' : '● STAGE: ' + stage}
+                        </div>
+                    </div>
+
+                    <div class="telemetry-grid">
+                        <div class="stat-unit">
+                            <label>Fertilizer: ${fert}%</label>
+                            <div class="bar-bg"><div class="bar-fill" style="width:${fert}%; background:var(--safe)"></div></div>
+                        </div>
+                        <div class="stat-unit">
+                            <label>Weeds: ${weeds}%</label>
+                            <div class="bar-bg"><div class="bar-fill" style="width:${weeds}%; background:#ff4d4d"></div></div>
+                        </div>
+                        <div class="stat-unit">
+                            <label>Stones: ${stones}%</label>
+                            <div class="bar-bg"><div class="bar-fill" style="width:${stones}%; background:#888"></div></div>
+                        </div>
+                    </div>
+
+                    <div class="requirement-tags">
+                        ${needsLime ? '<span class="req-badge lime">NEEDS LIME</span>' : ''}
+                        ${needsPlowing ? '<span class="req-badge plow">NEEDS PLOW</span>' : ''}
+                        ${parseFloat(slurryPot) > 0 ? '<span class="req-badge slurry">SLURRY READY</span>' : ''}
+                    </div>
+                </div>
+            `;
+        }).join('');
+    } catch (e) { console.warn("Field Blade Error: Cross-reference failed."); }
+}
+</script>
+
+<style>
+/* Module 1 Thematic Styling [cite: 2026-02-08] */
+.field-data-blade { color: #fff; }
+.blade-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid var(--gold); padding-bottom: 15px; margin-bottom: 20px; }
+.matrix-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 15px; }
+
+.field-card { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,215,0,0.1); border-radius: 10px; padding: 15px; position: relative; }
+.harvest-ready { border: 2px solid var(--safe); box-shadow: 0 0 15px rgba(124, 252, 0, 0.2); }
+
+.field-top { display: flex; justify-content: space-between; font-weight: 900; font-size: 0.75rem; margin-bottom: 12px; }
+.owner-tag.green { color: #7cfc00; }
+.owner-tag.gold { color: #ffd700; }
+
+.field-crop { font-size: 1.3rem; font-weight: 800; letter-spacing: 1px; }
+.field-status { font-size: 0.75rem; font-weight: 900; margin-bottom: 15px; }
+
+.telemetry-grid { display: flex; flex-direction: column; gap: 10px; margin-bottom: 15px; }
+.stat-unit label { font-size: 0.65rem; color: #aaa; text-transform: uppercase; display: block; margin-bottom: 4px; }
+.bar-bg { height: 5px; background: #222; border-radius: 3px; overflow: hidden; }
+.bar-fill { height: 100%; transition: width 1.5s ease-in-out; }
+
+.requirement-tags { display: flex; flex-wrap: wrap; gap: 5px; }
+.req-badge { font-size: 0.65rem; font-weight: 900; padding: 3px 8px; border-radius: 4px; color: #000; }
+.req-badge.lime { background: #fff; }
+.req-badge.plow { background: #ff4500; color: #fff; }
+.req-badge.slurry { background: #8b4513; color: #fff; }
+</style>
