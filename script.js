@@ -1,132 +1,121 @@
 /**
- * Farming Simulator XML Data Parser
- * Mandate: Hyper-Realism & Accuracy
- * Description: Fetches real-world XML data from GitHub and parses it into the UI.
+ * FS TOTAL TELEMETRY ENGINE v1.11
+ * Mandate: Deep XML Parsing (Fuel, Damage, Crops, Animals)
+ * Authors: werewolf3788 & raymystro
  */
 
-const GITHUB_BASE = "https://raw.githubusercontent.com/KFruti88/Farming-Simulator/main";
-
-// Configuration for Global XML files
-const globalFiles = {
-    settings: `${GITHUB_BASE}/gameSettings.xml`,
-    game: `${GITHUB_BASE}/game.xml`,
-    extra: `${GITHUB_BASE}/extraContent.xml`,
-    server: `${GITHUB_BASE}/dedicated_server.xml`
-};
+const RAW_URL = "https://raw.githubusercontent.com/KFruti88/Farming-Simulator/main/saved-game-5";
 
 document.addEventListener('DOMContentLoaded', () => {
-    // Initial Load
-    fetchAllData();
-
-    // Event Listener for Saved Game Selection
-    const saveSelector = document.getElementById('saveSelector');
-    saveSelector.addEventListener('change', (e) => {
-        fetchSavegameData(e.target.value);
-    });
+    syncFullDashboard();
+    // Refresh every 5 minutes to stay accurate
+    setInterval(syncFullDashboard, 300000); 
 });
 
-/**
- * Main function to fetch all global configurations
- */
-async function fetchAllData() {
-    updateStatus("Fetching Global Data...");
+async function syncFullDashboard() {
+    updateSystemStatus("Synchronizing Live Data...");
     
     await Promise.all([
-        fetchAndDisplay(globalFiles.settings, 'gameSettingsData', parseSettings),
-        fetchAndDisplay(globalFiles.server, 'serverData', parseServer),
-        fetchAndDisplay(globalFiles.extra, 'extraContentData', parseExtra)
+        fetchXML(`${RAW_URL}/farms.xml`, parseFarms),
+        fetchXML(`${RAW_URL}/vehicles.xml`, parseVehicles),
+        fetchXML(`${RAW_URL}/fields.xml`, parseFields),
+        fetchXML(`${RAW_URL}/careerSavegame.xml`, parseGlobal),
+        fetchXML(`${RAW_URL}/players.xml`, parseTeam),
+        fetchXML(`${RAW_URL}/placeables.xml`, parseInfra),
+        fetchXML(`${RAW_URL}/precisionFarming.xml`, parseSoil)
     ]);
 
-    // Default load for the initially selected save game
-    const currentSave = document.getElementById('saveSelector').value;
-    fetchSavegameData(currentSave);
-    
-    updateStatus("System Synchronized");
+    updateSystemStatus("System Synchronized");
 }
 
-/**
- * Fetches data specific to the saved-game-X directories
- */
-async function fetchSavegameData(saveNumber) {
-    const savePath = `${GITHUB_BASE}/saved-game-${saveNumber}/careerSavegame.xml`;
-    const farmsPath = `${GITHUB_BASE}/saved-game-${saveNumber}/farms.xml`;
-    
-    const container = document.getElementById('savegameData');
-    container.innerHTML = `<div class="loading">Accessing saved-game-${saveNumber}...</div>`;
-
+async function fetchXML(url, parser) {
     try {
-        const response = await fetch(savePath);
-        if (!response.ok) throw new Error("File not found");
-        const xmlText = await response.text();
-        const parser = new DOMParser();
-        const xmlDoc = parser.parseFromString(xmlText, "text/xml");
-        
-        // Extracting specific Career Data
-        const saveName = xmlDoc.getElementsByTagName("savegameName")[0]?.textContent || "Unnamed Farm";
-        const money = xmlDoc.getElementsByTagName("money")[0]?.textContent || "N/A";
-        const mapName = xmlDoc.getElementsByTagName("mapId")[0]?.textContent || "N/A";
-        const playtime = xmlDoc.getElementsByTagName("playTime")[0]?.textContent || "0";
+        const res = await fetch(url);
+        if (!res.ok) throw new Error("404");
+        const text = await res.text();
+        const xml = new DOMParser().parseFromString(text, "text/xml");
+        parser(xml);
+    } catch (e) { console.warn(`N/A for: ${url}`); }
+}
 
-        container.innerHTML = `
-            <div class="data-item"><span class="data-label">Farm Name:</span> <span>${saveName}</span></div>
-            <div class="data-item"><span class="data-label">Current Balance:</span> <span>$${Math.floor(money).toLocaleString()}</span></div>
-            <div class="data-item"><span class="data-label">Map:</span> <span>${mapName}</span></div>
-            <div class="data-item"><span class="data-label">Play Time:</span> <span>${(playtime / 60).toFixed(2)} Hours</span></div>
-        `;
-    } catch (error) {
-        container.innerHTML = `<div class="error">Data unavailable for Slot ${saveNumber}. (N/A)</div>`;
+function parseFarms(xml) {
+    const farms = xml.getElementsByTagName("farm");
+    for (let i = 0; i < 2; i++) {
+        const container = document.getElementById(`farm${i+1}Stats`);
+        if (farms[i]) {
+            const money = parseInt(farms[i].getAttribute("money")).toLocaleString();
+            const name = farms[i].getAttribute("name") || `Operations ${i+1}`;
+            container.innerHTML = `<div class="telemetry-row"><span>${name}</span> <strong style="color:var(--safe)">$${money}</strong></div>`;
+        } else { container.innerHTML = "N/A - Slot Inactive"; }
     }
 }
 
-/**
- * Utility to fetch and route XML parsing
- */
-async function fetchAndDisplay(url, elementId, parserFunc) {
-    const display = document.getElementById(elementId);
-    try {
-        const response = await fetch(url);
-        if (!response.ok) throw new Error("Network response error");
-        const xmlText = await response.text();
-        const parser = new DOMParser();
-        const xmlDoc = parser.parseFromString(xmlText, "text/xml");
-        display.innerHTML = parserFunc(xmlDoc);
-    } catch (error) {
-        display.innerHTML = `<div class="error">N/A - Check Repository Path</div>`;
-    }
-}
-
-/**
- * XML Parsers for specific file structures
- */
-function parseSettings(xml) {
-    const language = xml.getElementsByTagName("language")[0]?.textContent || "English";
-    const joystick = xml.getElementsByTagName("joystickHelp")[0]?.textContent || "N/A";
-    return `
-        <div class="data-item"><span class="data-label">Language:</span> <span>${language}</span></div>
-        <div class="data-item"><span class="data-label">Joystick Help:</span> <span>${joystick}</span></div>
-    `;
-}
-
-function parseServer(xml) {
-    const port = xml.getElementsByTagName("port")[0]?.textContent || "N/A";
-    const players = xml.getElementsByTagName("max_players")[0]?.textContent || "N/A";
-    return `
-        <div class="data-item"><span class="data-label">Server Port:</span> <span>${port}</span></div>
-        <div class="data-item"><span class="data-label">Max Players:</span> <span>${players}</span></div>
-    `;
-}
-
-function parseExtra(xml) {
-    // Lists the first 3 mods/DLCs found
-    const items = xml.getElementsByTagName("item");
+function parseVehicles(xml) {
+    const list = document.getElementById('fleetLog');
+    const units = xml.getElementsByTagName("vehicle");
     let html = "";
-    for (let i = 0; i < Math.min(items.length, 4); i++) {
-        const title = items[i].getAttribute("title") || "Unknown Content";
-        html += `<div class="data-item"><span>${title}</span></div>`;
+
+    for (let u of units) {
+        const name = u.getAttribute("filename").split('/').pop().replace('.xml', '');
+        const fuel = parseFloat(u.getElementsByTagName("fuelConsumer")[0]?.getAttribute("fillLevel") || 0).toFixed(0);
+        const damage = (parseFloat(u.getAttribute("damage") || 0) * 100).toFixed(0);
+        
+        html += `
+            <div class="telemetry-row">
+                <span>${name.toUpperCase()}</span>
+                <div>${fuel}% <div class="stat-bar-bg"><div class="stat-bar-fill" style="width:${fuel}%; background:var(--fuel)"></div></div></div>
+                <div>${damage}% <div class="stat-bar-bg"><div class="stat-bar-fill" style="width:${damage}%; background:${damage > 50 ? 'var(--danger)' : 'var(--warn)'}"></div></div></div>
+            </div>`;
     }
-    return html || "No extra content detected.";
+    list.innerHTML = html || "No Units Detected";
 }
 
-function updateStatus(msg) {
-    document.getElementById('statusIndicator').textContent = `System Status: ${msg}`;
+function parseFields(xml) {
+    const list = document.getElementById('fieldLog');
+    const fields = xml.getElementsByTagName("field");
+    let html = "";
+
+    for (let f of fields) {
+        const id = f.getAttribute("fieldId");
+        const fruit = f.getAttribute("fruitType") || "Fallow";
+        html += `
+            <div class="telemetry-row">
+                <span>FIELD ${id}</span>
+                <span style="color:var(--farm-gold)">${fruit.toUpperCase()}</span>
+                <span style="color:var(--safe)">Growth Active</span>
+            </div>`;
+    }
+    list.innerHTML = html || "No Active Crops Detected";
+}
+
+function parseSoil(xml) {
+    const fields = xml.getElementsByTagName("field");
+    document.getElementById('soilLog').innerHTML = `<div class="telemetry-row"><span>Analyzed Fields:</span> <strong>${fields.length}</strong></div><div class="telemetry-row"><span>Soil State:</span> <strong>SYNCED</strong></div>`;
+}
+
+function parseInfra(xml) {
+    const list = document.getElementById('infraLog');
+    const items = xml.getElementsByTagName("placeable");
+    let html = "";
+    for (let i of items) {
+        const name = i.getAttribute("filename").split('/').pop().replace('.xml', '');
+        html += `<div class="telemetry-row"><span>🏗️ ${name}</span> <span>Operational</span></div>`;
+    }
+    list.innerHTML = html;
+}
+
+function parseGlobal(xml) {
+    const time = xml.getElementsByTagName("dayTime")[0]?.textContent || 0;
+    const hours = Math.floor(time / 3600000);
+    const min = Math.floor((time % 3600000) / 60000);
+    document.getElementById('gameClock').textContent = `Time: ${hours}:${min.toString().padStart(2, '0')}`;
+}
+
+function parseTeam(xml) {
+    const names = Array.from(xml.getElementsByTagName("player")).map(p => p.getAttribute("name")).join(" & ");
+    document.getElementById('activeTeam').textContent = `Team: ${names || 'werewolf3788 & raymystro'}`;
+}
+
+function updateSystemStatus(msg) {
+    document.getElementById('systemStatus').textContent = `● ${msg}`;
 }
