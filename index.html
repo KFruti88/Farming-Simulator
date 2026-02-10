@@ -7,10 +7,10 @@
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
     
-    <title>FS MASTER COMMAND | Full Telemetry Matrix</title>
+    <title>FS MASTER COMMAND | Private Cloud Telemetry</title>
     
-    <link rel="stylesheet" href="style.css?v=1.24">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css?v=1.27">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;900&display=swap" rel="stylesheet">
 </head>
 <body>
 
@@ -19,7 +19,7 @@
             <div class="header-content">
                 <div class="map-branding">
                     <div class="image-container">
-                        <img id="activeMapImage" src="https://raw.githubusercontent.com/KFruti88/Farming-Simulator/main/saved-game-2/big-flat-texas.jpg" alt="Map Branding">
+                        <img id="activeMapImage" src="https://raw.githubusercontent.com/KFruti88/Farming-Simulator/main/saved-game-2/big-flat-texas.jpg" alt="Operation Map">
                         <div class="slot-badge" id="currentSlotLabel">SYNCING...</div>
                     </div>
                     <div class="header-text">
@@ -27,18 +27,19 @@
                         <div class="status-bar">
                             <span id="mapDisplay">Map: Detecting...</span> | 
                             <span id="gameClock">Time: 00:00</span> | 
-                            <span id="syncPulse" class="pulse">● LIVE HYBRID TELEMETRY</span>
+                            <span id="syncPulse" class="pulse">● SECURE CLOUD LINK ACTIVE</span>
                         </div>
                     </div>
                 </div>
-                <div class="selector-box">
-                    <label for="saveSelector">Active Operations Data:</label>
+                
+                <div class="control-center">
+                    <label for="saveSelector">Switch Operations:</label>
                     <select id="saveSelector">
-                        <option value="2" selected>Saved Game 2 (Big Flats Texas)</option>
-                        <option value="5">Saved Game 5 (Alma, Missouri)</option>
-                        <option value="4">Saved Game 4</option>
-                        <option value="3">Saved Game 3</option>
                         <option value="1">Saved Game 1</option>
+                        <option value="2" selected>Saved Game 2 (Texas)</option>
+                        <option value="3">Saved Game 3</option>
+                        <option value="4">Saved Game 4</option>
+                        <option value="5">Saved Game 5 (Missouri)</option>
                     </select>
                 </div>
             </div>
@@ -46,66 +47,60 @@
 
         <section class="operations-grid">
             <article class="glass-panel farm-card">
-                <div class="card-tag">🖥️ SERVER CONFIGURATION</div>
-                <div id="serverConfig" class="telemetry-body">Analyzing dedicatedServerConfig.xml...</div>
+                <div class="card-tag">🛰️ NETWORK STATUS</div>
+                <div id="liveServerStats" class="telemetry-body">
+                    <div class="telemetry-row"><span>Connection:</span> <strong style="color:var(--safe)">ENCRYPTED</strong></div>
+                    <div class="telemetry-row"><span>Latency:</span> <strong>STABLE</strong></div>
+                </div>
             </article>
             <article class="glass-panel farm-card">
-                <div class="card-tag">👥 ACTIVE TEAM TELEMETRY</div>
-                <div id="playerLog" class="telemetry-body">Scanning Slots...</div>
+                <div class="card-tag">👥 ACTIVE CREW</div>
+                <div id="playerLog" class="telemetry-body">Scanning...</div>
             </article>
         </section>
 
         <section class="farm-row">
             <article class="glass-panel farm-card" id="farm1">
-                <div class="card-label">FARM 01: ACCOUNTING</div>
-                <div id="farm1Stats" class="telemetry-body">Scanning farms.xml...</div>
+                <div class="card-label">OPERATIONS: FARM 01</div>
+                <div id="farm1Stats" class="telemetry-body">Syncing farms.xml...</div>
             </article>
             <article class="glass-panel farm-card" id="farm2">
-                <div class="card-label">FARM 02: ACCOUNTING</div>
-                <div id="farm2Stats" class="telemetry-body">Scanning farms.xml...</div>
+                <div class="card-label">OPERATIONS: FARM 02</div>
+                <div id="farm2Stats" class="telemetry-body">Syncing farms.xml...</div>
             </article>
         </section>
 
         <main class="telemetry-matrix">
             <article class="glass-panel card fleet-panel">
-                <h2>🚜 UNIT FLEET TELEMETRY (FUEL, DEF & WEAR)</h2>
+                <h2>🚜 UNIT FLEET TELEMETRY (FUEL & WEAR)</h2>
                 <div class="telemetry-header">
                     <span>MACHINE UNIT</span>
                     <span>CARGO / FILL</span>
                     <span>FUEL & CONDITION</span>
                 </div>
-                <div id="fleetLog" class="scroll-list">Syncing vehicles.xml...</div>
+                <div id="fleetLog" class="scroll-list">Fetching vehicles.xml...</div>
             </article>
 
             <article class="glass-panel card field-panel">
-                <h2>🌾 FIELD & LAND MATRIX</h2>
+                <h2>🌾 LAND & FIELD MATRIX</h2>
                 <div class="telemetry-header">
                     <span>FIELD ID</span>
                     <span>CROP TYPE</span>
-                    <span>OWNER / STATUS</span>
+                    <span>STATUS</span>
                 </div>
-                <div id="fieldLog" class="scroll-list">Syncing fields.xml...</div>
-            </article>
-
-            <article class="glass-panel card">
-                <h2>🐾 LIVESTOCK HEALTH</h2>
-                <div id="animalLog" class="telemetry-body">Syncing animals.xml...</div>
-            </article>
-            <article class="glass-panel card">
-                <h2>🏗️ INFRASTRUCTURE</h2>
-                <div id="infraLog" class="scroll-list">Syncing placeables.xml...</div>
+                <div id="fieldLog" class="scroll-list">Fetching fields.xml...</div>
             </article>
         </main>
 
         <footer class="glass-panel footer-main">
             <div class="footer-grid">
-                <span>Source: G-Portal Feed & GitHub (KFruti88)</span>
-                <span id="activeTeamDisplay">Active Team: werewolf3788 & raymystro</span>
-                <span>Thematic Engine: FARM (Gold/Nature) [cite: 2026-02-08]</span>
+                <span>Thematic Engine: FARM (Gold/Nature)</span>
+                <span id="activeTeamDisplay">Team: werewolf3788 & raymystro</span>
+                <span>Version: 1.27-SECURE</span>
             </div>
         </footer>
     </div>
 
-    <script src="script.js?v=1.24"></script>
+    <script src="script.js?v=1.27"></script>
 </body>
 </html>
