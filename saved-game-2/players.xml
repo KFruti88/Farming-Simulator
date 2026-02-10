@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<players>
+    <player uniqueUserId="gRW7V4FYUiqAL1ULDQBlO/MHwWYKWt7ISjEnuYEwnZI=" timeLastConnected="2026/02/10 12:12">
+        <style filename="dataS/character/humans/player/player01.xml" bottomConfigId="jeans" bottomConfigColor="1" faceConfigId="head01" faceConfigColor="1" footwearConfigId="workBoots2" footwearConfigColor="1" hairStyleConfigId="hair02" hairStyleConfigColor="6" topConfigId="denimJacket" topConfigColor="1"/>
+    </player>
+    <player uniqueUserId="9CtOVu0WAR2i29PfI9RQmIR+ax+hY+U0ShVJisU1CQc=" timeLastConnected="2026/01/17 04:57">
+        <style filename="dataS/character/humans/player/player01.xml" bottomConfigId="jeans" bottomConfigColor="1" faceConfigId="head01" faceConfigColor="1" footwearConfigId="workBoots2" footwearConfigColor="1" hairStyleConfigId="hair02" hairStyleConfigColor="6" topConfigId="denimJacket" topConfigColor="1"/>
+    </player>
+    <player uniqueUserId="NE0DifHeTEE3XiAha2XqNE99mfJhUP5lNhHcjUe16qw=" timeLastConnected="2026/01/17 04:57">
+        <style filename="dataS/character/humans/player/player01.xml" beardConfigId="goatee_head02" beardConfigColor="8" bottomConfigId="leather" bottomConfigColor="2" faceConfigId="head02" faceConfigColor="1" footwearConfigId="eltenArborist" footwearConfigColor="2" glassesConfigId="vintage" glassesConfigColor="1" glovesConfigId="racing" glovesConfigColor="3" hairStyleConfigId="hair11" hairStyleConfigColor="8" headgearConfigId="outback" headgearConfigColor="3" mustacheConfigId="goatee_head02" mustacheConfigColor="8" topConfigId="leather" topConfigColor="2"/>
+    </player>
+    <player uniqueUserId="fdaq30Len79cmlOFO60IcvH25Fh5gERIfAXW0xKn05M=" timeLastConnected="2025/12/06 22:15">
+        <style filename="dataS/character/humans/player/player01.xml" bottomConfigId="jeans" bottomConfigColor="5" faceConfigId="head01" faceConfigColor="1" footwearConfigId="workBoots2" footwearConfigColor="2" glassesConfigId="sports2" glassesConfigColor="1" hairStyleConfigId="hair02" hairStyleConfigColor="6" headgearConfigId="cowboy" headgearConfigColor="9" topConfigId="teeShirt" topConfigColor="65"/>
+    </player>
+    <player uniqueUserId="He38U+i9ZyfxTc3EfrjgG0EuFLUKRP22aGpKc3+P8Dk=" timeLastConnected="2025/11/29 20:28">
+        <style filename="dataS/character/humans/player/player01.xml" bottomConfigId="jeans" bottomConfigColor="1" faceConfigId="head01" faceConfigColor="1" footwearConfigId="workBoots2" footwearConfigColor="1" hairStyleConfigId="hair02" hairStyleConfigColor="6" topConfigId="denimJacket" topConfigColor="1"/>
+    </player>
+</players>
