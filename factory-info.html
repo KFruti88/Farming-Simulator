@@ -1,0 +1,95 @@
+<div id="factoryModule" class="factory-data-blade">
+    <div class="blade-header">
+        <h2>🏗️ MODULE 3: PRODUCTION CHAINS & LOGISTICS</h2>
+        <span id="factoryCount" class="badge">ANALYZING WAREHOUSES...</span>
+    </div>
+
+    <div id="factoryMatrixContainer" class="matrix-grid scroll-list main-scroll">
+        <div class="loading-state">Syncing Production Lines & Storage Capacities...</div>
+    </div>
+</div>
+
+<script>
+/**
+ * ULTIMATE FACTORY BLADE v1.42
+ * Tracking: Bakery, Dairy, Oil/Grain/Sugar Mills, Spinnery, and Sawmills.
+ */
+async function syncFactoryBlade(gitPath) {
+    try {
+        const res = await fetch(`${gitPath}/placeables.xml?v=${new Date().getTime()}`);
+        if (!res.ok) throw new Error();
+        const xml = new DOMParser().parseFromString(await res.text(), "text/xml");
+        
+        // Filter for Production Points
+        const factories = Array.from(xml.getElementsByTagName("productionPoint"));
+        document.getElementById('factoryCount').textContent = `${factories.length} ACTIVE FACILITIES`;
+        
+        const container = document.getElementById('factoryMatrixContainer');
+        container.innerHTML = factories.map(f => {
+            const parent = f.parentElement;
+            const name = parent.getAttribute("filename")?.split('/').pop().replace('.xml', '').toUpperCase() || "FACTORY";
+            const ownerId = parent.getAttribute("farmId");
+            const ownerName = ownerId === "2" ? "RAY" : "KEVIN";
+            
+            // Production Mode Logic
+            const modeMap = ["STORING", "SELLING", "DISTRIBUTING"];
+            
+            // Storage & Fill Levels
+            const storage = Array.from(f.getElementsByTagName("storage")[0]?.children || []);
+            const productions = Array.from(f.getElementsByTagName("production"));
+
+            return `
+                <div class="factory-card">
+                    <div class="card-top">
+                        <span class="factory-id">${name}</span>
+                        <span class="owner-tag ${ownerName === 'RAY' ? 'gold' : 'green'}">${ownerName}</span>
+                    </div>
+
+                    <div class="production-lines">
+                        ${productions.map(p => {
+                            const pName = p.getAttribute("id") || "Line";
+                            const pStatus = p.getAttribute("isEnabled") === "true" ? "ACTIVE" : "HALTED";
+                            return `<div class="p-line">⚙️ ${pName}: <strong style="color:${pStatus === 'ACTIVE' ? 'var(--safe)' : 'var(--danger)'}">${pStatus}</strong></div>`;
+                        }).join('')}
+                    </div>
+
+                    <div class="storage-matrix">
+                        <label>WAREHOUSE CAPACITY</label>
+                        ${storage.map(s => {
+                            const fillType = s.tagName.toUpperCase();
+                            const amount = parseFloat(s.textContent || 0).toFixed(0);
+                            const capacity = 100000; // Standard High-Volume Capacity
+                            const pct = (amount / capacity * 100).toFixed(0);
+                            
+                            return `
+                                <div class="stat-unit">
+                                    <div class="bar-info"><span>${fillType}</span> <span>${amount}L</span></div>
+                                    <div class="bar-bg"><div class="bar-fill" style="width:${pct}%; background:var(--gold)"></div></div>
+                                </div>
+                            `;
+                        }).join('')}
+                    </div>
+                </div>
+            `;
+        }).join('');
+    } catch (e) { console.warn("Factory telemetry secured."); }
+}
+</script>
+
+<style>
+.factory-data-blade { color: #fff; }
+.blade-header { display: flex; justify-content: space-between; border-bottom: 2px solid var(--gold); padding-bottom: 10px; margin-bottom: 20px; }
+.matrix-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 15px; }
+
+.factory-card { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,215,0,0.1); border-radius: 10px; padding: 15px; }
+.card-top { display: flex; justify-content: space-between; font-weight: 900; font-size: 0.75rem; margin-bottom: 12px; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 8px; }
+.factory-id { color: var(--gold); letter-spacing: 1px; }
+
+.production-lines { margin-bottom: 15px; font-size: 0.75rem; display: flex; flex-direction: column; gap: 5px; }
+.storage-matrix label { font-size: 0.6rem; color: #aaa; text-transform: uppercase; margin-bottom: 10px; display: block; font-weight: 900; }
+
+.stat-unit { margin-bottom: 10px; }
+.bar-info { display: flex; justify-content: space-between; font-size: 0.7rem; font-weight: 700; margin-bottom: 4px; }
+.bar-bg { height: 4px; background: #222; border-radius: 2px; overflow: hidden; }
+.bar-fill { height: 100%; transition: width 1.5s ease-in-out; }
+</style>
