@@ -4,16 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-    <meta http-equiv="Pragma" content="no-cache">
-    <meta http-equiv="Expires" content="0">
-    
     <title>FS MASTER COMMAND | TOTAL DETAIL MATRIX</title>
-    
-    <link rel="stylesheet" href="style.css?v=1.44">
+    <link rel="stylesheet" href="style.css?v=1.45">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;900&display=swap" rel="stylesheet">
 </head>
 <body>
-
     <div class="dashboard-container">
         <header class="glass-panel header-main">
             <div class="header-content">
@@ -30,13 +25,10 @@
                     </div>
                 </div>
                 <div class="selector-box">
-                    <label for="saveSelector">Switch Operations:</label>
                     <select id="saveSelector">
                         <option value="2" selected>Saved Game 2 (Texas)</option>
                         <option value="5">Saved Game 5 (Missouri)</option>
                         <option value="1">Saved Game 1</option>
-                        <option value="3">Saved Game 3</option>
-                        <option value="4">Saved Game 4</option>
                     </select>
                 </div>
             </div>
@@ -53,88 +45,41 @@
             </article>
             <article class="glass-panel card">
                 <div class="card-tag">👥 LIVE TEAM</div>
-                <div id="playerLog" class="telemetry-body">Sector Empty</div>
+                <div id="playerLog" class="telemetry-body">Scanning...</div>
             </article>
         </section>
 
-        <main class="data-matrix quad-grid">
-            
-            <article class="glass-panel card master-module-container">
-                <div id="module-1-field-info">
-                    <div class="loading-state">Loading Field Biometrics...</div>
-                </div>
-            </article>
-
-            <article class="glass-panel card master-module-container">
-                <div id="module-2-animal-info">
-                    <div class="loading-state">Loading Livestock Biometrics...</div>
-                </div>
-            </article>
-
-            <article class="glass-panel card master-module-container">
-                <div id="module-3-factory-info">
-                    <div class="loading-state">Loading Factory Logistics...</div>
-                </div>
-            </article>
-
-            <article class="glass-panel card">
-                <h2>🚜 UNIT FLEET TELEMETRY</h2>
-                <div class="telemetry-header fleet-header">
-                    <span>UNIT</span>
-                    <span>CARGO</span>
-                    <span>FUEL/WEAR</span>
-                </div>
-                <div id="fleetLog" class="scroll-list main-scroll">Analyzing vehicles.xml...</div>
-            </article>
-
+        <main class="data-matrix triple-col">
+            <article class="glass-panel card"><div id="module-1-field-info"></div></article>
+            <article class="glass-panel card"><div id="module-2-animal-info"></div></article>
+            <article class="glass-panel card"><div id="module-3-factory-info"></div></article>
         </main>
-
-        <footer class="glass-panel footer-main">
-            <div class="footer-grid">
-                <span>Thematic Engine: FARM (Gold/Nature) [cite: 2026-02-08]</span>
-                <span id="networkOps">Network Operators: werewolf3788 & raymystro</span>
-                <span>Version: 1.44-FINAL-MATRIX</span>
-            </div>
-        </footer>
     </div>
 
-    <script src="script.js?v=1.44"></script>
-    
+    <script src="script.js?v=1.45"></script>
     <script>
-    /**
-     * MASTER INJECTOR v1.44
-     * Consolidates all detailed blades into the master matrix.
-     */
-    async function loadMasterModules(slot) {
-        const gitPath = `https://raw.githubusercontent.com/KFruti88/Farming-Simulator/main/saved-game-${slot}`;
-        
-        // 1. Load Field Biometrics Blade
-        fetch('field-info.html?v=' + Date.now()).then(r => r.text()).then(html => {
-            document.getElementById('module-1-field-info').innerHTML = html;
-            if (typeof syncFieldBlade === "function") syncFieldBlade(gitPath);
-        });
+        async function loadModules(slot) {
+            const gitPath = `https://raw.githubusercontent.com/KFruti88/Farming-Simulator/main/saved-game-${slot}`;
+            const timestamp = Date.now();
+            
+            const modules = [
+                { id: 'module-1-field-info', file: 'field-info.html', sync: 'syncFieldBlade' },
+                { id: 'module-2-animal-info', file: 'animal-info.html', sync: 'syncAnimalBlade' },
+                { id: 'module-3-factory-info', file: 'factory-info.html', sync: 'syncFactoryBlade' }
+            ];
 
-        // 2. Load Animal Biometrics Blade
-        fetch('animal-info.html?v=' + Date.now()).then(r => r.text()).then(html => {
-            document.getElementById('module-2-animal-info').innerHTML = html;
-            if (typeof syncAnimalBlade === "function") syncAnimalBlade(gitPath);
+            modules.forEach(mod => {
+                fetch(`${mod.file}?v=${timestamp}`).then(r => r.text()).then(html => {
+                    document.getElementById(mod.id).innerHTML = html;
+                    if (window[mod.sync]) window[mod.sync](gitPath);
+                }).catch(e => document.getElementById(mod.id).innerHTML = `404: ${mod.file} MISSING`);
+            });
+        }
+        document.addEventListener('DOMContentLoaded', () => {
+            const selector = document.getElementById('saveSelector');
+            loadModules(selector.value);
+            selector.addEventListener('change', (e) => loadModules(e.target.value));
         });
-
-        // 3. Load Factory Logistics Blade
-        fetch('factory-info.html?v=' + Date.now()).then(r => r.text()).then(html => {
-            document.getElementById('module-3-factory-info').innerHTML = html;
-            if (typeof syncFactoryBlade === "function") syncFactoryBlade(gitPath);
-        });
-        
-        // 4. Trigger Internal Fleet Sync (from script.js)
-        if (typeof syncFleetInternal === "function") syncFleetInternal(gitPath);
-    }
-
-    document.addEventListener('DOMContentLoaded', () => {
-        const selector = document.getElementById('saveSelector');
-        loadMasterModules(selector.value);
-        selector.addEventListener('change', (e) => loadMasterModules(e.target.value));
-    });
     </script>
 </body>
 </html>
