@@ -7,9 +7,9 @@
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
     
-    <title>FS MASTER COMMAND | TOTAL BIOMETRIC MATRIX</title>
+    <title>FS MASTER COMMAND | TOTAL DETAIL MATRIX</title>
     
-    <link rel="stylesheet" href="style.css?v=1.41">
+    <link rel="stylesheet" href="style.css?v=1.44">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;900&display=swap" rel="stylesheet">
 </head>
 <body>
@@ -19,13 +19,13 @@
             <div class="header-content">
                 <div class="map-branding">
                     <div class="image-container">
-                        <img id="activeMapImage" src="http://176.57.165.81:8080/feed/dedicated-server-stats-map.jpg?code=DIaoyx8jutkGtlDr&quality=60&size=512" alt="Operation Map">
+                        <img id="activeMapImage" src="http://176.57.165.81:8080/feed/dedicated-server-stats-map.jpg?code=DIaoyx8jutkGtlDr&quality=60&size=512" alt="Live Map">
                         <div class="slot-badge" id="currentSlotLabel">FULL MATRIX ACTIVE</div>
                     </div>
                     <div class="header-text">
                         <h1 id="serverNameDisplay">Werewolf Red Operations</h1>
                         <div class="status-bar">
-                            <span id="mapDisplay">Map: Detecting...</span> | <span id="gameClock">Time: 00:00</span>
+                            <span id="mapDisplay">Map: Big Flats Texas</span> | <span id="gameClock">Time: 09:03</span>
                         </div>
                     </div>
                 </div>
@@ -35,6 +35,8 @@
                         <option value="2" selected>Saved Game 2 (Texas)</option>
                         <option value="5">Saved Game 5 (Missouri)</option>
                         <option value="1">Saved Game 1</option>
+                        <option value="3">Saved Game 3</option>
+                        <option value="4">Saved Game 4</option>
                     </select>
                 </div>
             </div>
@@ -43,7 +45,7 @@
         <section class="ops-matrix">
             <article class="glass-panel card">
                 <div class="card-tag">💰 KEVIN (FARM 1)</div>
-                <div id="kevinFinance" class="telemetry-body">$0.00</div>
+                <div id="kevinFinance" class="telemetry-body">$1,080,707,968</div>
             </article>
             <article class="glass-panel card">
                 <div class="card-tag">💰 RAY (FARM 2)</div>
@@ -51,21 +53,27 @@
             </article>
             <article class="glass-panel card">
                 <div class="card-tag">👥 LIVE TEAM</div>
-                <div id="playerLog" class="telemetry-body">Scanning...</div>
+                <div id="playerLog" class="telemetry-body">Sector Empty</div>
             </article>
         </section>
 
-        <main class="data-matrix">
+        <main class="data-matrix quad-grid">
             
             <article class="glass-panel card master-module-container">
                 <div id="module-1-field-info">
-                    <div class="loading-state">Loading Module 1: Field Biometrics...</div>
+                    <div class="loading-state">Loading Field Biometrics...</div>
                 </div>
             </article>
 
             <article class="glass-panel card master-module-container">
                 <div id="module-2-animal-info">
-                    <div class="loading-state">Loading Module 2: Livestock Biometrics...</div>
+                    <div class="loading-state">Loading Livestock Biometrics...</div>
+                </div>
+            </article>
+
+            <article class="glass-panel card master-module-container">
+                <div id="module-3-factory-info">
+                    <div class="loading-state">Loading Factory Logistics...</div>
                 </div>
             </article>
 
@@ -83,43 +91,45 @@
 
         <footer class="glass-panel footer-main">
             <div class="footer-grid">
-                <span>Thematic Engine: FARM [cite: 2026-02-08]</span>
-                <span>Network Operators: werewolf3788 & raymystro</span>
-                <span>Version: 1.41-MASTER-SYNC</span>
+                <span>Thematic Engine: FARM (Gold/Nature) [cite: 2026-02-08]</span>
+                <span id="networkOps">Network Operators: werewolf3788 & raymystro</span>
+                <span>Version: 1.44-FINAL-MATRIX</span>
             </div>
         </footer>
     </div>
 
-    <script src="script.js?v=1.41"></script>
+    <script src="script.js?v=1.44"></script>
     
     <script>
     /**
-     * MASTER INJECTOR Logic v1.41
-     * Consolidates Module 1 & 2 injections
+     * MASTER INJECTOR v1.44
+     * Consolidates all detailed blades into the master matrix.
      */
     async function loadMasterModules(slot) {
         const gitPath = `https://raw.githubusercontent.com/KFruti88/Farming-Simulator/main/saved-game-${slot}`;
         
-        // Load Module 1: Field Info
-        try {
-            const fieldRes = await fetch('field-info.html?v=' + new Date().getTime());
-            if (fieldRes.ok) {
-                document.getElementById('module-1-field-info').innerHTML = await fieldRes.text();
-                if (typeof syncFieldBlade === "function") syncFieldBlade(gitPath);
-            }
-        } catch (e) { console.warn("Module 1 failed to load."); }
+        // 1. Load Field Biometrics Blade
+        fetch('field-info.html?v=' + Date.now()).then(r => r.text()).then(html => {
+            document.getElementById('module-1-field-info').innerHTML = html;
+            if (typeof syncFieldBlade === "function") syncFieldBlade(gitPath);
+        });
 
-        // Load Module 2: Animal Info
-        try {
-            const animalRes = await fetch('animal-info.html?v=' + new Date().getTime());
-            if (animalRes.ok) {
-                document.getElementById('module-2-animal-info').innerHTML = await animalRes.text();
-                if (typeof syncAnimalBlade === "function") syncAnimalBlade(gitPath);
-            }
-        } catch (e) { console.warn("Module 2 failed to load."); }
+        // 2. Load Animal Biometrics Blade
+        fetch('animal-info.html?v=' + Date.now()).then(r => r.text()).then(html => {
+            document.getElementById('module-2-animal-info').innerHTML = html;
+            if (typeof syncAnimalBlade === "function") syncAnimalBlade(gitPath);
+        });
+
+        // 3. Load Factory Logistics Blade
+        fetch('factory-info.html?v=' + Date.now()).then(r => r.text()).then(html => {
+            document.getElementById('module-3-factory-info').innerHTML = html;
+            if (typeof syncFactoryBlade === "function") syncFactoryBlade(gitPath);
+        });
+        
+        // 4. Trigger Internal Fleet Sync (from script.js)
+        if (typeof syncFleetInternal === "function") syncFleetInternal(gitPath);
     }
 
-    // Global Sync Trigger [cite: 2026-01-26]
     document.addEventListener('DOMContentLoaded', () => {
         const selector = document.getElementById('saveSelector');
         loadMasterModules(selector.value);
