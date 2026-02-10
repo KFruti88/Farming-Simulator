@@ -4,8 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
     <title>FS MASTER COMMAND | TOTAL DETAIL MATRIX</title>
-    <link rel="stylesheet" href="style.css?v=1.45">
+    <link rel="stylesheet" href="style.css?v=1.66">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;900&display=swap" rel="stylesheet">
 </head>
 <body>
@@ -36,31 +38,41 @@
 
         <section class="ops-matrix">
             <article class="glass-panel card">
-                <div class="card-tag">💰 KEVIN (FARM 1)</div>
+                <div class="card-tag">💰 werewolf3788 (FARM 1)</div>
                 <div id="kevinFinance" class="telemetry-body">$1,080,707,968</div>
             </article>
             <article class="glass-panel card">
-                <div class="card-tag">💰 RAY (FARM 2)</div>
+                <div class="card-tag">💰 raymystro (FARM 2)</div>
                 <div id="rayFinance" class="telemetry-body">$0.00</div>
             </article>
             <article class="glass-panel card">
                 <div class="card-tag">👥 LIVE TEAM</div>
-                <div id="playerLog" class="telemetry-body">Scanning...</div>
+                <div id="playerLog" class="telemetry-body">Scanning Sector...</div>
             </article>
         </section>
 
         <main class="data-matrix triple-col">
-            <article class="glass-panel card"><div id="module-1-field-info"></div></article>
-            <article class="glass-panel card"><div id="module-2-animal-info"></div></article>
-            <article class="glass-panel card"><div id="module-3-factory-info"></div></article>
+            <article class="glass-panel card" id="card-module-1">
+                <div id="module-1-field-info"><div class="loading">Syncing Field Preparation...</div></div>
+            </article>
+            <article class="glass-panel card" id="card-module-2">
+                <div id="module-2-animal-info"><div class="loading">Analyzing Livestock Biometrics...</div></div>
+            </article>
+            <article class="glass-panel card" id="card-module-3">
+                <div id="module-3-factory-info"><div class="loading">Syncing Production Lines...</div></div>
+            </article>
         </main>
     </div>
 
-    <script src="script.js?v=1.45"></script>
+    <script src="script.js?v=1.66"></script>
     <script>
+        /**
+         * TRUTH-ENABLED MODULE LOADER
+         * Prevents 404s and ensures all blades update with the Truth ID [cite: 2026-01-26]
+         */
         async function loadModules(slot) {
             const gitPath = `https://raw.githubusercontent.com/KFruti88/Farming-Simulator/main/saved-game-${slot}`;
-            const timestamp = Date.now();
+            const truthID = `?truth=${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
             
             const modules = [
                 { id: 'module-1-field-info', file: 'field-info.html', sync: 'syncFieldBlade' },
@@ -69,12 +81,23 @@
             ];
 
             modules.forEach(mod => {
-                fetch(`${mod.file}?v=${timestamp}`).then(r => r.text()).then(html => {
+                fetch(`${mod.file}${truthID}`).then(r => {
+                    if(!r.ok) throw new Error();
+                    return r.text();
+                }).then(html => {
                     document.getElementById(mod.id).innerHTML = html;
+                    // Global Handshake with individual blade logic [cite: 2026-02-10]
                     if (window[mod.sync]) window[mod.sync](gitPath);
-                }).catch(e => document.getElementById(mod.id).innerHTML = `404: ${mod.file} MISSING`);
+                }).catch(e => {
+                    document.getElementById(mod.id).innerHTML = `
+                        <div class="error-state">
+                            <h3>404: MODULE MISSING</h3>
+                            <p>Verify ${mod.file} is in GitHub root.</p>
+                        </div>`;
+                });
             });
         }
+
         document.addEventListener('DOMContentLoaded', () => {
             const selector = document.getElementById('saveSelector');
             loadModules(selector.value);
