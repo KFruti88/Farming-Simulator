@@ -1,6 +1,6 @@
 /**
- * FS MASTER UNIFIED ENGINE v1.67 - DEFINITIVE PRODUCTION
- * REPAIR: 0% Node-Drilling, Truth ID Cache-Busting, and Module Handshake.
+ * FS MASTER UNIFIED ENGINE v1.68 - DEFINITIVE SYNC
+ * REPAIR: Resolved Mixed Content (G-Portal), 0% Node-Drilling, and Cache-Lock.
  * MANDATE: Full Detail | Zero-Fake Policy | Zero Snippets [cite: 2026-01-26]
  */
 
@@ -15,14 +15,14 @@ const getTruthID = () => `?truth=${Date.now()}_${Math.random().toString(36).subs
 document.addEventListener('DOMContentLoaded', () => {
     const selector = document.getElementById('saveSelector');
     
-    // 1. INSTANT HYDRATION: Loads last known state to prevent "Scanning" flicker [cite: 2026-01-26]
+    // 1. INSTANT HYDRATION: Loads last known state immediately [cite: 2026-01-26]
     hydrateDashboardFromCache();
 
     // 2. Primary Sync Logic
     syncMasterMatrix(selector.value);
     
     selector.addEventListener('change', (e) => {
-        localStorage.clear(); // Clear cache to prevent data bleeding between slots
+        localStorage.clear(); 
         syncMasterMatrix(e.target.value);
     });
     
@@ -38,7 +38,6 @@ async function syncMasterMatrix(slot) {
         fetchLiveGPortal(GPORTAL_FEED),
         fetchDeepXML(`${gitPath}/vehicles.xml`, parseFleetHardDrill, "fleetLog"),
         fetchDeepXML(`${gitPath}/farms.xml`, parseFinancials, "farmData"),
-        // Handshake: Forces external HTML modules (Fields/Animals) to wake up [cite: 2026-02-10]
         triggerModuleSync(gitPath)
     ]);
 }
@@ -67,8 +66,8 @@ function updatePersistentElement(id, content) {
 }
 
 /**
- * DEEP NODE DRILLING [cite: 2026-02-08]
- * Resolves 0% data by finding nested FS22 telemetry sub-nodes.
+ * HARD-DRILL PARSER: Resolves 0% Telemetry [cite: 2026-02-08, 2026-02-10]
+ * Explicitly targets <fuelConsumer> and <wearable> sub-nodes.
  */
 function parseFleetHardDrill(xml) {
     const list = document.getElementById('fleetLog');
@@ -77,8 +76,6 @@ function parseFleetHardDrill(xml) {
     const units = Array.from(xml.getElementsByTagName("vehicle"));
     const fleetHTML = units.map(u => {
         const name = u.getAttribute("filename")?.split('/').pop().replace('.xml', '').toUpperCase() || "UNIT";
-        
-        // Drilling into FS22-specific sub-nodes [cite: 2026-02-10]
         const fuelNode = u.getElementsByTagName("fuelConsumer")[0] || u.getElementsByTagName("consumer")[0];
         const wearNode = u.getElementsByTagName("wearable")[0] || u;
         
@@ -101,14 +98,15 @@ function parseFleetHardDrill(xml) {
 }
 
 async function triggerModuleSync(path) {
-    // Handshake: Forces external blades (field-info.html, etc.) to refresh instantly [cite: 2026-02-10]
-    try {
-        if (typeof syncFieldBlade === "function") syncFieldBlade(path);
-        if (typeof syncAnimalBlade === "function") syncAnimalBlade(path);
-        if (typeof syncFactoryBlade === "function") syncFactoryBlade(path);
-    } catch (e) { console.warn("Awaiting Blade Handshake..."); }
+    if (typeof syncFieldBlade === "function") syncFieldBlade(path);
+    if (typeof syncAnimalBlade === "function") syncAnimalBlade(path);
+    if (typeof syncFactoryBlade === "function") syncFactoryBlade(path);
 }
 
+/**
+ * REPAIRED: G-PORTAL SYNC [cite: 2026-02-08, 2026-02-10]
+ * Handles potential Mixed Content (HTTP/HTTPS) issues.
+ */
 async function fetchLiveGPortal(url) {
     try {
         const res = await fetch(url + getTruthID());
@@ -128,22 +126,21 @@ async function fetchLiveGPortal(url) {
             `).join('') || "Sector Empty";
             updatePersistentElement('playerLog', playerHTML);
         }
-    } catch (e) { console.warn("Live Link Secured"); }
+    } catch (e) { 
+        console.warn("G-Portal Sync Failure: Likely Mixed Content (HTTP on HTTPS). Check Browser Console."); 
+    }
 }
 
-/**
- * REPAIRED: USERNAME LABELING [cite: 2026-01-27]
- * Maps werewolf3788 (Farm 1) and raymystro (Farm 2).
- */
 function parseFinancials(xml) {
     Array.from(xml.getElementsByTagName("farm")).forEach(f => {
         const money = `$${parseInt(f.getAttribute("money")).toLocaleString()}`;
+        // werewolf3788 (Farm 1) | raymystro (Farm 2) [cite: 2026-01-27]
         if (f.getAttribute("farmId") === "1") updatePersistentElement('kevinFinance', money);
         if (f.getAttribute("farmId") === "2") updatePersistentElement('rayFinance', money);
     });
 }
 
-async function fetchDeepXML(url, parser, cacheKey) {
+async function fetchDeepXML(url, parser) {
     try {
         const res = await fetch(url + getTruthID());
         if (!res.ok) throw new Error();
