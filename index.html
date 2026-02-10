@@ -3,65 +3,93 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Farming Simulator Dashboard | Werewolf3788</title>
-    
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
-
-    <link rel="stylesheet" href="style.css?v=1.01">
     
+    <title>FS LIVE COMMAND | Full Telemetry Dashboard</title>
+    
+    <link rel="stylesheet" href="style.css?v=1.11">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
 </head>
 <body>
 
     <div class="dashboard-container">
         <header class="glass-panel header-main">
-            <h1>🚜 Farming Simulator Live Stats 🌻</h1>
-            <p>Real-time data synchronization from GitHub Repository</p>
+            <div class="header-content">
+                <div class="map-frame">
+                    <img id="mapThumbnail" src="https://raw.githubusercontent.com/KFruti88/Farming-Simulator/main/saved-game-5/alma-2C-missouri-us-v1.0.0.3-fs22-1.jpg" alt="Alma Missouri Map">
+                </div>
+                <div class="header-text">
+                    <h1>🚜 FS LIVE COMMAND: FULL TELEMETRY 🌻</h1>
+                    <div class="meta-stats">
+                        <span id="gameClock">Time: 00:00</span> | 
+                        <span id="mapName">Map: Alma, Missouri</span> | 
+                        <span id="systemStatus" class="status-ok">● System Synchronized</span>
+                    </div>
+                </div>
+            </div>
         </header>
 
-        <section class="glass-panel controls">
-            <div class="control-group">
-                <label for="saveSelector">Select Saved Game Slot:</label>
-                <select id="saveSelector">
-                    <option value="5">Saved Game 5 (Current)</option>
-                    <option value="4">Saved Game 4</option>
-                    <option value="3">Saved Game 3 (Placeholder)</option>
-                    <option value="2">Saved Game 2 (Placeholder)</option>
-                    <option value="1">Saved Game 1 (Placeholder)</option>
-                </select>
-            </div>
-            <div id="statusIndicator" class="status-online">System Status: Synchronized</div>
+        <section class="farm-row" id="farmColumns">
+            <article class="glass-panel farm-card">
+                <div class="card-tag">FARM 01</div>
+                <div id="farm1Stats" class="telemetry-body">Scanning farms.xml...</div>
+            </article>
+            <article class="glass-panel farm-card">
+                <div class="card-tag">FARM 02</div>
+                <div id="farm2Stats" class="telemetry-body">Scanning farms.xml...</div>
+            </article>
         </section>
 
-        <main class="data-grid">
-            <article class="glass-panel card">
-                <h2>⚙️ Game Settings</h2>
-                <div id="gameSettingsData" class="data-content">Loading XML data...</div>
+        <main class="data-matrix">
+            
+            <article class="glass-panel card fleet-card">
+                <h2>🚜 ACTIVE FLEET TELEMETRY</h2>
+                <div class="telemetry-header">
+                    <span>MACHINE UNIT</span>
+                    <span>FUEL LEVEL</span>
+                    <span>WEAR/DAMAGE</span>
+                </div>
+                <div id="fleetLog" class="scrollable-content">Analyzing vehicles.xml...</div>
             </article>
 
-            <article class="glass-panel card">
-                <h2>🖥️ Dedicated Server</h2>
-                <div id="serverData" class="data-content">Loading XML data...</div>
+            <article class="glass-panel card field-card">
+                <h2>🌾 FIELD & CROP ANALYSIS</h2>
+                <div class="telemetry-header">
+                    <span>FIELD ID</span>
+                    <span>CROP TYPE</span>
+                    <span>STATE</span>
+                </div>
+                <div id="fieldLog" class="scrollable-content">Analyzing fields.xml & density maps...</div>
             </article>
 
-            <article class="glass-panel card wide-card">
-                <h2>🌾 Career Progress & Farm Info</h2>
-                <div id="savegameData" class="data-content">Select a save game to view details.</div>
+            <article class="glass-panel card animal-card">
+                <h2>🐾 LIVESTOCK TELEMETRY</h2>
+                <div id="animalLog" class="telemetry-body">Searching animals.xml...</div>
             </article>
 
-            <article class="glass-panel card">
-                <h2>📦 Extra Content (DLC)</h2>
-                <div id="extraContentData" class="data-content">Loading XML data...</div>
+            <article class="glass-panel card soil-card">
+                <h2>🔬 PRECISION SOIL DATA</h2>
+                <div id="soilLog" class="telemetry-body">Analyzing precisionFarming.xml...</div>
             </article>
+
+            <article class="glass-panel card log-card">
+                <h2>📋 INFRASTRUCTURE & OBJECTIVES</h2>
+                <div id="infraLog" class="scrollable-content">Analyzing placeables.xml...</div>
+            </article>
+
         </main>
 
-        <footer class="glass-panel footer-info">
-            <p>Data Source: KFruti88/Farming-Simulator | Theme: FARM (Gold/Nature)</p>
+        <footer class="glass-panel footer-main">
+            <div class="footer-grid">
+                <span>Data Source: KFruti88/Farming-Simulator</span>
+                <span id="activeTeam">Team: werewolf3788 & raymystro</span>
+                <span>Thematic Overlay: FARM (Gold/Nature)</span>
+            </div>
         </footer>
     </div>
 
-    <script src="script.js?v=1.01"></script>
+    <script src="script.js?v=1.11"></script>
 </body>
 </html>
