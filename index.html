@@ -4,12 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-    <meta http-equiv="Pragma" content="no-cache">
-    <meta http-equiv="Expires" content="0">
-    
-    <title>FS MASTER COMMAND | Multi-User Sync Matrix</title>
-    
-    <link rel="stylesheet" href="style.css?v=1.30">
+    <title>FS MASTER COMMAND | TOTAL BIOMETRIC MATRIX</title>
+    <link rel="stylesheet" href="style.css?v=1.37">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;900&display=swap" rel="stylesheet">
 </head>
 <body>
@@ -20,25 +16,21 @@
                 <div class="map-branding">
                     <div class="image-container">
                         <img id="activeMapImage" src="http://176.57.165.81:8080/feed/dedicated-server-stats-map.jpg?code=DIaoyx8jutkGtlDr&quality=60&size=512" alt="Operation Map">
-                        <div class="slot-badge" id="currentSlotLabel">HYBRID SYNC</div>
+                        <div class="slot-badge" id="currentSlotLabel">FULL MATRIX ACTIVE</div>
                     </div>
                     <div class="header-text">
                         <h1 id="serverNameDisplay">Werewolf Red Operations</h1>
                         <div class="status-bar">
-                            <span id="mapDisplay">Map: Detecting...</span> | 
-                            <span id="gameClock">Time: 00:00</span> | 
-                            <span id="syncPulse" class="pulse">● MULTI-PROFILE SYNC ACTIVE</span>
+                            <span id="mapDisplay">Map: Detecting...</span> | <span id="gameClock">Time: 00:00</span>
                         </div>
                     </div>
                 </div>
-                <div class="control-center">
-                    <label for="saveSelector">Active Operations:</label>
+                <div class="selector-box">
+                    <label for="saveSelector">Switch Operations:</label>
                     <select id="saveSelector">
                         <option value="2" selected>Saved Game 2 (Texas)</option>
                         <option value="5">Saved Game 5 (Missouri)</option>
                         <option value="1">Saved Game 1</option>
-                        <option value="3">Saved Game 3</option>
-                        <option value="4">Saved Game 4</option>
                     </select>
                 </div>
             </div>
@@ -46,55 +38,60 @@
 
         <section class="ops-matrix">
             <article class="glass-panel card">
-                <div class="card-tag">🛰️ NETWORK & MODS</div>
-                <div id="serverConfig" class="telemetry-body">Syncing...</div>
-                <div id="modLog" class="scroll-list mini">Scanning Mods...</div>
-            </article>
-            <article class="glass-panel card" id="rayProfileCard">
-                <div class="card-tag">👥 PRIMARY OPERATOR: RAY</div>
-                <div id="rayProfileContent" class="telemetry-body">
-                    <div class="telemetry-row"><span>Status:</span> <strong id="rayStatus">OFFLINE</strong></div>
-                    <div class="telemetry-row"><span>Base:</span> <strong>Flora, IL</strong></div>
-                    <div class="telemetry-row"><span>Repo:</span> <a href="https://github.com/KFruti88/Rays-Page" target="_blank" style="color:var(--gold);">Rays-Page</a></div>
-                </div>
+                <div class="card-tag">💰 KEVIN (FARM 1)</div>
+                <div id="kevinFinance" class="telemetry-body">$0.00</div>
             </article>
             <article class="glass-panel card">
-                <div class="card-tag">💰 FARM ACCOUNTS</div>
-                <div id="farmAccountMatrix" class="telemetry-body">Analyzing farms.xml...</div>
+                <div class="card-tag">💰 RAY (FARM 2)</div>
+                <div id="rayFinance" class="telemetry-body">$0.00</div>
+            </article>
+            <article class="glass-panel card">
+                <div class="card-tag">👥 LIVE TEAM</div>
+                <div id="playerLog" class="telemetry-body">Scanning...</div>
             </article>
         </section>
 
         <main class="data-matrix">
-            <article class="glass-panel card fleet-panel">
-                <h2>🚜 UNIT FLEET TELEMETRY (DEEP SCAN)</h2>
-                <div class="telemetry-header">
-                    <span>MACHINE UNIT</span>
-                    <span>CARGO / FILL</span>
-                    <span>FUEL & CONDITION</span>
+            <article class="glass-panel card">
+                <h2>🌾 FIELD GROWTH & HARVEST STATUS</h2>
+                <div class="telemetry-header growth-header">
+                    <span>ID</span>
+                    <span>CROP</span>
+                    <span>STAGE / OWNER</span>
                 </div>
-                <div id="fleetLog" class="scroll-list main-scroll">Initializing Deep Parser...</div>
+                <div id="fieldLog" class="scroll-list main-scroll">Analyzing field.xml...</div>
             </article>
 
-            <article class="glass-panel card field-panel">
-                <h2>🌾 LAND & FIELD MATRIX</h2>
-                <div class="telemetry-header">
-                    <span>FIELD ID</span>
-                    <span>CROP TYPE</span>
-                    <span>OWNERSHIP & COORDS</span>
+            <article class="glass-panel card">
+                <h2>🐾 ANIMAL HEALTH & REPRODUCTION</h2>
+                <div class="telemetry-header animal-header">
+                    <span>SPECIES</span>
+                    <span>HEALTH %</span>
+                    <span>FOOD / WATER</span>
                 </div>
-                <div id="fieldLog" class="scroll-list main-scroll">Analyzing All Zones...</div>
+                <div id="animalLog" class="scroll-list main-scroll">Analyzing animals.xml...</div>
+            </article>
+
+            <article class="glass-panel card">
+                <h2>🚜 UNIT FLEET TELEMETRY</h2>
+                <div class="telemetry-header fleet-header">
+                    <span>UNIT</span>
+                    <span>CARGO</span>
+                    <span>FUEL/WEAR</span>
+                </div>
+                <div id="fleetLog" class="scroll-list main-scroll">Analyzing vehicles.xml...</div>
             </article>
         </main>
 
         <footer class="glass-panel footer-main">
             <div class="footer-grid">
-                <span>Thematic Engine: FARM [cite: 2026-02-08]</span>
-                <span id="teamDisplay">Team: werewolf3788 & raymystro</span>
-                <span>Profile Sync: Rays-Page (GitHub)</span>
+                <span>Thematic Engine: FARM (Gold/Nature) [cite: 2026-02-08]</span>
+                <span>Network Operators: werewolf3788 & raymystro</span>
+                <span>Version: 1.37-FULL-MATRIX</span>
             </div>
         </footer>
     </div>
 
-    <script src="script.js?v=1.30"></script>
+    <script src="script.js?v=1.37"></script>
 </body>
 </html>
