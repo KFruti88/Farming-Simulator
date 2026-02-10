@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<Server game="Farming Simulator 22" version="1.14.0.0" name="Werewolf Red - red -redneck" mapName="Big Flats Texas" dayTime="56635980" mapOverviewFilename="$moddir$FS22_BigFlatsTexas/maps/overview.png" mapSize="2048">
+    <Slots capacity="6" numUsed="1">
+        <Player isUsed="true" isAdmin="true" uptime="71" x="-186.613388" y="105.362610" z="-625.480347">OneLIVIDMAN</Player>
+        <Player/>
+        <Player isUsed="false"/>
+        <Player isUsed="false"/>
+        <Player isUsed="false"/>
+        <Player isUsed="false"/>
+        <Player isUsed="false"/>
+    </Slots>
+    <Vehicles>
+        <Vehicle name="Vehicle Wagon" category="TRAILERS" type="trainTimberTrailer" x="216.764755" y="100.223000" z="820.918762"/>
+        <Vehicle name="Grain Wagon" category="TRAILERS" type="trainTrailer" x="243.367508" y="100.223000" z="820.918762" fillTypes="UNKNOWN" fillLevels="0.000"/>
+        <Vehicle name="Grain Wagon" category="TRAILERS" type="trainTrailer" x="260.619690" y="100.223000" z="820.918762" fillTypes="UNKNOWN" fillLevels="0.000"/>
+        <Vehicle name="Grain Wagon" category="TRAILERS" type="trainTrailer" x="277.873901" y="100.223000" z="820.918762" fillTypes="UNKNOWN" fillLevels="0.000"/>
+        <Vehicle name="Grain Wagon" category="TRAILERS" type="trainTrailer" x="346.917969" y="100.223000" z="820.918762" fillTypes="UNKNOWN" fillLevels="0.000"/>
+        <Vehicle name="Grain Wagon" category="TRAILERS" type="trainTrailer" x="364.170837" y="100.223000" z="820.918762" fillTypes="UNKNOWN" fillLevels="0.000"/>
+        <Vehicle name="Vehicle Wagon" category="TRAILERS" type="trainTimberTrailer" x="416.446228" y="100.223000" z="820.918762"/>
+        <Vehicle name="Vehicle Wagon" category="TRAILERS" type="trainTimberTrailer" x="443.551453" y="100.223000" z="820.918762"/>
+        <Vehicle name="Vehicle Wagon" category="TRAILERS" type="trainTimberTrailer" x="470.656372" y="100.223000" z="820.918762"/>
+        <Vehicle name="Sugarbeet Wagon" category="TRAILERS" type="trainTrailer" x="295.133118" y="100.223000" z="820.918762" fillTypes="UNKNOWN" fillLevels="0.000"/>
+        <Vehicle name="Sugarbeet Wagon" category="TRAILERS" type="trainTrailer" x="312.396851" y="100.223000" z="820.918762" fillTypes="UNKNOWN" fillLevels="0.000"/>
+        <Vehicle name="Sugarbeet Wagon" category="TRAILERS" type="trainTrailer" x="329.659973" y="100.223000" z="820.918762" fillTypes="UNKNOWN" fillLevels="0.000"/>
+        <Vehicle name="Sugarbeet Wagon" category="TRAILERS" type="trainTrailer" x="381.428040" y="100.223000" z="820.918762" fillTypes="UNKNOWN" fillLevels="0.000"/>
+        <Vehicle name="Sugarbeet Wagon" category="TRAILERS" type="trainTrailer" x="398.690002" y="100.223000" z="820.918762" fillTypes="UNKNOWN" fillLevels="0.000"/>
+        <Vehicle name="Korn-Kali Solid Fertilizer" category="BIGBAGS" type="bigBag" x="-979.099670" y="100.490265" z="-890.477356" fillTypes="FERTILIZER" fillLevels="566.106"/>
+        <Vehicle name="Korn-Kali Solid Fertilizer" category="BIGBAGS" type="bigBag" x="-979.032715" y="100.425110" z="-889.476257" fillTypes="FERTILIZER" fillLevels="78.803"/>
+        <Vehicle name="Quick-QuickBale" category="BALERS" type="balerWrapper" x="-98.866287" y="104.124344" z="78.242165" fillTypes="UNKNOWN STRAW UNKNOWN" fillLevels="0.000 7648.148 0.000"/>
+        <Vehicle name="Fantom 1250 Pro" category="CULTIVATORS" type="cultivator" x="9.477177" y="105.979744" z="76.946915"/>
+        <Vehicle name="Series 7 TTV HD" category="TRACTORSM" type="tractor" x="-56.238224" y="101.523331" z="669.310730" fillTypes="DIESEL DEF AIR" fillLevels="336.955 27.000 3382.070" isAIActive="false"/>
+        <Vehicle name="SCOUT XXL 260" category="MISC" type="FS22_precisionFarming.soilSampler" x="-191.649643" y="102.932091" z="-705.628845"/>
+        <Vehicle name="Pickup 2017" category="CARS" type="car" x="-194.918991" y="102.409943" z="-707.124451" fillTypes="DIESEL" fillLevels="92.997" isAIActive="false"/>
+        <Vehicle name="9RX Series" category="TRACTORSL" type="tractor" x="-46.793472" y="105.056267" z="30.959984" fillTypes="DIESEL DEF AIR" fillLevels="1427.961 83.000 2433.393" isAIActive="false"/>
+        <Vehicle name="53&apos; Dropdeck Trailer Autoload Bales" category="TRAILERS" type="trailer" x="529.033447" y="105.815796" z="-455.608429" fillTypes="DRYGRASS_WINDROW" fillLevels="518913.089"/>
+        <Vehicle name="KDD 941 STH" category="MOWERS" type="mower" x="638.638916" y="109.790787" z="-274.619232"/>
+        <Vehicle name="KDF 341 S" category="MOWERS" type="mower" x="631.244507" y="109.783363" z="-274.609711"/>
+        <Vehicle name="K165" category="FERTILIZERSPREADERS" type="spreader" x="-94.206284" y="103.950500" z="76.519249" fillTypes="FERTILIZER" fillLevels="18446.717"/>
+        <Vehicle name="CP690" category="COTTONVEHICLES" type="cottonHarvester" x="-9.307566" y="105.248459" z="76.489578" fillTypes="COTTON COTTON DIESEL DEF" fillLevels="5083.521 0.543 261.337 61.000" isAIActive="false"/>
+        <Vehicle name="TGS 18.500 4x4" category="TRUCKS" type="tractor" x="546.077087" y="105.771126" z="-470.760132" fillTypes="DIESEL DEF AIR" fillLevels="348.985 56.000 2666.245" isAIActive="false"/>
+        <Vehicle name="TGS 18.500 4x4" category="TRUCKS" type="tractor" x="529.137939" y="105.687874" z="-465.581116" fillTypes="DIESEL DEF AIR" fillLevels="352.988 57.000 4000.000" isAIActive="false"/>
+        <Vehicle name="53&apos; Dropdeck Trailer Autoload Bales" category="TRAILERS" type="FS22_dropdeckTrailer53Ft_AutoPack_crossplay.manureSpreaderTrailer" x="-136.857849" y="104.009254" z="71.067497" fillTypes="UNKNOWN" fillLevels="0.000"/>
+        <Vehicle name="ZA-TS 3200" category="FERTILIZERSPREADERS" type="spreader" x="-89.949028" y="103.945854" z="80.037796" fillTypes="FERTILIZER" fillLevels="3200.000"/>
+        <Vehicle name="9RX Series" category="TRACTORSL" type="tractor" x="9.570041" y="105.056702" z="62.559238" fillTypes="DIESEL DEF AIR" fillLevels="1259.883 83.000 3552.099" isAIActive="false"/>
+        <Vehicle name="Series 8 TTV" category="TRACTORSM" type="tractor" x="634.760193" y="109.463409" z="-274.595795" fillTypes="DIESEL DEF AIR" fillLevels="494.999 35.000 3000.000" isAIActive="false"/>
+        <Vehicle name="53&apos; Dropdeck Trailer Autoload Bales" category="TRAILERS" type="FS22_dropdeckTrailer53Ft_AutoPack_crossplay.baleAutoLoaderTrailer" x="555.239258" y="105.759460" z="-466.794037" fillTypes="UNKNOWN UNKNOWN UNKNOWN UNKNOWN UNKNOWN UNKNOWN UNKNOWN UNKNOWN UNKNOWN UNKNOWN" fillLevels="0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000"/>
+        <Vehicle name="53&apos; Dropdeck Trailer Autoload Bales" category="TRAILERS" type="trailer" x="-134.498154" y="104.083961" z="72.197655" fillTypes="UNKNOWN" fillLevels="0.000"/>
+        <Vehicle name="Citan 15001-C" category="SEEDERS" type="fertilizingSowingMachine" x="-108.490334" y="103.960228" z="76.773712" fillTypes="UNKNOWN UNKNOWN" fillLevels="0.000 0.000"/>
+        <Vehicle name="Kompaktomat 1570 Max" category="CULTIVATORS" type="cultivator" x="-23.453362" y="105.570107" z="80.964844"/>
+        <Vehicle name="GIGANT 13500" category="SPRAYERS" type="pdlc_premiumExpansion.sprayerExtended" x="-105.494820" y="103.909843" z="76.572296" fillTypes="UNKNOWN" fillLevels="0.000"/>
+        <Vehicle name="MF 2370 Ultra HD" category="BALERS" type="baler" x="-124.491859" y="103.955719" z="75.938332" fillTypes="UNKNOWN" fillLevels="0.000"/>
+        <Vehicle name="IMPRESS 185VC PRO" category="BALERS" type="balerWrapper" x="-102.581947" y="103.878426" z="77.042122" fillTypes="UNKNOWN" fillLevels="0.000"/>
+        <Vehicle name="4905 Multi-Fruit Planter Unrealistic" category="PLANTERS" type="FS22_kinzeMultiFruitPlanterPack.mulchFertilizingSowingMachine" x="-127.752251" y="104.541786" z="76.450745" fillTypes="SEEDS UNKNOWN" fillLevels="62924.176 0.000"/>
+        <Vehicle name="4905 Multi-Fruit Planter Unrealistic" category="PLANTERS" type="FS22_kinzeMultiFruitPlanterPack.mulchFertilizingSowingMachine" x="-34.869724" y="106.034233" z="68.456955" fillTypes="SEEDS LIQUIDFERTILIZER" fillLevels="75000.000 25000.000"/>
+        <Vehicle name="Wool" category="PALLETS" type="pallet" x="505.898987" y="105.733299" z="-506.270355" fillTypes="WOOL" fillLevels="1000.000"/>
+        <Vehicle name="Wool" category="PALLETS" type="pallet" x="503.899872" y="105.733299" z="-506.330170" fillTypes="WOOL" fillLevels="1000.000"/>
+        <Vehicle name="Invisible Roller" category="ROLLERS" type="roller" x="-56.114017" y="101.415398" z="673.049194"/>
+        <Vehicle name="Wool" category="PALLETS" type="pallet" x="501.900726" y="105.733299" z="-506.390015" fillTypes="WOOL" fillLevels="1000.000"/>
+        <Vehicle name="Wool" category="PALLETS" type="pallet" x="499.901611" y="105.733299" z="-506.449371" fillTypes="WOOL" fillLevels="1000.000"/>
+        <Vehicle name="Wool" category="PALLETS" type="pallet" x="497.902405" y="105.733299" z="-506.509521" fillTypes="WOOL" fillLevels="1000.000"/>
+        <Vehicle name="Wool" category="PALLETS" type="pallet" x="495.903473" y="105.741936" z="-506.569580" fillTypes="WOOL" fillLevels="377.917"/>
+    </Vehicles>
+    <Mods>
+        <Mod name="pdlc_agiPack" author="GIANTS Software" version="1.1.0.0" hash="1e34e6da3250471b406a092063173ec0">AGI Pack</Mod>
+        <Mod name="pdlc_forestryPack" author="GIANTS Software" version="1.3.0.0" hash="329e90792fd90c2ca716253d202aa7a4">Platinum Expansion</Mod>
+        <Mod name="pdlc_premiumExpansion" author="GIANTS Software" version="1.1.1.0" hash="b5aed8c67671022cdec2f0dc5f5b0066">Premium Expansion</Mod>
+        <Mod name="FS22_AmericanShedWithLounge" author="Sand Hill Modding" version="1.0.0.0" hash="04df4ad978bd172a12a9797ad191daed">American Shed With Lounge</Mod>
+        <Mod name="FS22_AutomaticWater_Animals_Greenhouses" author="JogaDim" version="1.0.0.0" hash="2fb0a448516ab94aa2f01289c08ec42e">Automatic Water For Animals And Greenhouses</Mod>
+        <Mod name="FS22_BigFlatsTexas" author="TK Farms" version="1.0.0.0" hash="5452d599df457792f14de8082b038cba">Big Flats Texas</Mod>
+        <Mod name="FS22_CaseIH_Puma_Series" author="Steves Mods" version="1.0.1.0" hash="30a4e21bcd6b3b605870206aa6a6820c">Case Puma 240 CVX Powerdrive</Mod>
+        <Mod name="FS22_dropdeckTrailer53Ft_AutoPack_crossplay" author="macktrucker921" version="2.0.0.1" hash="42ee58b6cb4fc1f476612f868d8688e9">53' Dropdeck Trailer Autoload Bales</Mod>
+        <Mod name="FS22_freefuel" author="Aus Farmer" version="1.0.1.0" hash="5f82fd33dbb32974b533f28c8e6ebb10">Free Fuel</Mod>
+        <Mod name="FS22_John_Deere_CP_770" author="Agro Tonho" version="1.0.0.0" hash="4d17bb93ae095aabf30e91266663c635">John Deere CP 770</Mod>
+        <Mod name="FS22_kinzeMultiFruitPlanterPack" author="ChrisS and RileyS" version="1.2.0.0" hash="c2e3f0d18c557453752a7abe648520aa">Kinze Multi-Fruit Planter Pack</Mod>
+        <Mod name="FS22_KuhnAxis402" author="Kamilos0397" version="1.0.0.0" hash="bca2c3b7dd8c9f7ef9e428db71149dba">Kuhn Axis 402</Mod>
+        <Mod name="FS22_Lizard_SM72_SM82" author="Agro Tonho" version="1.0.0.0" hash="84e136d8e2d4e6a0057fe281b53899bb">Lizard SM 72 / SM 82</Mod>
+        <Mod name="FS22_Lizard_Trex_600" author="Blacksheep Modding" version="1.0.0.0" hash="f18efe711c76416b6fd05e5165297b01">LIZARD Trex600</Mod>
+        <Mod name="FS22_Multifruit_Buying_Station" author="82Studio" version="1.0.3.2" hash="fa4e9962891aea7a1b54e06cd01ec934">Multifruit Buying Station</Mod>
+        <Mod name="FS22_Pack_Autoload" author="raulycristi1 [VSR Modding Sur&amp;#93;" version="1.0.1.0" hash="df64c6f23ca595e49e6f3ea8056336a8">Autoload Pack</Mod>
+        <Mod name="FS22_PlaceableSymbols" author="JMZ" version="1.0.0.0" hash="0e685b2c7447757b63ed3310091690ba">Placeable Glowing Symbols Pack</Mod>
+        <Mod name="FS22_precisionFarming" author="GIANTS Software" version="1.0.2.1" hash="5359be9ae727974edde9f964b4739661">Precision Farming DLC</Mod>
+        <Mod name="FS22_precisionFarming_extension" author="Achimobil" version="1.0.0.0" hash="167dca57362bc13bbf10e2275fe2313e">ISARIA Color And Range Extension</Mod>
+        <Mod name="FS22_Pro_Bale_Fork_Autoload" author="Blacksheep Modding" version="1.0.0.0" hash="34773893028a75ced63dc2b8d10b6c43">Pro Bale Grab Autoload</Mod>
+        <Mod name="FS22_Quickbale" author="Mark Thor" version="1.0.0.4" hash="13a3954c97920a6fdc02bc945873e2c9">QuickBale</Mod>
+        <Mod name="FS22_R3_HarvestProfit" author="Raster R3 Modding" version="1.0.0.0" hash="23b3d06aacd5b2b14b5db0f4cf44d9a5">Harvest Profit</Mod>
+        <Mod name="FS22_Rake_Lizard_R90" author="Hispano" version="2.0.0.0" hash="19a63f813c088682d3dc55e42bfc0b8d">Lizard Front Windrower</Mod>
+        <Mod name="FS22_Refillable_Tanks" author="Puma 145" version="1.1.0.0" hash="87af19430d7becb04f46c16ea3147582">Refillable Tanks</Mod>
+        <Mod name="FS22_RM_Subsidy" author="Realismus Modding" version="1.0.0.0" hash="8a6b59d79f29f13b76e80eb699b9417c">Government Subsidy</Mod>
+        <Mod name="FS22_sellEverything" author="Schultz Modding" version="1.0.0.3" hash="2be24ccbc8390491d1394eddaf5f3ac5">Sell Everything</Mod>
+        <Mod name="FS22_Silo_Pack" author="BERNIESCS" version="1.0.0.0" hash="ac9967e3702cfed37232d2fbc0e85b42">Silo And Containers</Mod>
+        <Mod name="FS22_SolarFarmsLizard" author="MechMods" version="1.0.0.0" hash="228d234d70c67982804803896e06b674">Solar Farms Lizard</Mod>
+        <Mod name="FS22_strawHarvestPack" author="Creative Mesh" version="1.2.0.1" hash="1597574bd52d68be39b78f6122c95714">Straw Harvest Pack</Mod>
+        <Mod name="FS22_T4_40_Multi_Harvester_Pack" author="MarkThor" version="1.0.0.1" hash="599ca59f3208a512b03e0ade4b3eb6d6">T4-40 Multi Harvester Pack</Mod>
+        <Mod name="FS22_tardisLoader" author="OmaTana" version="1.3.1.0" hash="586eaccb2b3d9a8ad5b00d45d1e07e30">Lizard Tardis XL</Mod>
+        <Mod name="FS22_TLX_X52_Tipper" author="82Studio" version="1.0.0.0" hash="2fd4039965d12ea66912ff9f5a652ff2">TLX X52 Tipper</Mod>
+        <Mod name="FS22_TreeBGone" author="Mantrid" version="1.0.1.0" hash="7906892fe3238fe887dbc8bda96e22cc">Tree-B-Gone</Mod>
+        <Mod name="FS22_WindTurbinePackage" author="Razak" version="1.3.0.0" hash="30b628376b3e3d91a537513b713cd83b">Wind Turbine Package</Mod>
+        <Mod name="FS22_WirelessWasher" author="PizzaBacker" version="1.0.0.0" hash="56956c9b5dabdad3a0cc7dc3d212b27d">Wireless High Pressure Washer</Mod>
+    </Mods>
+    <Farmlands>
+        <Farmland name="" id="1" owner="0" area="139620" x="-878.566406" z="901.112610"/>
+        <Farmland name="" id="2" owner="1" area="93330" x="-65.000000" z="19.000000"/>
+        <Farmland name="" id="3" owner="1" area="266965" x="-60.977749" z="432.075989"/>
+        <Farmland name="" id="4" owner="0" area="367500" x="263.000000" z="378.000000"/>
+        <Farmland name="" id="5" owner="0" area="193705" x="93.902039" z="910.028687"/>
+        <Farmland name="" id="6" owner="0" area="146955" x="731.000000" z="921.000000"/>
+        <Farmland name="" id="7" owner="0" area="624880" x="730.000000" z="392.000000"/>
+        <Farmland name="" id="8" owner="1" area="170820" x="730.000000" z="-153.000000"/>
+        <Farmland name="" id="9" owner="1" area="154050" x="827.000000" z="-428.000000"/>
+        <Farmland name="" id="10" owner="1" area="76630" x="535.000000" z="-428.000000"/>
+        <Farmland name="" id="11" owner="1" area="313800" x="735.942627" z="-801.684509"/>
+        <Farmland name="" id="12" owner="1" area="804420" x="111.000000" z="-534.000000"/>
+        <Farmland name="" id="13" owner="0" area="730620" x="-513.000000" z="-534.000000"/>
+        <Farmland name="" id="14" owner="0" area="223615" x="-916.345459" z="-473.423218"/>
+        <Farmland name="" id="15" owner="0" area="231660" x="-918.000000" z="387.000000"/>
+        <Farmland name="" id="16" owner="0" area="427640" x="-513.062500" z="246.971283"/>
+        <Farmland name="" id="17" owner="0" area="166465" x="-529.414673" z="672.382263"/>
+        <Farmland name="" id="18" owner="0" area="142050" x="-511.720367" z="917.891663"/>
+        <Farmland name="" id="19" owner="1" area="74520" x="-918.000000" z="-957.000000"/>
+        <Farmland name="" id="20" owner="0" area="19890" x="-771.000000" z="573.000000"/>
+        <Farmland name="" id="21" owner="0" area="9610" x="-995.000000" z="-73.000000"/>
+        <Farmland name="" id="22" owner="1" area="50439" x="-232.835052" z="671.649475"/>
+        <Farmland name="" id="23" owner="0" area="14800" x="478.000000" z="-989.000000"/>
+    </Farmlands>
+    <Fields>
+        <Field id="1" x="-912.474182" z="-500.004395" isOwned="false"/>
+        <Field id="2" x="-537.161194" z="-510.254791" isOwned="false"/>
+        <Field id="3" x="140.227814" z="-513.075073" isOwned="true"/>
+        <Field id="4" x="723.379822" z="-796.844055" isOwned="true"/>
+        <Field id="5" x="818.328857" z="-389.756012" isOwned="true"/>
+        <Field id="6" x="536.616821" z="-326.606018" isOwned="true"/>
+        <Field id="7" x="728.462830" z="-146.318039" isOwned="true"/>
+        <Field id="8" x="694.760803" z="410.651978" isOwned="false"/>
+        <Field id="9" x="262.858215" z="381.353729" isOwned="false"/>
+        <Field id="10" x="-71.862885" z="395.815979" isOwned="true"/>
+        <Field id="11" x="-529.358154" z="209.625961" isOwned="false"/>
+        <Field id="12" x="-520.816162" z="670.566956" isOwned="false"/>
+        <Field id="13" x="-917.279175" z="416.281982" isOwned="false"/>
+        <Field id="14" x="-547.702148" z="940.529968" isOwned="false"/>
+        <Field id="15" x="150.367813" z="916.936951" isOwned="false"/>
+        <Field id="16" x="659.273804" z="915.040955" isOwned="false"/>
+    </Fields>
+</Server>
