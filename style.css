@@ -1,165 +1,102 @@
-/* FARM Theme: Gold (#ffd700), Dark Background (#1a1400)
-    Design Style: High-end Glassmorphism
+/* FARM Theme: Gold (#ffd700), Dark Background (#0d0a00)
+   Mandate: Full Page Coverage & Cross-Device Responsiveness
 */
 
 :root {
     --farm-gold: #ffd700;
-    --farm-bg: #1a1400;
-    --glass-bg: rgba(255, 255, 255, 0.05);
-    --glass-border: rgba(255, 215, 0, 0.2);
-    --text-main: #ffffff;
-    --text-muted: #cccccc;
+    --farm-bg: #0d0a00;
+    --glass: rgba(255, 255, 255, 0.04);
+    --border: rgba(255, 215, 0, 0.2);
+    --safe: #7cfc00;
+    --warn: #ffcc00;
+    --danger: #ff4d4d;
+    --fuel: #00d4ff;
 }
 
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-}
+* { box-sizing: border-box; margin: 0; padding: 0; }
 
 body {
     background-color: var(--farm-bg);
-    background-image: 
-        radial-gradient(circle at 20% 30%, rgba(255, 215, 0, 0.05) 0%, transparent 40%),
-        radial-gradient(circle at 80% 70%, rgba(255, 215, 0, 0.05) 0%, transparent 40%);
+    background-image: radial-gradient(circle at top right, #1a1400 0%, #0d0a00 100%);
     font-family: 'Inter', sans-serif;
-    color: var(--text-main);
-    line-height: 1.6;
+    color: #fff;
     min-height: 100vh;
     display: flex;
     justify-content: center;
-    align-items: flex-start;
-    padding: 20px 0;
 }
 
 .dashboard-container {
-    width: 90%; /* Responsive Mandate */
-    max-width: 1280px; /* Broadcast Overlay Standard */
+    width: 95%; /* Expands to cover page */
+    max-width: 1920px; /* Supports Ultra-Wide monitors */
+    padding: 20px 0;
     display: flex;
     flex-direction: column;
-    gap: 20px;
-}
-
-/* Glassmorphism Panel Base */
-.glass-panel {
-    background: var(--glass-bg);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border: 1px solid var(--glass-border);
-    border-radius: 15px;
-    padding: 20px;
-    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
-}
-
-.header-main {
-    text-align: center;
-    border-bottom: 2px solid var(--farm-gold);
-}
-
-.header-main h1 {
-    font-size: 2rem;
-    color: var(--farm-gold);
-    text-transform: uppercase;
-    letter-spacing: 2px;
-}
-
-.controls {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
     gap: 15px;
 }
 
-.control-group {
-    display: flex;
-    align-items: center;
-    gap: 10px;
+.glass-panel {
+    background: var(--glass);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 15px;
 }
 
-select {
-    background: #2a2200;
-    color: var(--farm-gold);
-    border: 1px solid var(--farm-gold);
-    padding: 8px 15px;
-    border-radius: 5px;
-    font-family: inherit;
-    cursor: pointer;
+/* Header Overhaul - No longer scrunched */
+.header-main { border-left: 6px solid var(--farm-gold); }
+.header-content { display: flex; align-items: center; gap: 25px; }
+
+.map-frame img {
+    width: 140px;
+    height: 90px;
+    object-fit: cover;
+    border: 2px solid var(--farm-gold);
+    border-radius: 4px;
 }
 
-.status-online {
-    color: #7cfc00;
-    font-size: 0.9rem;
-    display: flex;
-    align-items: center;
-    gap: 5px;
-}
+.header-text h1 { font-size: 1.8rem; letter-spacing: 2px; color: var(--farm-gold); }
+.meta-stats { font-size: 0.9rem; color: #ccc; margin-top: 5px; }
+.status-ok { color: var(--safe); }
 
-.status-online::before {
-    content: "●";
-    font-size: 1.2rem;
-}
+/* Multi-Farm Column Logic */
+.farm-row { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+.farm-card { border-top: 3px solid var(--farm-gold); }
+.card-tag { font-size: 0.7rem; color: var(--farm-gold); font-weight: 800; margin-bottom: 5px; }
 
-/* Data Grid Layout */
-.data-grid {
+/* Responsive Matrix Grid */
+.data-matrix {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 20px;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: auto;
+    gap: 15px;
+    flex-grow: 1; /* Pushes content to fill vertical space */
 }
 
-.wide-card {
-    grid-column: span 1;
+/* Specific Card Rules */
+.fleet-card { grid-column: span 2; }
+.card h2 { color: var(--farm-gold); font-size: 0.85rem; margin-bottom: 12px; border-bottom: 1px solid var(--border); padding-bottom: 5px; }
+
+/* Telemetry Lists */
+.telemetry-header { display: grid; grid-template-columns: 2fr 1fr 1fr; font-size: 0.7rem; color: var(--farm-gold); font-weight: 600; margin-bottom: 8px; }
+.scrollable-content { height: 350px; overflow-y: auto; padding-right: 5px; }
+
+.telemetry-row { display: grid; grid-template-columns: 2fr 1fr 1fr; font-size: 0.8rem; padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.05); align-items: center; }
+
+/* Progress Bars (Fuel/Condition) */
+.stat-bar-bg { height: 6px; background: #222; border-radius: 3px; margin-top: 4px; overflow: hidden; }
+.stat-bar-fill { height: 100%; transition: width 0.8s ease; }
+
+/* RESPONSIVENESS MANDATE */
+@media (max-width: 1400px) {
+    .data-matrix { grid-template-columns: 1fr 1fr; }
+    .fleet-card { grid-column: span 1; }
 }
 
-@media (min-width: 1024px) {
-    .wide-card {
-        grid-column: span 2;
-    }
+@media (max-width: 900px) {
+    .data-matrix, .farm-row { grid-template-columns: 1fr; }
+    .header-content { flex-direction: column; text-align: center; }
+    .scrollable-content { height: auto; max-height: 400px; }
 }
 
-.card h2 {
-    color: var(--farm-gold);
-    font-size: 1.2rem;
-    margin-bottom: 15px;
-    border-left: 3px solid var(--farm-gold);
-    padding-left: 10px;
-}
-
-.data-content {
-    font-size: 0.9rem;
-    color: var(--text-muted);
-}
-
-.data-item {
-    display: flex;
-    justify-content: space-between;
-    padding: 8px 0;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-}
-
-.data-label {
-    font-weight: 600;
-    color: var(--text-main);
-}
-
-.footer-info {
-    text-align: center;
-    font-size: 0.8rem;
-    color: var(--text-muted);
-}
-
-/* Mobile Responsiveness: Stacking content vertically as requested */
-@media (max-width: 768px) {
-    .dashboard-container {
-        width: 95%;
-    }
-    
-    .controls {
-        flex-direction: column;
-        align-items: flex-start;
-    }
-    
-    .wide-card {
-        grid-column: span 1;
-    }
-}
+.footer-grid { display: flex; justify-content: space-between; font-size: 0.75rem; color: #888; }
