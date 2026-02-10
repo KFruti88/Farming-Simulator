@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8" standalone="no" ?>
+
+<streamingInternetRadios>
+									<!-- <181.FM Oldies Stations> -->
+	<streamingInternetRadio href="http://listen.181fm.com/181-greatoldies_128k.mp3" /> <!-- Classic Hits -->
+	<streamingInternetRadio href="http://listen.181fm.com/181-goodtime_128k.mp3" /> <!-- Good Time Oldies -->
+	<streamingInternetRadio href="http://listen.181fm.com/181-mellow_128k.mp3" /> <!-- Mellow Hits -->
+	<streamingInternetRadio href="http://listen.181fm.com/181-soul_128k.mp3" /> <!-- Soul -->
+	<streamingInternetRadio href="http://listen.181fm.com/181-beatles_128k.mp3" /> <!-- Beatles -->
+	<streamingInternetRadio href="http://listen.181fm.com/181-70s_128k.mp3" /> <!-- Super '70s -->
+									<!-- <181.FM '80s Decade> -->
+	<streamingInternetRadio href="http://listen.181fm.com/181-awesome80s_128k.mp3" /> <!-- Awesome '80s -->
+	<streamingInternetRadio href="http://listen.181fm.com/181-lite80s_128k.mp3" /> <!-- Lite '80s -->
+	<streamingInternetRadio href="http://listen.181fm.com/181-80scountry_128k.mp3" /> <!-- 80's Country --> <!-- FS22 Default Station -->
+	<streamingInternetRadio href="http://listen.181fm.com/181-80srnb_128k.mp3" /> <!-- '80s RnB -->
+	<streamingInternetRadio href="http://listen.181fm.com/181-80sliternb_128k.mp3" /> <!-- '80s RnB Lite -->
+	<streamingInternetRadio href="http://listen.181fm.com/181-hairband_128k.mp3" /> <!-- '80s Hairband --> <!-- FS22 Default Station -->
+									<!-- <181.FM '90s Decade> -->
+	<streamingInternetRadio href="http://listen.181fm.com/181-star90s_128k.mp3" /> <!-- Star '90s -->
+	<streamingInternetRadio href="http://listen.181fm.com/181-90scountry_128k.mp3" /> <!-- '90s Country -->
+	<streamingInternetRadio href="http://listen.181fm.com/181-lite90s_128k.mp3" /> <!-- Lite '90s -->
+	<streamingInternetRadio href="http://listen.181fm.com/181-90salt_128k.mp3" /> <!-- '90s Alternative -->
+	<streamingInternetRadio href="http://listen.181fm.com/181-90sdance_128k.mp3" /> <!-- '90s Dance -->
+	<streamingInternetRadio href="http://listen.181fm.com/181-90sliternb_128k.mp3" /> <!-- '90s Lite RnB -->
+	<streamingInternetRadio href="http://listen.181fm.com/181-90srnb_128k.mp3" /> <!-- '90s RnB -->
+									<!-- <181.FM Pop> -->
+	<streamingInternetRadio href="http://listen.181fm.com/181-power_128k.mp3" /> <!-- Power 181 (Top 40) -->
+	<streamingInternetRadio href="http://listen.181fm.com/181-powerexplicit_128k.mp3" /> <!-- Power 181 (E) -->
+	<streamingInternetRadio href="http://listen.181fm.com/181-office_128k.mp3" /> <!-- The Office -->
+	<streamingInternetRadio href="http://listen.181fm.com/181-themix_128k.mp3" /> <!-- The Mix -->
+	<streamingInternetRadio href="http://listen.181fm.com/181-thepoint_128k.mp3" /> <!-- The Point -->
+	<streamingInternetRadio href="http://listen.181fm.com/181-oldschool_128k.mp3" /> <!-- Old School HipHop/RnB -->
+	<streamingInternetRadio href="http://listen.181fm.com/181-smoothac_128k.mp3" /> <!-- Smooth accel -->
+	<streamingInternetRadio href="http://listen.181fm.com/181-uktop40_128k.mp3" /> <!-- UK Top 40 -->
+	<streamingInternetRadio href="http://listen.181fm.com/181-heart_128k.mp3" /> <!-- The Heart (Love Songs) -->
+	<streamingInternetRadio href="http://listen.181fm.com/181-vibe_128k.mp3" /> <!-- The Vibe of Vegas -->
+									<!-- <181.FM Rock> -->
+	<streamingInternetRadio href="http://listen.181fm.com/181-buzz_128k.mp3" /> <!-- The Buzz (Alt. Rock)-->
+	<streamingInternetRadio href="http://listen.181fm.com/181-classicbuzz_128k.mp3" /> <!-- Classic Buzz (Alt) -->
+	<streamingInternetRadio href="http://listen.181fm.com/181-eagle_128k.mp3" /> <!-- The Eagle (Classic) -->
+	<streamingInternetRadio href="http://listen.181fm.com/181-rock_128k.mp3" /> <!-- Rock 181 -->
+	<streamingInternetRadio href="http://listen.181fm.com/181-rock40_128k.mp3" /> <!-- Rock 40 (Rock & Roll -->
+	<streamingInternetRadio href="http://listen.181fm.com/181-hairband_128k.mp3" /> <!-- '80s Hairband --> <!-- FS22 Default Station --> <!-- List Duplicate -->
+	<streamingInternetRadio href="http://listen.181fm.com/181-yachtrock_128k.mp3" /> <!-- Yacht Rock -->
+	<streamingInternetRadio href="http://listen.181fm.com/181-chloe_128k.mp3" /> <!-- Chloe @ 181.FM<-->
+	<streamingInternetRadio href="http://listen.181fm.com/181-thepoint_128k.mp3" /> <!-- The Point -->
+	<streamingInternetRadio href="http://listen.181fm.com/181-hardrock_128k.mp3" /> <!-- The Rock! (Hard Rock) -->
+									<!-- <181.FM Country> -->
+	<streamingInternetRadio href="http://listen.181fm.com/181-kickincountry_128k.mp3" /> <!-- Kickin' Country -->
+	<streamingInternetRadio href="http://listen.181fm.com/181-realcountry_128k.mp3" /> <!-- Real Country -->
+	<streamingInternetRadio href="http://listen.181fm.com/181-highway_128k.mp3" /> <!-- Highway 181 -->
+	<streamingInternetRadio href="http://listen.181fm.com/181-80scountry_128k.mp3" /> <!-- '80s Country --> <!-- FS22 Default Station --> <!-- List Duplicate -->
+	<streamingInternetRadio href="http://listen.181fm.com/181-90scountry_128k.mp3" /> <!-- '90s Country --> <!-- List Duplicate -->
+	<streamingInternetRadio href="http://listen.181fm.com/181-frontporch_128k.mp3" /> <!-- Front Porch (Bluegrass) -->
+									<!-- <181.FM Urban> -->
+	<streamingInternetRadio href="http://listen.181fm.com/181-beat_128k.mp3" /> <!-- The Beat (HipHop/R&B) -->
+	<streamingInternetRadio href="http://listen.181fm.com/181-thebox_128k.mp3" /> <!-- The Box (Urban) -->
+	<streamingInternetRadio href="http://listen.181fm.com/181-rnb_128k.mp3" /> <!-- True R&B -->
+	<streamingInternetRadio href="http://listen.181fm.com/181-soul_128k.mp3" /> <!-- Soul --> <!-- List Duplicate -->
+	<streamingInternetRadio href="http://listen.181fm.com/181-party_128k.mp3" /> <!-- Party 181 -->
+	<streamingInternetRadio href="http://listen.181fm.com/181-jammin_128k.mp3" /> <!-- Jammin' 181 -->
+	<streamingInternetRadio href="http://listen.181fm.com/181-80srnb_128k.mp3" /> <!-- '80s RnB --> <!-- List Duplicate -->
+	<streamingInternetRadio href="http://listen.181fm.com/181-80sliternb_128k.mp3" /> <!-- '80s RnB Lite --> <!-- List Duplicate -->
+	<streamingInternetRadio href="http://listen.181fm.com/181-oldschool_128k.mp3" /> <!-- Old School HipHop/RnB --> <!-- List Duplicate -->
+									<!-- <181.FM Dance/Techno> -->
+	<streamingInternetRadio href="http://listen.181fm.com/181-energy98_128k.mp3" /> <!-- Energy 98 -->
+	<streamingInternetRadio href="http://listen.181fm.com/181-chilled_128k.mp3" /> <!-- Chilled Out -->
+	<streamingInternetRadio href="http://listen.181fm.com/181-energy93_128k.mp3" /> <!-- Energy 93 -->
+	<streamingInternetRadio href="http://listen.181fm.com/181-ball_128k.mp3" /> <!-- Studio 181 -->
+	<streamingInternetRadio href="http://listen.181fm.com/181-vibe_128k.mp3" /> <!-- The Vibe of Vegas --> <!-- List Duplicate -->
+	<streamingInternetRadio href="http://listen.181fm.com/181-90sdance_128k.mp3" /> <!-- '90s Dance --> <!-- List Duplicate -->
+									<!-- <181.FM Easy Listening> -->
+	<streamingInternetRadio href="http://listen.181fm.com/181-breeze_128k.mp3" /> <!-- The Breeze -->
+	<streamingInternetRadio href="http://listen.181fm.com/181-blues_128k.mp3" /> <!-- True Blues -->
+	<streamingInternetRadio href="http://listen.181fm.com/181-jazzmix_128k.mp3" /> <!-- Jazz Mix -->
+	<streamingInternetRadio href="http://listen.181fm.com/181-classicalguitar_128k.mp3" /> <!-- Classical Guitar -->
+	<streamingInternetRadio href="http://listen.181fm.com/181-classicaljazz_128k.mp3" /> <!-- Classical Jazz -->
+	<streamingInternetRadio href="http://listen.181fm.com/181-vocals_128k.mp3" /> <!-- Vocal Jazz -->
+	<streamingInternetRadio href="http://listen.181fm.com/181-bebop_128k.mp3" /> <!-- BeBop Jazz -->
+	<streamingInternetRadio href="http://listen.181fm.com/181-fusionjazz_128k.mp3" /> <!-- Fusion Jazz -->
+	<streamingInternetRadio href="http://listen.181fm.com/181-trancejazz_128k.mp3" /> <!-- Trance Jazz -->
+	<streamingInternetRadio href="http://listen.181fm.com/181-classical_128k.mp3" /> <!-- Classical Music -->
+	<streamingInternetRadio href="http://listen.181fm.com/181-acidjazz_128k.mp3" /> <!-- Acid Jazz -->
+									<!-- <181.FM Talk Radio> -->
+	<streamingInternetRadio href="http://listen.181fm.com/181-comedy_128k.mp3" /> <!-- Comedy Club -->
+									<!-- <181.FM Christmas> -->
+	<streamingInternetRadio href="http://listen.181fm.com/181-xkkountry_128k.mp3" /> <!-- Christmas Kountry -->
+	<streamingInternetRadio href="http://listen.181fm.com/181-xtraditional_128k.mp3" /> <!-- Christmas Classics -->
+	<streamingInternetRadio href="http://listen.181fm.com/181-xoldies_128k.mp3" /> <!-- Christmas Oldies -->
+	<streamingInternetRadio href="http://listen.181fm.com/181-xcountry_128k.mp3" /> <!-- Christmas Country -->
+	<streamingInternetRadio href="http://listen.181fm.com/181-xpower_128k.mp3" /> <!-- Christmas Power -->
+	<streamingInternetRadio href="http://listen.181fm.com/181-xhighway_128k.mp3" /> <!-- Christmas Highway -->
+	<streamingInternetRadio href="http://listen.181fm.com/181-xsoundtrax_128k.mp3" /> <!-- Christmas Soundtracks -->
+	<streamingInternetRadio href="http://listen.181fm.com/181-xtrue_128k.mp3" /> <!-- Christmas R&B -->
+	<streamingInternetRadio href="http://listen.181fm.com/181-xrock_128k.mp3" /> <!-- Christmas Rock -->
+	<streamingInternetRadio href="http://listen.181fm.com/181-xmix_128k.mp3" /> <!-- Christmas Mix -->
+	<streamingInternetRadio href="http://listen.181fm.com/181-xfun_128k.mp3" /> <!-- Christmas Fun -->
+	<streamingInternetRadio href="http://listen.181fm.com/181-xkids_128k.mp3" /> <!-- Christmas Kids -->
+	<streamingInternetRadio href="http://listen.181fm.com/181-xblender_128k.mp3" /> <!-- Christmas Blender -->
+	<streamingInternetRadio href="http://listen.181fm.com/181-xstandards_128k.mp3" /> <!-- Christmas Standards -->
+	<streamingInternetRadio href="http://listen.181fm.com/181-xspirit_128k.mp3" /> <!-- Christmas Spirit -->
+	<streamingInternetRadio href="http://listen.181fm.com/181-xsmooth_128k.mp3" /> <!-- Christmas Smooth Jazz -->
+	<streamingInternetRadio href="http://listen.181fm.com/181-xgospel_128k.mp3" /> <!-- Christmas Gospel -->
+	<streamingInternetRadio href="http://listen.181fm.com/181-xswing_128k.mp3" /> <!-- Christmas Swing -->
+
+</streamingInternetRadios>
