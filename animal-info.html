@@ -1,7 +1,7 @@
 <div id="animalModule" class="animal-data-blade">
     <div class="blade-header">
         <h2>🐾 MODULE 2: LIVESTOCK BIOMETRICS & PRODUCTION</h2>
-        <span id="animalCount" class="badge">SCANNING...</span>
+        <span id="animalCount" class="badge">INITIALIZING SCAN...</span>
     </div>
 
     <div id="animalMatrixContainer" class="matrix-grid scroll-list main-scroll">
@@ -11,14 +11,15 @@
 
 <script>
 /**
- * ULTIMATE ANIMAL & PALLET BLADE v1.42
- * Tracking: Bees, Chickens, Sheep, Pigs, Cows, and Horses.
+ * ULTIMATE ANIMAL & PALLET BLADE v1.49
+ * REPAIR: Unified Species Requirements & Production Tracking [cite: 2026-02-10].
  */
 async function syncAnimalBlade(gitPath) {
     try {
+        const timestamp = Date.now();
         const [animRes, placeRes] = await Promise.all([
-            fetch(`${gitPath}/animals.xml?v=${new Date().getTime()}`),
-            fetch(`${gitPath}/placeables.xml?v=${new Date().getTime()}`)
+            fetch(`${gitPath}/animals.xml?v=${timestamp}`),
+            fetch(`${gitPath}/placeables.xml?v=${timestamp}`)
         ]);
         
         const animXml = new DOMParser().parseFromString(await animRes.text(), "text/xml");
@@ -30,38 +31,49 @@ async function syncAnimalBlade(gitPath) {
         document.getElementById('animalCount').textContent = `${animals.length} ACTIVE HEAD`;
         
         const container = document.getElementById('animalMatrixContainer');
-        container.innerHTML = animals.map(a => {
+        
+        // Species Requirement Mapping [cite: 2026-02-10]
+        const getRequirements = (type) => {
+            const reqMap = {
+                'COW': 'TMR / HAY / GRASS',
+                'CHICKEN': 'WHEAT / BARLEY',
+                'PIG': 'CORN / SORGHUM / PROTEIN',
+                'SHEEP': 'GRASS / HAY',
+                'HORSE': 'OATS / SORGHUM / HAY',
+                'BEE': 'NO FEED REQ'
+            };
+            return reqMap[type] || 'Standard Feed';
+        };
+
+        let htmlContent = animals.map(a => {
             const type = a.getAttribute("type")?.split('_').pop().toUpperCase() || "LIVESTOCK";
             const health = (parseFloat(a.getAttribute("health") || 0) * 100).toFixed(0);
             const food = parseFloat(a.getAttribute("foodLevel") || 0).toFixed(0);
             const water = parseFloat(a.getAttribute("waterLevel") || 0).toFixed(0);
-            const prod = (parseFloat(a.getAttribute("reproductionWeight") || 0) * 100).toFixed(0);
+            const repro = (parseFloat(a.getAttribute("reproductionWeight") || 0) * 100).toFixed(0);
+            const age = a.getAttribute("age") || 0;
             
-            // Production Logic (Milk/Wool)
+            // Production Logic [cite: 2026-02-10]
             const milk = parseFloat(a.getAttribute("milkLevel") || 0).toFixed(0);
             const wool = parseFloat(a.getAttribute("woolLevel") || 0).toFixed(0);
-
-            // Requirement Mapping based on Species
-            let reqs = "";
-            if(type === "COW") reqs = "TMR / HAY";
-            if(type === "CHICKEN") reqs = "WHEAT / BARLEY";
-            if(type === "PIG") reqs = "CORN / SORGHUM";
-            if(type === "SHEEP") reqs = "GRASS / HAY";
-            if(type === "HORSE") reqs = "OATS / SORGHUM";
+            const diet = getRequirements(type);
 
             return `
                 <div class="animal-card ${health < 50 ? 'warning' : ''}">
                     <div class="card-top">
                         <span class="type-tag">${type}</span>
-                        <span class="prod-tag">PROD: ${prod}%</span>
+                        <span class="age-tag">AGE: ${age}M</span>
                     </div>
                     
                     <div class="telemetry-bars">
                         <label>VITAL HEALTH: ${health}%</label>
                         <div class="bar-bg"><div class="bar-fill" style="width:${health}%; background:var(--safe)"></div></div>
                         
-                        <label>DIET (${reqs}): ${food}L</label>
-                        <div class="bar-bg"><div class="bar-fill" style="width:${(food/1000)*100}%; background:var(--gold)"></div></div>
+                        <label>REPRODUCTION: ${repro}%</label>
+                        <div class="bar-bg"><div class="bar-fill" style="width:${repro}%; background:var(--gold)"></div></div>
+
+                        <label>DIET (${diet}): ${food}L</label>
+                        <div class="bar-bg"><div class="bar-fill" style="width:${(food/5000)*100}%; background:var(--fuel)"></div></div>
                     </div>
 
                     <div class="production-stats">
@@ -73,39 +85,52 @@ async function syncAnimalBlade(gitPath) {
             `;
         }).join('');
 
-        // BEES & PALLET SCANNER
+        // BEES & PALLET SCANNER [cite: 2026-02-10]
         const beeHives = placeables.filter(p => p.getAttribute("filename")?.includes("beeHive"));
         if(beeHives.length > 0) {
-            container.innerHTML += `
+            htmlContent += `
                 <div class="animal-card bee-card">
-                    <div class="card-top"><span class="type-tag">BEES</span> <span class="prod-tag">AUTO</span></div>
+                    <div class="card-top">
+                        <span class="type-tag">BEES</span>
+                        <span class="prod-tag">AUTO-SPAWN</span>
+                    </div>
                     <div class="production-stats">
-                        <div class="stat-line">🍯 HIVES ACTIVE: <strong>${beeHives.length}</strong></div>
-                        <div class="stat-line">📦 PALLET SPAWNER: <strong>ACTIVE</strong></div>
+                        <div class="stat-line">🍯 ACTIVE HIVES: <strong>${beeHives.length}</strong></div>
+                        <div class="stat-line">📦 HONEY PALLETS: <strong>MONITORING</strong></div>
+                    </div>
+                    <div class="telemetry-bars">
+                        <label>PALLET SPAWNER STATUS</label>
+                        <div class="bar-bg"><div class="bar-fill" style="width:100%; background:var(--gold)"></div></div>
                     </div>
                 </div>
             `;
         }
-    } catch (e) { console.warn("Animal telemetry secured."); }
+        
+        container.innerHTML = htmlContent || "<div class='loading-state'>No Animals Detected in XML.</div>";
+    } catch (e) { 
+        console.error("Animal Telemetry Error:", e);
+        document.getElementById('animalMatrixContainer').innerHTML = "<div class='loading-state' style='color:var(--danger)'>ERROR: animals.xml / placeables.xml Sync Secured.</div>";
+    }
 }
 </script>
 
 <style>
 .animal-data-blade { color: #fff; }
 .blade-header { display: flex; justify-content: space-between; border-bottom: 2px solid var(--gold); padding-bottom: 10px; margin-bottom: 20px; }
-.matrix-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 15px; }
+.matrix-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 15px; }
 
 .animal-card { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,215,0,0.1); border-radius: 10px; padding: 15px; }
-.warning { border-color: var(--danger); }
+.animal-card.warning { border-color: var(--danger); box-shadow: inset 0 0 10px rgba(255, 77, 77, 0.1); }
 .bee-card { border-color: var(--gold); background: rgba(255, 215, 0, 0.05); }
 
 .card-top { display: flex; justify-content: space-between; font-weight: 900; font-size: 0.75rem; margin-bottom: 12px; }
 .type-tag { color: var(--gold); letter-spacing: 1px; }
+.age-tag { color: #888; }
 
-.telemetry-bars label { font-size: 0.6rem; color: #aaa; margin-top: 8px; display: block; }
-.bar-bg { height: 4px; background: #222; border-radius: 2px; overflow: hidden; margin-top: 4px; }
-.bar-fill { height: 100%; transition: width 1.5s ease; }
+.telemetry-bars label { font-size: 0.6rem; color: #aaa; margin-top: 10px; display: block; text-transform: uppercase; font-weight: 900; }
+.bar-bg { height: 4px; background: #111; border-radius: 2px; overflow: hidden; margin-top: 4px; }
+.bar-fill { height: 100%; transition: width 1.5s ease-in-out; }
 
 .production-stats { margin-top: 15px; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 10px; font-size: 0.75rem; }
-.stat-line { display: flex; justify-content: space-between; margin-bottom: 4px; }
+.stat-line { display: flex; justify-content: space-between; margin-bottom: 4px; font-weight: 600; }
 </style>
