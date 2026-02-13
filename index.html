@@ -6,8 +6,8 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
-    <title>FS MASTER COMMAND | TOTAL SYNC v1.99</title>
-    <link rel="stylesheet" href="style.css?v=1.99">
+    <title>FS MASTER COMMAND | SYSTEM INTEGRITY v2.01</title>
+    <link rel="stylesheet" href="style.css?v=2.01">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;900&display=swap" rel="stylesheet">
     <style>
         .sandbox-alert {
@@ -24,14 +24,13 @@
         .conn-status { font-size: 10px; padding: 2px 6px; border-radius: 4px; margin-left: 10px; }
         .conn-live { background: #00ffcc; color: #000; }
         .conn-blocked { background: #ff4500; color: #fff; }
-        .data-label { opacity: 0.5; font-size: 9px; text-transform: uppercase; margin-right: 5px; }
     </style>
 </head>
 <body>
     <div class="dashboard-container" style="width: 90%; margin: 20px auto;">
         
         <div class="sandbox-alert">
-            🛰️ AUTOMATIC SERVER SYNC: TOTAL EXTRACTION v1.99 🛰️
+            🛰️ SYSTEM INTEGRITY ACTIVE: 1:1 SERVER EXTRACTION v2.01 🛰️
         </div>
 
         <header class="glass-panel header-main">
@@ -41,13 +40,13 @@
                         <img id="activeMapImage" 
                              src="http://176.57.165.81:8080/feed/dedicated-server-stats-map.jpg?code=DIaoyx8jutkGtlDr&quality=60&size=512" 
                              alt="Live Map" 
-                             onerror="this.src='https://via.placeholder.com/512x256?text=Allow+Insecure+Content+To+View+Live+Map'">
+                             onerror="this.src='https://via.placeholder.com/512x256?text=Allow+Insecure+Content+In+Browser'">
                         <div class="slot-badge" id="currentSlotLabel">SYNCING...</div>
                     </div>
                     <div class="header-text">
-                        <h1>Werewolf Operations Hub <span id="linkStatus" class="conn-status conn-blocked">G-PORTAL PENDING</span></h1>
+                        <h1>Werewolf Command Hub <span id="linkStatus" class="conn-status conn-blocked">G-PORTAL PENDING</span></h1>
                         <div class="status-bar">
-                            <span id="mapDisplay">Map: Detecting...</span> | <span id="gameClock">Time: 00:00</span> | <span id="envDate">Season: Detecting...</span>
+                            <span id="mapDisplay">Map: Detecting...</span> | <span id="gameClock">Time: 00:00</span> | <span id="envDate">Day: Detecting...</span>
                         </div>
                     </div>
                 </div>
@@ -75,8 +74,8 @@
                 <div id="rayStats" style="font-size:10px; opacity:0.7; margin-top:8px;"></div>
             </article>
             <article class="glass-panel card">
-                <div class="card-tag">📑 ACTIVE CONTRACT MISSIONS</div>
-                <div id="missionLog" class="telemetry-body" style="font-size:11px; max-height: 100px; overflow-y: auto;">Scanning XML...</div>
+                <div class="card-tag">📑 ACTIVE SERVER MISSIONS (MISSIONS.XML)</div>
+                <div id="missionLog" class="telemetry-body" style="font-size:11px; max-height: 100px; overflow-y: auto;">Drilling Contracts...</div>
             </article>
         </section>
 
@@ -93,11 +92,11 @@
         </main>
 
         <section class="glass-panel card fleet-section" style="margin-top: 20px;">
-            <div class="card-tag">🚜 COMPLETE SERVER FLEET INVENTORY (1:1 AUTO-SYNC)</div>
-            <div id="fleetLog" class="telemetry-grid">Drilling G-Portal Save Data...</div>
+            <div class="card-tag">🚜 1:1 SERVER FLEET INVENTORY (VEHICLES.XML)</div>
+            <div id="fleetLog" class="telemetry-grid">Parsing Unit Telemetry...</div>
         </section>
     </div>
 
-    <script src="script.js?v=1.99"></script>
+    <script src="script.js?v=2.01"></script>
 </body>
 </html>
