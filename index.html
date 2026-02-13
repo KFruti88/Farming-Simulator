@@ -6,15 +6,14 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
-    <title>618 CREW | READABILITY MATRIX v2.34</title>
+    <title>618 CREW | MENU REVERSE v2.35</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=JetBrains+Mono:wght@500;800&display=swap" rel="stylesheet">
     <style>
         :root {
             --kevin-orange: #FF8C00;
-            --ray-red: #C41E3A;
-            --bg-tactical: #020617; /* Deep Background */
-            --font-light: #e2e8f0;   /* Readable Light Font */
+            --bg-tactical: #020202; /* Deep Black Background */
+            --font-light: #cbd5e1;
             --panel-bg: rgba(15, 17, 20, 0.98);
         }
 
@@ -24,55 +23,54 @@
             font-family: 'Inter', sans-serif; 
             font-size: 11px; 
             padding: 30px; 
-            line-height: 1.5; 
         }
 
-        /* REVERSE COLOR READABILITY */
-        .live-reverse {
+        /* REVERSE COLOR FOR MENU BAR ONLY */
+        .menu-live-reverse {
             background: var(--kevin-orange) !important;
-            color: #000 !important; /* Force black text on orange background */
-            border: 4px solid #fff !important;
-        }
-
-        .live-reverse h1, .live-reverse h3, .live-reverse p, .live-reverse .mono, .live-reverse td {
             color: #000 !important;
-            font-weight: 800 !important;
+            border: 2px solid #fff !important;
+            font-weight: 900 !important;
         }
 
-        .live-reverse .glass {
-            background: rgba(0, 0, 0, 0.05) !important;
-            border-color: rgba(0, 0, 0, 0.2) !important;
-        }
-
-        /* STANDARD THEME ELEMENTS [cite: 2026-02-13] */
-        .glass { background: var(--panel-bg); border: 2px solid rgba(255, 255, 255, 0.05); border-radius: 8px; padding: 30px; margin-bottom: 30px; width: 100%; box-shadow: 0 20px 50px rgba(0,0,0,0.5); }
+        .glass { background: var(--panel-bg); border: 2px solid rgba(255, 255, 255, 0.05); border-radius: 8px; padding: 30px; margin-bottom: 30px; box-shadow: 0 20px 50px rgba(0,0,0,0.5); }
         .scroll-area { max-height: 450px; overflow-y: auto; padding-right: 12px; }
         
         table { width: 100%; border-collapse: collapse; }
-        th { text-align: left; color: #64748b; font-size: 10px; text-transform: uppercase; border-bottom: 2px solid rgba(255,255,255,0.1); padding: 10px; background: rgba(15, 17, 20, 1); position: sticky; top: 0; z-index: 20; }
-        td { padding: 10px; border-bottom: 1px solid rgba(255,255,255,0.05); color: var(--font-light); }
+        th { text-align: left; color: #64748b; font-size: 10px; text-transform: uppercase; border-bottom: 2px solid rgba(255,255,255,0.1); padding: 10px; background: rgba(15, 17, 20, 1); position: sticky; top: 0; }
+        td { padding: 10px; border-bottom: 1px solid rgba(255,255,255,0.05); }
         
-        .f1-text { color: #FF8C00; } .f2-text { color: #00D4FF; }
+        .f1-text { color: #FF8C00; }
         .mono { font-family: 'JetBrains Mono', monospace; }
         
-        #slotSelector { background: #000; color: #fff; border: 1px solid #FF8C00; padding: 5px 15px; border-radius: 4px; font-weight: 900; }
+        /* THE MENU BAR [cite: 2026-01-26] */
+        #slotSelector { 
+            background: #111; 
+            color: #fff; 
+            border: 1px solid var(--kevin-orange); 
+            padding: 10px 20px; 
+            border-radius: 6px; 
+            font-weight: 900; 
+            font-size: 12px;
+            transition: all 0.3s ease;
+        }
     </style>
 </head>
 <body>
 
-<div id="mainWrapper" class="max-w-[1850px] mx-auto">
+<div class="max-w-[1850px] mx-auto">
     <header class="flex flex-col xl:flex-row justify-between items-center bg-white/5 p-10 rounded-lg border-2 border-white/10 mb-10 shadow-2xl">
         <div class="flex flex-col md:flex-row gap-16 md:gap-32">
             <div><p class="text-xs uppercase text-slate-500 font-black mb-2">FARM 01 LIQUIDITY</p><p id="f1-money" class="text-7xl font-black f1-text tracking-tighter">$0</p></div>
             <div class="md:border-l-2 border-white/10 md:pl-32">
-                <p class="text-xs uppercase text-slate-500 font-black mb-2">FARM 02 LIQUIDITY</p><p id="f2-money" class="text-7xl font-black f2-text tracking-tighter">$0</p>
+                <p class="text-xs uppercase text-slate-500 font-black mb-2">FARM 02 LIQUIDITY</p><p id="f2-money" class="text-7xl font-black text-[#00D4FF] tracking-tighter">$0</p>
             </div>
         </div>
         <div class="text-center xl:text-right">
             <h1 class="text-5xl font-black italic uppercase text-white mb-2">Strategic Operations</h1>
             <div class="flex items-center gap-4 justify-center xl:justify-end">
                 <select id="slotSelector"></select>
-                <p id="live-badge" class="mono text-sm bg-white/10 px-4 py-2 rounded text-white italic">SCANNING...</p>
+                <p id="live-badge" class="mono text-sm bg-white/10 px-4 py-2 rounded text-white italic">SYNCING...</p>
             </div>
         </div>
     </header>
@@ -82,15 +80,10 @@
         <div class="glass border-l-8 border-l-[#FF8C00]"><h3>Farm 01: Support</h3><div class="scroll-area"><table id="f1-support"></table></div></div>
         <div class="glass border-l-8 border-l-[#FF8C00]"><h3>Farm 01: Pallets</h3><div class="scroll-area"><table id="f1-pallets"></table></div></div>
     </div>
-
-    <div class="grid grid-cols-1 xl:grid-cols-2 gap-8 mb-8">
-        <div class="glass border-l-8 border-l-[#FF8C00]"><h3>Werewolf Field Registry</h3><div class="scroll-area"><table id="f1-fields"></table></div></div>
-        <div class="glass border-l-8 border-l-[#00D4FF]"><h3>Lividman Field Registry</h3><div class="scroll-area"><table id="f2-fields"></table></div></div>
-    </div>
 </div>
 
 <script>
-/** 618 STRATEGIC ENGINE v2.34 | CONTRAST LOCK */
+/** 618 STRATEGIC ENGINE v2.35 | MENU IDENTITY SYNC */
 const GITHUB_ROOT = "https://raw.githubusercontent.com/KFruti88/Farming-Simulator/main";
 const GPORTAL_FEED = "http://176.57.165.81:8080/feed/dedicated-server-stats.xml?code=DIaoyx8jutkGtlDr";
 const getTruth = () => `?truth=${Date.now()}`;
@@ -107,29 +100,29 @@ document.addEventListener('DOMContentLoaded', async () => {
         sel.appendChild(opt);
     }
     sel.value = liveSlot;
-    updateReadability(liveSlot, liveSlot);
+    updateDashboard(liveSlot, liveSlot);
 
-    sel.addEventListener('change', (e) => updateReadability(e.target.value, liveSlot));
-    setInterval(() => updateReadability(sel.value, liveSlot), 45000);
+    sel.addEventListener('change', (e) => updateDashboard(e.target.value, liveSlot));
+    setInterval(() => updateDashboard(sel.value, liveSlot), 45000);
 });
 
-async function updateReadability(slot, live) {
-    const wrapper = document.getElementById('mainWrapper');
+async function updateDashboard(slot, live) {
+    const sel = document.getElementById('slotSelector');
     const badge = document.getElementById('live-badge');
     const path = `${GITHUB_ROOT}/saved-game-${slot}`;
 
-    // THEME READABILITY SWITCH [cite: 2026-02-13]
+    // REVERSE MENU COLOR LOGIC
     if(slot == live) {
-        wrapper.classList.add('live-reverse');
-        badge.innerText = `ACTIVE OPS: ${MAPS[slot]}`;
+        sel.classList.add('menu-live-reverse');
+        badge.innerText = `LIVE SERVER: ${MAPS[slot]}`;
     } else {
-        wrapper.classList.remove('live-reverse');
-        badge.innerText = `ARCHIVE VIEW: ${MAPS[slot] || 'REGION'}`;
+        sel.classList.remove('menu-live-reverse');
+        badge.innerText = `ARCHIVE: ${MAPS[slot] || 'REGION'}`;
     }
 
-    const [fml, pre, fld, farms, vml] = await Promise.all([
+    const [fml, pre, farms, vml] = await Promise.all([
         fetchXML(`${path}/farmland.xml`), fetchXML(`${path}/precisionFarming.xml`),
-        fetchXML(`${path}/fields.xml`), fetchXML(`${path}/farms.xml`), fetchXML(`${path}/vehicles.xml`)
+        fetchXML(`${path}/farms.xml`), fetchXML(`${path}/vehicles.xml`)
     ]);
 
     if(farms) {
@@ -139,24 +132,13 @@ async function updateReadability(slot, live) {
         document.getElementById('f2-money').innerText = `$${parseInt(f2?.getAttribute("money") || 0).toLocaleString()}`;
     }
 
-    if(fml) {
-        const owned = Array.from(fml.getElementsByTagName("farmland")).filter(f => f.getAttribute("farmId") === "1");
-        const pNodes = Array.from(pre?.getElementsByTagName("field") || []);
-        document.getElementById('f1-fields').innerHTML = `<thead><tr><th>Field</th><th>Nitrogen (lbs/ac)</th><th>Lime</th></tr></thead><tbody>` + 
-            owned.map(l => {
-                const p = pNodes.find(n => n.getAttribute("id") === l.getAttribute("id"));
-                const lbs = (parseFloat(p?.getAttribute("nitrogenValue") || 0) * 2.204).toFixed(0);
-                return `<tr><td class="font-black">#${l.getAttribute("id")}</td><td class="mono">${lbs}</td><td>${p?.getAttribute("needsLime") === 'true' ? 'REQUIRED' : 'OK'}</td></tr>`;
-            }).join('') + `</tbody>`;
-    }
-
     if(vml) {
         const units = Array.from(vml.getElementsByTagName("vehicle")).filter(u => u.getAttribute("farmId") === "1" && !u.getAttribute("filename").includes("BALE"));
         document.getElementById('f1-engines').innerHTML = `<thead><tr><th>Unit</th><th>Fuel (Gal)</th><th>Dmg</th></tr></thead><tbody>` + 
             units.map(u => {
                 const d = (parseFloat(u.getElementsByTagName("wearable")[0]?.getAttribute("damage") || 0) * 100).toFixed(1);
                 const g = (parseFloat(u.getElementsByTagName("fillUnit")[0]?.getAttribute("fillLevel") || 0) * 0.264).toFixed(1);
-                return `<tr><td>${u.getAttribute("filename").split('/').pop().replace('.XML','')}</td><td class="mono">${g} gal</td><td>${d}%</td></tr>`;
+                return `<tr><td>${u.getAttribute("filename").split('/').pop().replace('.XML','')}</td><td class="mono">${g}</td><td>${d}%</td></tr>`;
             }).join('') + `</tbody>`;
     }
 }
