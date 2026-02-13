@@ -1,6 +1,6 @@
 :root {
-    --kevin-orange: #ff8c00;
-    --ray-red: #c41e3a;
+    --kevin-orange: #ff8c00; /* Jet Orange */
+    --ray-red: #c41e3a; /* Cardinal Red */
     --bg: #050505;
     --glass: rgba(255, 255, 255, 0.03);
     --border: rgba(255, 255, 255, 0.1);
@@ -17,32 +17,12 @@ body {
 }
 
 .dashboard-container { width: 90%; margin: 20px auto; display: flex; flex-direction: column; gap: 20px; }
-
 .glass-panel { background: var(--glass); backdrop-filter: blur(25px); border: 1px solid var(--border); border-radius: 12px; padding: 20px; }
 
-.header-main { border-left: 8px solid var(--kevin-orange); }
-
-.live-indicator { font-size: 0.6rem; font-weight: 900; color: #aaa; margin-bottom: 5px; text-transform: uppercase; }
-.live-pulse { color: #00ffcc; animation: pulse 2s infinite; }
-
-@keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.4; } 100% { opacity: 1; } }
-
-#slotSelector { background: #000; color: #fff; border: 1px solid var(--border); padding: 10px; border-radius: 8px; font-weight: 900; width: 250px; }
-
-.box-container { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+/* Ownership Borders [cite: 2026-02-12] */
+.owner-kevin { border-left: 5px solid var(--kevin-orange); padding-left: 15px; background: linear-gradient(90deg, rgba(255,140,0,0.05) 0%, transparent 100%); }
+.owner-ray { border-left: 5px solid var(--ray-red); padding-left: 15px; background: linear-gradient(90deg, rgba(196,30,58,0.05) 0%, transparent 100%); }
 
 .scroll-box { background: rgba(0,0,0,0.4); border-radius: 10px; padding: 20px; height: 600px; overflow-y: auto; border: 1px solid var(--border); }
-
 .box-title { font-size: 0.8rem; font-weight: 900; color: #888; border-bottom: 1px solid var(--border); padding-bottom: 10px; margin-bottom: 15px; }
-
 .item-row { padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.03); }
-
-/* IDENTITY COLORS [cite: 2026-02-12] */
-.owner-kevin { border-left: 5px solid var(--kevin-orange); padding-left: 15px; }
-.owner-ray { border-left: 5px solid var(--ray-red); padding-left: 15px; }
-
-.status-tag { font-weight: 900; font-size: 0.7rem; padding: 4px 10px; border-radius: 4px; margin-right: 10px; }
-.kevin-tag { background: var(--kevin-orange); color: #000; }
-.ray-tag { background: var(--ray-red); color: #fff; }
-
-@media (max-width: 1200px) { .box-container { grid-template-columns: 1fr; } }
