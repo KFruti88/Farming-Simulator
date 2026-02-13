@@ -1,41 +1,48 @@
 :root {
-    --gold: #ffd700; --kevin: #7cfc00; --ray: #ffd700; --bg: #050505; 
-    --glass: rgba(255, 255, 255, 0.03); --border: rgba(255, 255, 255, 0.1);
-    --safe: #7cfc00; --fuel: #00d4ff; --danger: #ff4d4d;
+    --kevin-orange: #ff8c00;
+    --ray-red: #c41e3a;
+    --bg: #050505;
+    --glass: rgba(255, 255, 255, 0.03);
+    --border: rgba(255, 255, 255, 0.1);
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
 body {
-    background-color: var(--bg); font-family: 'Inter', sans-serif; color: #fff;
-    background-image: radial-gradient(circle at center, #1a1400 0%, #050505 100%);
+    background-color: var(--bg);
+    font-family: 'Inter', sans-serif;
+    color: #fff;
+    background-image: radial-gradient(circle at center, #1a0f00 0%, #050505 100%);
+    min-height: 100vh;
 }
 
-.glass-panel { background: var(--glass); backdrop-filter: blur(25px); border: 1px solid var(--border); border-radius: 12px; padding: 15px; }
+.dashboard-container { width: 90%; margin: 20px auto; display: flex; flex-direction: column; gap: 20px; }
 
-/* 20-Slot Row Styles [cite: 2026-02-13] */
-.save-row { display: flex; flex-direction: column; gap: 15px; }
-.row-header { font-weight: 900; color: rgba(255,255,255,0.4); font-size: 1.1rem; letter-spacing: 2px; }
+.glass-panel { background: var(--glass); backdrop-filter: blur(25px); border: 1px solid var(--border); border-radius: 12px; padding: 20px; }
+
+.header-main { border-left: 8px solid var(--kevin-orange); }
+
+.live-indicator { font-size: 0.6rem; font-weight: 900; color: #aaa; margin-bottom: 5px; text-transform: uppercase; }
+.live-pulse { color: #00ffcc; animation: pulse 2s infinite; }
+
+@keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.4; } 100% { opacity: 1; } }
+
+#slotSelector { background: #000; color: #fff; border: 1px solid var(--border); padding: 10px; border-radius: 8px; font-weight: 900; width: 250px; }
 
 .box-container { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
 
-/* Independent Scroll Zones [cite: 2026-02-13] */
-.scroll-box {
-    background: rgba(255,255,255,0.02); border-radius: 10px; padding: 15px; height: 450px; 
-    overflow-y: auto; border: 1px solid rgba(255,255,255,0.05);
-}
+.scroll-box { background: rgba(0,0,0,0.4); border-radius: 10px; padding: 20px; height: 600px; overflow-y: auto; border: 1px solid var(--border); }
 
-.scroll-box::-webkit-scrollbar { width: 4px; }
-.scroll-box::-webkit-scrollbar-thumb { background: rgba(255,215,0,0.3); border-radius: 10px; }
+.box-title { font-size: 0.8rem; font-weight: 900; color: #888; border-bottom: 1px solid var(--border); padding-bottom: 10px; margin-bottom: 15px; }
 
-.box-title { 
-    font-size: 0.75rem; font-weight: 900; text-transform: uppercase; margin-bottom: 12px; 
-    padding-bottom: 8px; border-bottom: 1px solid rgba(255,255,255,0.1);
-}
+.item-row { padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.03); }
 
-.item-row { padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.03); font-size: 0.85rem; }
-.status-tag { font-weight: 900; font-size: 0.7rem; padding: 3px 8px; border-radius: 4px; }
+/* IDENTITY COLORS [cite: 2026-02-12] */
+.owner-kevin { border-left: 5px solid var(--kevin-orange); padding-left: 15px; }
+.owner-ray { border-left: 5px solid var(--ray-red); padding-left: 15px; }
 
-/* Ownership Colors [cite: 2026-01-27] */
-.owner-kevin { border-left: 4px solid var(--kevin); padding-left: 10px; }
-.owner-ray { border-left: 4px solid var(--ray); padding-left: 10px; }
+.status-tag { font-weight: 900; font-size: 0.7rem; padding: 4px 10px; border-radius: 4px; margin-right: 10px; }
+.kevin-tag { background: var(--kevin-orange); color: #000; }
+.ray-tag { background: var(--ray-red); color: #fff; }
+
+@media (max-width: 1200px) { .box-container { grid-template-columns: 1fr; } }
