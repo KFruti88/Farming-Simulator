@@ -1,62 +1,46 @@
 :root {
-    --gold: #ffd700; --kevin: #7cfc00; --bg: #0d0a00; --glass: rgba(255, 255, 255, 0.04);
-    --border: rgba(255, 215, 0, 0.3); --safe: #7cfc00; --fuel: #00d4ff; --danger: #ff4d4d;
+    --gold: #ffd700; --kevin: #7cfc00; --ray: #ffd700; --bg: #0d0a00; 
+    --glass: rgba(255, 255, 255, 0.04); --border: rgba(255, 215, 0, 0.2);
+    --safe: #7cfc00; --fuel: #00d4ff; --danger: #ff4d4d;
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
 body {
     background-color: var(--bg); font-family: 'Inter', sans-serif; color: #fff;
-    min-height: 100vh; display: flex; justify-content: center;
     background-image: radial-gradient(circle at center, #1a1400 0%, #0d0a00 100%);
 }
 
-.dashboard-container { width: 90%; max-width: 1920px; padding: 20px 0; display: flex; flex-direction: column; gap: 15px; }
+.glass-panel { background: var(--glass); backdrop-filter: blur(20px); border: 1px solid var(--border); border-radius: 12px; padding: 15px; }
 
-.glass-panel { background: var(--glass); backdrop-filter: blur(25px); border: 1px solid var(--border); border-radius: 12px; padding: 15px; }
-
-.header-main { border-left: 8px solid var(--gold); }
-
-.ops-matrix { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; }
-
-.data-matrix { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; flex-grow: 1; }
-
-/* INDEPENDENT SCROLL ZONES [cite: 2026-02-12] */
-.glass-panel.card {
-    display: flex;
-    flex-direction: column;
-    max-height: 600px; /* Locked to fit screen standards */
-    overflow: hidden;
+/* 20-Slot Row Architecture [cite: 2026-02-13] */
+.save-row {
+    display: flex; flex-direction: column; gap: 10px;
+    border-left: 5px solid var(--gold); padding-left: 15px;
 }
 
-#module-1-field-info, 
-#module-2-animal-info, 
-#module-3-factory-info, 
-#fleetLog {
-    overflow-y: auto;
-    flex-grow: 1;
-    padding-right: 10px;
-    scrollbar-width: thin;
-    scrollbar-color: var(--gold) rgba(255,255,255,0.05);
+.row-header { font-weight: 900; color: var(--gold); font-size: 1.2rem; text-transform: uppercase; }
+
+.box-container {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px;
 }
 
-/* CUSTOM SCROLLBARS [cite: 2026-01-26] */
-#fleetLog::-webkit-scrollbar,
-.card div::-webkit-scrollbar {
-    width: 6px;
+/* Independent Scroll Zones [cite: 2026-02-13] */
+.scroll-box {
+    background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.05);
+    border-radius: 8px; padding: 12px; height: 400px; overflow-y: auto;
+    scrollbar-width: thin; scrollbar-color: var(--gold) transparent;
 }
 
-#fleetLog::-webkit-scrollbar-track,
-.card div::-webkit-scrollbar-track {
-    background: rgba(255, 255, 255, 0.02);
-    border-radius: 10px;
+.scroll-box::-webkit-scrollbar { width: 4px; }
+.scroll-box::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 10px; }
+
+.box-title { 
+    font-size: 0.7rem; font-weight: 900; color: rgba(255,215,0,0.6); 
+    margin-bottom: 10px; border-bottom: 1px solid rgba(255,215,0,0.2); padding-bottom: 5px;
 }
 
-#fleetLog::-webkit-scrollbar-thumb,
-.card div::-webkit-scrollbar-thumb {
-    background: var(--gold);
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
-}
+.detail-row { font-size: 0.8rem; padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.03); }
+.status-tag { font-weight: 900; font-size: 0.65rem; padding: 2px 5px; border-radius: 3px; }
 
-@media (max-width: 1400px) { .data-matrix { grid-template-columns: 1fr; } }
+@media (max-width: 1200px) { .box-container { grid-template-columns: 1fr; } }
