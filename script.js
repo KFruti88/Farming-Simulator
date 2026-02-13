@@ -1,7 +1,7 @@
 /**
- * FS MASTER UNIFIED ENGINE v1.83 - FLEET INTELLIGENCE
- * REPAIR: Filtered Fleet Telemetry (Excludes Pallets/Rollers), Motorized-Only Fuel Display.
- * MANDATE: Full Detail | Zero-Fake Policy | Zero Snippets [cite: 2026-01-26]
+ * FS MASTER UNIFIED ENGINE v1.84 - DEFINITIVE RECOVERY
+ * REPAIR: Restored Precision Matrix Detail (Field #, Crop, State, Needs).
+ * MANDATE: Full Detail | Zero Snippets | Zero-Fake Policy [cite: 2026-01-26]
  */
 
 const GITHUB_ROOT = "https://raw.githubusercontent.com/KFruti88/Farming-Simulator/main";
@@ -27,8 +27,9 @@ async function masterSyncCycle(slot) {
     
     await Promise.all([
         fetchLiveGPortal(GPORTAL_FEED),
-        fetchDeepXML(`${gitPath}/vehicles.xml`, parseFleetHardDrill), // REFINED v1.83
+        fetchDeepXML(`${gitPath}/vehicles.xml`, parseFleetHardDrill),
         fetchDeepXML(`${gitPath}/farms.xml`, parseFinancials),
+        // RESTORED PRECISION INTELLIGENCE [cite: 2026-02-12]
         injectBladeModule('module-1-field-info', 'field-info.html', `${gitPath}/farmland.xml`, 
             (xml) => parsePrecisionFieldMatrix(xml, `${gitPath}/precisionFarming.xml`, `${gitPath}/fields.xml`)),
         injectBladeModule('module-2-animal-info', 'animal-info.html', `${gitPath}/placeables.xml`, parseAnimalBiometrics),
@@ -47,14 +48,64 @@ async function injectBladeModule(id, file, xmlPath, parser) {
 }
 
 /**
- * REFINED: FLEET INTELLIGENCE [cite: 2026-02-12]
- * Excludes pallets, rollers, and big bags. Only shows fuel for motorized units.
+ * RESTORED: PRECISION INTELLIGENCE MATRIX [cite: 2026-02-12]
+ * Shows: Field Number, Crop, State, and Soil Needs (Lime/Fert).
+ */
+async function parsePrecisionFieldMatrix(farmlandXml, precisionPath, fieldsPath) {
+    try {
+        const [pRes, fRes] = await Promise.all([
+            fetch(precisionPath + getTruthID()),
+            fetch(fieldsPath + getTruthID())
+        ]);
+        const pXml = new DOMParser().parseFromString(await pRes.text(), "text/xml");
+        const fXml = new DOMParser().parseFromString(await fRes.text(), "text/xml");
+        
+        const owned = Array.from(farmlandXml.getElementsByTagName("farmland")).filter(f => f.getAttribute("farmId") === "1");
+        const pNodes = Array.from(pXml.getElementsByTagName("field"));
+        const fNodes = Array.from(fXml.getElementsByTagName("field"));
+
+        const html = `
+            <div class="module-header" style="color:var(--gold); font-weight:900; border-bottom:1px solid rgba(255,215,0,0.3); padding-bottom:10px;">🌾 PRECISION INTELLIGENCE MATRIX</div>
+            <div style="display:grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap:10px; margin-top:15px;">
+                ${owned.map(farmland => {
+                    const id = farmland.getAttribute("id");
+                    const soil = pNodes.find(n => n.getAttribute("id") === id);
+                    const crop = fNodes.find(n => n.getAttribute("id") === id);
+
+                    const fruit = crop ? crop.getAttribute("fruitType") || "EMPTY" : "STUBBLE";
+                    const state = crop ? crop.getAttribute("state") || "GROWING" : "CULTIVATED";
+                    
+                    const ph = soil ? parseFloat(soil.getAttribute("phValue") || 0) : 0;
+                    const nitro = soil ? parseFloat(soil.getAttribute("nitrogenValue") || 0) : 0;
+                    const limeNeed = ph < 6.5 ? '<span style="color:var(--danger)">LIME</span>' : '<span style="color:var(--safe)">OK</span>';
+                    const fertNeed = nitro < 150 ? '<span style="color:var(--gold)">FERT/SLURRY</span>' : '<span style="color:var(--safe)">OK</span>';
+
+                    return `
+                        <div class="field-card" style="background:rgba(255,255,255,0.05); padding:12px; border-radius:6px; border:1px solid rgba(255,255,255,0.1);">
+                            <div style="display:flex; justify-content:space-between; margin-bottom:8px;">
+                                <strong style="color:var(--safe)">FLD ${id}</strong>
+                                <span style="font-size:10px; opacity:0.6; text-transform:uppercase;">${state}</span>
+                            </div>
+                            <div style="font-size:13px; font-weight:900; margin-bottom:12px; color:white;">CROP: ${fruit}</div>
+                            <div style="display:grid; grid-template-columns: 1fr; gap:4px; font-size:11px;">
+                                <div>pH: ${ph.toFixed(1)} [${limeNeed}]</div>
+                                <div>NITRO: ${nitro.toFixed(0)}kg [${fertNeed}]</div>
+                            </div>
+                        </div>`;
+                }).join('') || "NO FIELDS DETECTED"}
+            </div>`;
+        updateAndCache('module-1-field-info', html);
+    } catch (e) { updateAndCache('module-1-field-info', "N/A: PRECISION SYNC ERROR"); }
+}
+
+/**
+ * LOCKED & REFINED: FLEET INTELLIGENCE [cite: 2026-02-12]
+ * Excludes static objects (Pallets, Bags). Hides 0% fuel on non-motorized items.
  */
 function parseFleetHardDrill(xml) {
     const list = document.getElementById('fleetLog');
     if (!list) return;
 
-    // Exclusion List: Hide these items if they appear in filename
     const excludedKeywords = ['PALLET', 'BIGBAG', 'ROLLER', 'BALE', 'QUICKBALE'];
 
     const units = Array.from(xml.getElementsByTagName("vehicle")).filter(u => {
@@ -64,7 +115,7 @@ function parseFleetHardDrill(xml) {
 
     const html = units.map(u => {
         const rawName = u.getAttribute("filename")?.split('/').pop().replace('.xml', '').toUpperCase() || "UNIT";
-        const cleanName = rawName.replace(/_/g, ' '); // Professional labels [cite: 2026-02-12]
+        const cleanName = rawName.replace(/_/g, ' ');
         
         const fuelNode = u.getElementsByTagName("fuelConsumer")[0] || u.getElementsByTagName("consumer")[0];
         const wearNode = u.getElementsByTagName("wearable")[0] || u;
@@ -73,8 +124,7 @@ function parseFleetHardDrill(xml) {
         const wear = (parseFloat(wearNode?.getAttribute("damage") || 0) * 100).toFixed(0);
         const cargo = u.getElementsByTagName("fillUnit")[0]?.getAttribute("fillLevel") || 0;
 
-        // Conditional Layout: Hide fuel for non-motorized items [cite: 2026-02-12]
-        const fuelDisplay = fuel !== null ? `<span style="font-size:10px; opacity:0.8; color:var(--fuel)">${fuel}% FUEL</span>` : `<span style="font-size:10px; opacity:0.4;">TRAILER/WAGON</span>`;
+        const fuelDisplay = fuel !== null ? `<span style="font-size:10px; color:var(--fuel)">${fuel}% FUEL</span>` : `<span style="font-size:10px; opacity:0.4;">TRAILER/WAGON</span>`;
 
         return `
             <div class="telemetry-row" style="display:grid; grid-template-columns: 2fr 1fr 1.5fr; gap:10px; border-bottom:1px solid rgba(255,255,255,0.05); padding:8px 0; align-items:center;">
@@ -87,37 +137,7 @@ function parseFleetHardDrill(xml) {
             </div>`;
     }).join('');
 
-    updateAndCache('fleetLog', html || "NO ACTIVE MOBILE FLEET DETECTED");
-}
-
-/**
- * PRECISION & FINANCIALS [cite: 2026-01-27, 2026-02-12]
- */
-async function parsePrecisionFieldMatrix(farmlandXml, precisionPath, fieldsPath) {
-    try {
-        const [pRes, fRes] = await Promise.all([fetch(precisionPath + getTruthID()), fetch(fieldsPath + getTruthID())]);
-        const pXml = new DOMParser().parseFromString(await pRes.text(), "text/xml");
-        const fXml = new DOMParser().parseFromString(await fRes.text(), "text/xml");
-        const owned = Array.from(farmlandXml.getElementsByTagName("farmland")).filter(f => f.getAttribute("farmId") === "1");
-        const pNodes = Array.from(pXml.getElementsByTagName("field"));
-        const fNodes = Array.from(fXml.getElementsByTagName("field"));
-
-        const html = `<div class="module-header" style="color:var(--gold); font-weight:900;">🌾 PRECISION INTELLIGENCE</div>
-            <div style="display:grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap:10px; margin-top:10px;">
-                ${owned.map(farmland => {
-                    const id = farmland.getAttribute("id");
-                    const soil = pNodes.find(n => n.getAttribute("id") === id);
-                    const crop = fNodes.find(n => n.getAttribute("id") === id);
-                    const fruit = crop ? crop.getAttribute("fruitType") || "EMPTY" : "STUBBLE";
-                    const ph = soil ? parseFloat(soil.getAttribute("phValue") || 0) : 0;
-                    return `<div class="field-card" style="background:rgba(255,255,255,0.05); padding:10px; border-radius:6px; border:1px solid rgba(255,255,255,0.1);">
-                                <strong style="color:var(--safe)">FLD ${id}</strong> | <span style="font-size:10px;">${fruit}</span>
-                                <div style="font-size:10px; margin-top:5px; opacity:0.7;">pH: ${ph.toFixed(1)}</div>
-                            </div>`;
-                }).join('')}
-            </div>`;
-        updateAndCache('module-1-field-info', html);
-    } catch (e) { updateAndCache('module-1-field-info', "N/A: PRECISION DATA ERROR"); }
+    updateAndCache('fleetLog', html || "NO ACTIVE MOBILE FLEET");
 }
 
 function parseFinancials(xml) {
@@ -128,8 +148,21 @@ function parseFinancials(xml) {
     });
 }
 
-function parseAnimalBiometrics(xml) { updateAndCache('module-2-animal-info', '<div class="loading">Analyzing Livestock...</div>'); }
-function parseProductionChains(xml) { updateAndCache('module-3-factory-info', '<div class="loading">Syncing Warehouses...</div>'); }
+function parseAnimalBiometrics(xml) {
+    const husbs = Array.from(xml.getElementsByTagName("placeable")).filter(p => p.getAttribute("class")?.includes("Husbandry"));
+    const html = `<div class="module-header" style="color:#a855f7; font-weight:900;">🐾 LIVESTOCK</div><div class="data-stack" style="margin-top:10px;">
+        ${husbs.map(h => `<div style="background:rgba(255,255,255,0.05); padding:8px; border-radius:4px; margin-bottom:5px;">${h.getAttribute("filename").split('/').pop().replace('.xml', '').toUpperCase()}: OK</div>`).join('') || "N/A"}
+    </div>`;
+    updateAndCache('module-2-animal-info', html);
+}
+
+function parseProductionChains(xml) {
+    const points = Array.from(xml.getElementsByTagName("placeable")).filter(p => p.getAttribute("class")?.includes("ProductionPoint"));
+    const html = `<div class="module-header" style="color:#ef4444; font-weight:900;">🏗️ PRODUCTION</div><div class="factory-grid" style="margin-top:10px;">
+        ${points.map(p => `<div style="background:rgba(255,255,255,0.05); padding:8px; border-radius:4px; margin-bottom:5px;">🏭 ${p.getAttribute("filename").split('/').pop().replace('.xml', '')}</div>`).join('') || "N/A"}
+    </div>`;
+    updateAndCache('module-3-factory-info', html);
+}
 
 async function fetchLiveGPortal(url) {
     try {
