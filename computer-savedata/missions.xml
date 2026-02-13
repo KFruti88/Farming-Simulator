@@ -1,2 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8" standalone="no"?>
-<missions/>
+<missions>
+    <mission type="mow_bale" activeId="2" reward="18517" status="1" success="false" farmId="1">
+        <field id="38" sprayFactor="1.000000" spraySet="false" plowFactor="1.000000" state="2" vehicleGroup="19" vehicleUseCost="1052.616455" growthState="4" limeFactor="1.000000" weedFactor="1.000000" stubbleFactor="0.000000" fruitTypeName="GRASS"/>
+        <bale sellPointPlaceableId="18" unloadingStationIndex="1" fillTypeName="SILAGE" depositedLiters="0.000000"/>
+    </mission>
+    <mission type="harvest" activeId="1" reward="2307" status="1" success="false" farmId="1">
+        <field id="12" sprayFactor="1.000000" spraySet="false" plowFactor="1.000000" state="2" vehicleGroup="5" vehicleUseCost="400.003510" growthState="5" limeFactor="1.000000" weedFactor="1.000000" stubbleFactor="0.000000" fruitTypeName="SORGHUM"/>
+        <harvest sellPointPlaceableId="15" unloadingStationIndex="1" expectedLiters="24600.214844" depositedLiters="0.000000"/>
+    </mission>
+</missions>

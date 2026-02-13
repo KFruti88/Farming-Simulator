@@ -1,19 +1,44 @@
 ﻿<?xml version="1.0" encoding="utf-8" standalone="no"?>
 <fields>
-    <field id="1" plannedFruit="SOYBEAN"/>
-    <field id="2" plannedFruit="SUNFLOWER"/>
-    <field id="3" plannedFruit="WHEAT"/>
+    <field id="1" plannedFruit="CANOLA"/>
+    <field id="2" plannedFruit="CARROT"/>
+    <field id="3" plannedFruit="GRASS"/>
     <field id="4" plannedFruit="SUNFLOWER"/>
     <field id="5" plannedFruit="GRASS"/>
-    <field id="6" plannedFruit="GRASS"/>
+    <field id="6" plannedFruit="SUGARBEET"/>
     <field id="7" plannedFruit="SUNFLOWER"/>
-    <field id="8" plannedFruit="SUNFLOWER"/>
-    <field id="9" plannedFruit="CARROT"/>
-    <field id="10" plannedFruit="BARLEY"/>
-    <field id="11" plannedFruit="BEETROOT"/>
-    <field id="12" plannedFruit="SOYBEAN"/>
-    <field id="13" plannedFruit="SORGHUM"/>
-    <field id="14" plannedFruit="BEETROOT"/>
-    <field id="15" plannedFruit="OAT"/>
-    <field id="16" plannedFruit="CANOLA"/>
+    <field id="8" plannedFruit="SUGARBEET"/>
+    <field id="9" plannedFruit="SUNFLOWER"/>
+    <field id="10" plannedFruit="WHEAT"/>
+    <field id="11" plannedFruit="BARLEY"/>
+    <field id="12" plannedFruit="SORGHUM"/>
+    <field id="13" plannedFruit="CANOLA"/>
+    <field id="14" plannedFruit="OAT"/>
+    <field id="15" plannedFruit="WHEAT"/>
+    <field id="16" plannedFruit="SOYBEAN"/>
+    <field id="17" plannedFruit="PEAS"/>
+    <field id="18" plannedFruit="SORGHUM"/>
+    <field id="19" plannedFruit="SOYBEAN"/>
+    <field id="20" plannedFruit="POTATO"/>
+    <field id="21" plannedFruit="CANOLA"/>
+    <field id="22" plannedFruit="RYE"/>
+    <field id="23" plannedFruit="RYE"/>
+    <field id="24" plannedFruit="SOYBEAN"/>
+    <field id="25" plannedFruit="RYE"/>
+    <field id="26" plannedFruit="COTTON"/>
+    <field id="27" plannedFruit="PARSNIP"/>
+    <field id="28" plannedFruit="POTATO"/>
+    <field id="29" plannedFruit="OAT"/>
+    <field id="30" plannedFruit="SORGHUM"/>
+    <field id="31" plannedFruit="COTTON"/>
+    <field id="32" plannedFruit="PEAS"/>
+    <field id="33" plannedFruit="MAIZE"/>
+    <field id="34" plannedFruit="CANOLA"/>
+    <field id="35" plannedFruit="GRASS"/>
+    <field id="36" plannedFruit="GRASS"/>
+    <field id="37" plannedFruit="GRASS"/>
+    <field id="38" plannedFruit="GRASS"/>
+    <field id="39" plannedFruit="GRASS"/>
+    <field id="40" plannedFruit="GRASS"/>
+    <field id="41" plannedFruit="CANOLA"/>
 </fields>

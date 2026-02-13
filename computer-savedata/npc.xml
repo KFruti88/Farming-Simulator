@@ -3,11 +3,11 @@
     <npc name="NPC_US_01" finishedMissions="1"/>
     <npc name="NPC_US_02" finishedMissions="0"/>
     <npc name="NPC_US_03" finishedMissions="0"/>
-    <npc name="NPC_US_04" finishedMissions="0"/>
-    <npc name="NPC_US_05" finishedMissions="0"/>
+    <npc name="NPC_US_04" finishedMissions="2"/>
+    <npc name="NPC_US_05" finishedMissions="2"/>
     <npc name="NPC_US_06" finishedMissions="0"/>
     <npc name="NPC_US_07" finishedMissions="1"/>
-    <npc name="NPC_US_08" finishedMissions="1"/>
+    <npc name="NPC_US_08" finishedMissions="0"/>
     <npc name="NPC_US_09" finishedMissions="0"/>
     <npc name="NPC_US_10" finishedMissions="0"/>
     <npc name="NPC_US_11" finishedMissions="0"/>

@@ -2,7 +2,7 @@
 <Courseplay>
     <GlobalSettings>
         <GlobalSetting currentValue="100" name="wageModifier"/>
-        <GlobalSetting currentValue="70" name="autoRepair"/>
+        <GlobalSetting currentValue="25" name="autoRepair"/>
         <GlobalSetting currentValue="5" name="fuelThreshold"/>
         <GlobalSetting currentValue="false" name="waitForRefueling"/>
         <GlobalSetting currentValue="100" name="brokenThreshold"/>
