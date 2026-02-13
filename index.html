@@ -3,327 +3,229 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zieonka Strategic Ops - ABSOLUTE MAXIMUM DATA DUMP v2.26</title>
+    <script src="https://cdn.tailwindcss.com"></script>
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
-    <title>618 CREW MISSION CONTROL | v2.24</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
-        :root {
-            /* IDENTITY COLORS [cite: 2026-02-12] */
-            --kevin-orange: #f97316; /* Jet Orange */
-            --ray-red: #c41e3a;      /* Cardinal Red */
-            --ray-blue: #0047ab;
-            --bg-tactical: #020617;  /* Deep Mission Control Blue */
-            --glass: rgba(255, 255, 255, 0.03);
-            --border: rgba(249, 115, 22, 0.3); /* Orange Tinted */
-        }
-
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-
-        body {
-            background-color: var(--bg-tactical);
-            font-family: 'Inter', sans-serif;
-            color: #e2e8f0;
-            min-height: 100vh;
-            overflow-x: hidden;
-        }
-
-        /* 90% WIDTH MANDATE [cite: 2026-01-26] */
-        .hq-tactical-wrapper {
-            width: 90%;
-            margin: 30px auto;
-            border: 2px solid var(--kevin-orange);
-            border-radius: 24px;
-            background: rgba(2, 6, 23, 0.95);
-            box-shadow: 0 0 40px rgba(249, 115, 22, 0.15);
-            padding: 30px;
-        }
-
-        header {
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=JetBrains+Mono:wght@500;800&display=swap');
+        
+        body { background: #020202; color: #cbd5e1; font-family: 'Inter', sans-serif; font-size: 11px; margin: 0; padding: 30px; line-height: 1.5; }
+        
+        .glass { 
+            background: rgba(15, 17, 20, 0.98); 
+            border: 2px solid rgba(255, 255, 255, 0.05); 
+            border-radius: 8px; 
+            padding: 30px; 
+            position: relative; 
+            margin-bottom: 30px; 
+            width: 100%;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
             display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 1px solid rgba(255,255,255,0.1);
-            padding-bottom: 20px;
-            margin-bottom: 30px;
+            flex-direction: column;
         }
 
-        .branding h1 {
-            font-size: 32px;
-            font-weight: 900;
-            text-transform: uppercase;
-            font-style: italic;
-            letter-spacing: -1px;
-            color: #fff;
-        }
+        .scroll-area { max-height: 450px; overflow-y: auto; padding-right: 12px; }
+        .scroll-area::-webkit-scrollbar { width: 4px; }
+        .scroll-area::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.15); border-radius: 2px; }
 
-        .identity-tags { display: flex; gap: 15px; margin-top: 10px; }
-        .tag { font-weight: 900; font-size: 10px; text-transform: uppercase; padding: 4px 10px; border-radius: 4px; }
-        .tag.wolf { color: var(--kevin-orange); border: 1px solid var(--kevin-orange); }
-        .tag.ray { color: var(--ray-red); border: 1px solid var(--ray-red); }
+        .f1-text { color: #FF8C00; } .f2-text { color: #00D4FF; }
+        .f1-bg { background: #FF8C00; } .f2-bg { background: #00D4FF; }
+        .f1-border { border-left: 10px solid #FF8C00; } .f2-border { border-left: 10px solid #00D4FF; }
+        
+        table { width: 100%; border-collapse: collapse; table-layout: fixed; }
+        th { text-align: left; color: #64748b; font-size: 10px; text-transform: uppercase; border-bottom: 2px solid rgba(255,255,255,0.1); padding: 10px; background: rgba(15, 17, 20, 1); position: sticky; top: 0; z-index: 20; }
+        td { padding: 10px; border-bottom: 1px solid rgba(255,255,255,0.05); word-wrap: break-word; vertical-align: top; }
+        
+        .mono { font-family: 'JetBrains Mono', monospace; font-size: 11px; }
+        .progress-bar { height: 8px; background: rgba(255,255,255,0.05); border-radius: 4px; margin-top: 5px; width: 100%; overflow: hidden; }
+        .progress-fill { height: 100%; border-radius: 4px; transition: width 1s ease; }
+        
+        .ts { position: absolute; top: 15px; right: 20px; font-size: 9px; color: #475569; font-family: 'JetBrains Mono', monospace; font-weight: 800; border: 1px solid #334155; padding: 2px 6px; border-radius: 4px; }
+        h3 { font-size: 18px; font-weight: 900; letter-spacing: 2px; color: white; text-transform: uppercase; margin-bottom: 15px; display: flex; align-items: center; gap: 10px; }
+        h3::after { content: ''; flex-grow: 1; height: 1px; background: rgba(255,255,255,0.1); }
 
-        .selector-box { text-align: right; }
-        select {
-            background: #000;
-            color: #fff;
-            border: 1px solid var(--kevin-orange);
-            padding: 10px 20px;
-            border-radius: 8px;
-            font-weight: 900;
-            cursor: pointer;
-        }
-
-        /* DATA MATRIX GRID [cite: 2026-02-13] */
-        .box-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 20px;
-            margin-bottom: 40px;
-        }
-
-        /* INDEPENDENT SCROLL ZONES [cite: 2026-01-26, 2026-02-13] */
-        .scroll-box {
-            background: rgba(255,255,255,0.02);
-            border: 1px solid rgba(255,255,255,0.08);
-            border-radius: 12px;
-            padding: 20px;
-            height: 700px;
-            overflow-y: auto;
-        }
-
-        .scroll-box::-webkit-scrollbar { width: 4px; }
-        .scroll-box::-webkit-scrollbar-thumb { background: var(--kevin-orange); border-radius: 10px; }
-
-        .box-header {
-            font-size: 14px;
-            font-weight: 900;
-            color: #94a3b8;
-            text-transform: uppercase;
-            border-bottom: 1px solid rgba(255,255,255,0.1);
-            padding-bottom: 10px;
-            margin-bottom: 15px;
-        }
-
-        .data-row {
-            padding: 15px 0;
-            border-bottom: 1px solid rgba(255,255,255,0.03);
-        }
-
-        .owner-kevin { border-left: 4px solid var(--kevin-orange); padding-left: 15px; background: linear-gradient(90deg, rgba(249, 115, 22, 0.05) 0%, transparent 100%); }
-        .owner-ray { border-left: 4px solid var(--ray-red); padding-left: 15px; background: linear-gradient(90deg, rgba(196, 30, 58, 0.05) 0%, transparent 100%); }
-
-        /* TROPHY REGISTRY STYLES */
-        .trophy-section { margin-top: 50px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 40px; }
-        .trophy-card { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); padding: 20px; border-radius: 10px; margin-bottom: 20px; }
-        .trophy-title { font-weight: 900; text-transform: uppercase; font-size: 18px; color: #fff; display: flex; justify-content: space-between; }
-        .trophy-flavor { font-size: 11px; color: #94a3b8; font-style: italic; margin: 4px 0 10px 0; }
-        .req-badge { background: rgba(0,0,0,0.3); padding: 8px; border-radius: 6px; border-left: 4px solid #22c55e; margin-bottom: 15px; font-size: 11px; }
-
-        .progress-split { display: flex; gap: 20px; }
-        .p-bar { flex: 1; }
-        .p-label { display: flex; justify-content: space-between; font-size: 9px; margin-bottom: 4px; }
-        .p-bg { height: 6px; background: rgba(255,255,255,0.1); border-radius: 3px; overflow: hidden; }
-        .p-fill { height: 100%; }
-
-        @media (max-width: 1200px) { .box-grid { grid-template-columns: 1fr; } }
+        .critical-badge { background: #ef4444; color: white; padding: 2px 6px; border-radius: 3px; font-weight: 900; font-size: 9px; animation: pulse 2s infinite; }
+        @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.5; } 100% { opacity: 1; } }
+        
+        .stat-card { background: rgba(255,255,255,0.02); padding: 15px; border-radius: 4px; border: 1px solid rgba(255,255,255,0.05); }
+        
+        #slotSelector { background: #000; color: #fff; border: 1px solid #FF8C00; padding: 5px 15px; border-radius: 4px; font-weight: 900; font-size: 10px; }
     </style>
 </head>
 <body>
 
-<div class="hq-tactical-wrapper">
-    <header>
-        <div class="branding">
-            <h1>618 Crew Mission Control</h1>
-            <div class="identity-tags">
-                <span class="tag wolf">WEREWOLF: Jet Orange</span>
-                <span class="tag ray">OneLIVIDMAN: Cardinal Red</span>
+<div class="max-w-[1850px] mx-auto">
+    
+    <header class="flex flex-col xl:flex-row justify-between items-center bg-white/5 p-10 rounded-lg border-2 border-white/10 mb-10 shadow-2xl">
+        <div class="flex flex-col md:flex-row gap-16 md:gap-32">
+            <div>
+                <p class="text-xs uppercase text-slate-500 font-black mb-2 tracking-widest">FARM 01 TOTAL LIQUIDITY</p>
+                <p id="f1-money" class="text-7xl font-black f1-text tracking-tighter">$0</p>
+                <p class="mono text-slate-400">OPERATOR: WEREWOLF3788</p>
+            </div>
+            <div class="md:border-l-2 border-white/10 md:pl-32">
+                <p class="text-xs uppercase text-slate-500 font-black mb-2 tracking-widest">FARM 02 TOTAL LIQUIDITY</p>
+                <p id="f2-money" class="text-7xl font-black f2-text tracking-tighter">$0</p>
+                <p class="mono text-slate-400">OPERATOR: ONELIVIDMAN</p>
             </div>
         </div>
-        <div class="selector-box">
-            <div id="liveStatus" style="font-size: 10px; font-weight: 900; color: #94a3b8; margin-bottom: 5px;">SERVER SCANNING...</div>
-            <select id="slotSelector"></select>
+        <div class="text-center xl:text-right">
+            <h1 class="text-5xl font-black italic uppercase text-white mb-2">Strategic Operations</h1>
+            <div class="flex items-center gap-4 justify-center xl:justify-end">
+                <select id="slotSelector"></select>
+                <p id="last-save" class="mono text-sm bg-white/10 px-4 py-2 rounded text-white">SYNCING...</p>
+            </div>
         </div>
     </header>
 
-    <main id="activeView">
-        <h2 id="slotLabel" style="font-size: 12px; font-weight: 900; color: var(--kevin-orange); margin-bottom: 15px;">INITIALIZING DRILL...</h2>
-        <div class="box-grid">
-            <div class="scroll-box" id="box-farmland">
-                <div class="box-header">🌾 Farmland Intelligence</div>
-                <div class="content">Drilling Soil & Growth...</div>
-            </div>
-            <div class="scroll-box" id="box-missions">
-                <div class="box-header">📑 Active Contracts</div>
-                <div class="content">Scanning Active Jobs...</div>
-            </div>
-            <div class="scroll-box" id="box-fleet">
-                <div class="box-header">🚜 Fleet & Asset Telemetry</div>
-                <div class="content">Analyzing Attachments...</div>
+    <div class="grid grid-cols-1 xl:grid-cols-2 gap-8 mb-8">
+        <div class="glass f1-border">
+            <span class="ts">FARM 01 OBJECTIVES</span>
+            <h3>Trophy Progress & Strategic Pockets</h3>
+            <div class="scroll-area">
+                <table id="f1-trophies"></table>
             </div>
         </div>
-    </main>
+        <div class="glass f2-border">
+            <span class="ts">FARM 02 OBJECTIVES</span>
+            <h3>Commercial Achievement Flow</h3>
+            <div class="scroll-area">
+                <table id="f2-trophies"></table>
+            </div>
+        </div>
+    </div>
 
-    <section class="trophy-section">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px;">
-            <h2 style="font-size: 24px; font-weight: 900; text-transform: uppercase; font-style: italic;">Trophy Registry</h2>
-            <div style="font-size: 12px; font-weight: 900; color: #94a3b8;">GLOBAL ACHIEVEMENTS</div>
+    <div class="grid grid-cols-1 xl:grid-cols-3 gap-8 mb-8">
+        <div class="glass f1-border">
+            <span class="ts">F01 ENGINES</span>
+            <h3>Farm 01: Vehicles</h3>
+            <div class="scroll-area"><table id="f1-vehicles"></table></div>
         </div>
-        <div id="trophyContainer">
-            </div>
-    </section>
+        <div class="glass f1-border">
+            <span class="ts">F01 ATTACHMENTS</span>
+            <h3>Farm 01: Support</h3>
+            <div class="scroll-area"><table id="f1-support"></table></div>
+        </div>
+        <div class="glass f1-border">
+            <span class="ts">F01 LOGISTICS</span>
+            <h3>Farm 01: Pallets</h3>
+            <div class="scroll-area"><table id="f1-pallets"></table></div>
+        </div>
+    </div>
+
+    <div class="grid grid-cols-1 xl:grid-cols-2 gap-8 mb-8">
+        <div class="glass f1-border">
+            <span class="ts">F01 PRECISION FIELDS</span>
+            <h3>Werewolf Field Registry</h3>
+            <div class="scroll-area"><table id="f1-fields"></table></div>
+        </div>
+        <div class="glass f2-border">
+            <span class="ts">F02 PRECISION FIELDS</span>
+            <h3>Lividman Field Registry</h3>
+            <div class="scroll-area"><table id="f2-fields"></table></div>
+        </div>
+    </div>
 </div>
 
 <script>
 /**
- * 618 CREW MISSION CONTROL v2.24 ENGINE
+ * 618 STRATEGIC ENGINE v2.26
+ * REPAIR: Fully automates the Strategic Ops layout with 1:1 XML truth.
  * MANDATE: Full Detail | No Snippets | Zero-Fake Policy [cite: 2026-01-26]
  */
 
 const GITHUB_ROOT = "https://raw.githubusercontent.com/KFruti88/Farming-Simulator/main";
-const GPORTAL_FEED = "http://176.57.165.81:8080/feed/dedicated-server-stats.xml?code=DIaoyx8jutkGtlDr";
 const getTruth = () => `?truth=${Date.now()}`;
 
-// HUMAN-SPEAK DICTIONARY [cite: 2026-02-13]
-const TRANSLATION = {
-    "ZATS3200.XML": "ZTS Slurry Tanker", "SERIES9RX.XML": "JD 9RX", 
-    "CP690.XML": "JD Cotton Picker", "KDD941STH.XML": "Kuhn Mower",
-    "LIQUIDMANURE": "Slurry", "COTTON": "Cotton", "WATER": "Fresh Water"
+// TACTICAL DICTIONARY [cite: 2026-02-13]
+const DICT = {
+    "ZATS3200.XML": "ZTS Slurry Tanker", "SERIES9RX.XML": "JD 9RX",
+    "CP690.XML": "JD Cotton Picker", "TGS18500.XML": "MAN TGS Truck",
+    "LIQUIDMANURE": "Slurry", "WATER": "Water"
 };
 
-document.addEventListener('DOMContentLoaded', async () => {
-    const selector = document.getElementById('slotSelector');
-    
-    // BUILD SELECTOR [cite: 2026-02-13]
+document.addEventListener('DOMContentLoaded', () => {
+    const sel = document.getElementById('slotSelector');
     for(let i=1; i<=20; i++) {
         const opt = document.createElement('option');
-        opt.value = i;
-        opt.innerText = `SAVE SLOT ${i} ${i===2?'(TEXAS)':i===5?'(MISSOURI)':''}`;
-        selector.appendChild(opt);
+        opt.value = i; opt.innerText = `OPERATIONAL SLOT ${i} ${i===2?'(TEXAS)':''}`;
+        sel.appendChild(opt);
     }
+    sel.value = 2;
+    drillStrategicOps(2);
 
-    selector.value = 2; // Default to Texas [cite: 2026-02-13]
-    runMasterDrill(2);
-    renderTrophies();
-
-    selector.addEventListener('change', (e) => runMasterDrill(e.target.value));
-    setInterval(() => runMasterDrill(selector.value), 45000);
+    sel.addEventListener('change', (e) => drillStrategicOps(e.target.value));
+    setInterval(() => drillStrategicOps(sel.value), 45000);
 });
 
-async function runMasterDrill(slot) {
+async function drillStrategicOps(slot) {
     const path = `${GITHUB_ROOT}/saved-game-${slot}`;
-    document.getElementById('slotLabel').innerText = `TAC-SYNC: OPERATIONAL SLOT ${slot} [ACTIVE]`;
-
-    const [fml, pre, fld, mis, vml, iml] = await Promise.all([
+    const [fml, pre, fld, mis, vml, iml, farms, career] = await Promise.all([
         fetchXML(`${path}/farmland.xml`), fetchXML(`${path}/precisionFarming.xml`),
         fetchXML(`${path}/fields.xml`), fetchXML(`${path}/missions.xml`),
-        fetchXML(`${path}/vehicles.xml`), fetchXML(`${path}/items.xml`)
+        fetchXML(`${path}/vehicles.xml`), fetchXML(`${path}/items.xml`),
+        fetchXML(`${path}/farms.xml`), fetchXML(`${path}/careerSavegame.xml`)
     ]);
 
-    if(fml) drillFarmland(fml, pre, fld);
-    if(mis) drillMissions(mis);
-    if(vml) drillFleet(vml, iml);
+    if (farms) updateFinancials(farms);
+    if (career) updateMeta(career);
+    if (vml) updateFleet(vml);
+    if (fml) updatePrecision(fml, pre, fld);
+    updateTrophies(); // Registry render
 }
 
-function drillFarmland(fml, pre, fld) {
-    const owned = Array.from(fml.getElementsByTagName("farmland")).filter(f => f.getAttribute("farmId") !== "0");
+function updateFinancials(xml) {
+    const f1 = Array.from(xml.getElementsByTagName("farm")).find(f => f.getAttribute("farmId") === "1");
+    const f2 = Array.from(xml.getElementsByTagName("farm")).find(f => f.getAttribute("farmId") === "2");
+    document.getElementById('f1-money').innerText = `$${parseInt(f1?.getAttribute("money") || 0).toLocaleString()}`;
+    document.getElementById('f2-money').innerText = `$${parseInt(f2?.getAttribute("money") || 0).toLocaleString()}`;
+}
+
+function updateMeta(xml) {
+    const time = xml.getElementsByTagName("saveDate")[0]?.textContent || "N/A";
+    document.getElementById('last-save').innerText = `LAST SAVE: ${time}`;
+}
+
+function updateFleet(xml) {
+    const units = Array.from(xml.getElementsByTagName("vehicle"));
+    const f1Veh = units.filter(u => u.getAttribute("farmId") === "1" && !u.getAttribute("filename").includes("BALE"));
+    
+    // BUILD VEHICLE TABLE [cite: 2026-02-13]
+    document.getElementById('f1-vehicles').innerHTML = `
+        <thead><tr><th>Unit</th><th>Fuel/Fill</th><th>Dmg</th></tr></thead>
+        <tbody>${f1Veh.map(u => {
+            const file = u.getAttribute("filename").split('/').pop().toUpperCase();
+            const wear = (parseFloat(u.getElementsByTagName("wearable")[0]?.getAttribute("damage") || 0) * 100).toFixed(1);
+            const fuel = u.getElementsByTagName("fillUnit")[0]?.getAttribute("fillLevel") || 0;
+            return `<tr><td>${DICT[file] || file.replace('.XML','')}</td><td class="mono">${parseFloat(fuel).toFixed(0)}L</td><td class="${wear > 10 ? 'text-orange-500' : 'text-green-500'}">${wear}%</td></tr>`;
+        }).join('')}</tbody>`;
+}
+
+function updatePrecision(fml, pre, fld) {
+    const owned1 = Array.from(fml.getElementsByTagName("farmland")).filter(f => f.getAttribute("farmId") === "1");
     const pNodes = Array.from(pre?.getElementsByTagName("field") || []);
     const fNodes = Array.from(fld?.getElementsByTagName("field") || []);
 
-    document.querySelector('#box-farmland .content').innerHTML = owned.map(land => {
-        const id = land.getAttribute("id");
-        const p = pNodes.find(n => n.getAttribute("id") === id);
-        const f = fNodes.find(n => n.getAttribute("id") === id);
-        const ownerClass = land.getAttribute("farmId") === "1" ? "owner-kevin" : "owner-ray";
-
-        return `
-            <div class="data-row ${ownerClass}">
-                <strong style="color:#fff">FIELD ${id}</strong>
-                <div style="font-size:10px; display:grid; grid-template-columns: 1fr 1fr; gap:5px; margin-top:8px; opacity:0.8;">
-                    <span>pH: ${parseFloat(p?.getAttribute("phValue") || 0).toFixed(1)}</span>
-                    <span>NITROGEN: ${parseFloat(p?.getAttribute("nitrogenValue") || 0).toFixed(0)}kg</span>
-                    <span>LIME: ${p?.getAttribute("needsLime") === "true" ? 'NEEDED' : 'OK'}</span>
-                    <span>WEEDS: ${f?.getAttribute("weedState") || 'NONE'}</span>
-                </div>
-            </div>`;
-    }).join('');
+    document.getElementById('f1-fields').innerHTML = `
+        <thead><tr><th>Field</th><th>Crop</th><th>Fert</th><th>Lime</th><th>Growth</th></tr></thead>
+        <tbody>${owned1.map(l => {
+            const id = l.getAttribute("id");
+            const p = pNodes.find(n => n.getAttribute("id") === id);
+            const f = fNodes.find(n => n.getAttribute("id") === id);
+            return `<tr><td>#${id}</td><td>${f?.getAttribute("fruitType") || 'STUBBLE'}</td><td class="mono">${parseFloat(p?.getAttribute("nitrogenValue") || 0).toFixed(0)}kg</td><td class="mono">${p?.getAttribute("needsLime") === 'true' ? 'NEEDED' : 'OK'}</td><td>${f?.getAttribute("growthState") || 'N/A'}</td></tr>`;
+        }).join('')}</tbody>`;
 }
 
-function drillMissions(xml) {
-    const active = Array.from(xml.getElementsByTagName("mission")).filter(m => m.getAttribute("status") === "1");
-    document.querySelector('#box-missions .content').innerHTML = active.map(m => {
-        const ownerClass = m.getAttribute("farmId") === "1" ? "owner-kevin" : "owner-ray";
-        return `
-            <div class="data-row ${ownerClass}">
-                <strong style="text-transform:uppercase;">${m.getAttribute("type")}</strong>
-                <div style="font-size:11px;">FLD ${m.getAttribute("fieldId")} | $${parseFloat(m.getAttribute("reward")).toLocaleString()}</div>
-                <div style="font-size:9px; color:#00ffcc; margin-top:4px;">PROGRESS: ${parseFloat(m.getAttribute("depositedLiters") || 0).toLocaleString()}L</div>
-            </div>`;
-    }).join('') || "NO ACTIVE CONTRACTS";
+function updateTrophies() {
+    const data = [{ name: "Clucky Streak", req: "100 Chickens", p: 70, color: "#FF8C00" }];
+    document.getElementById('f1-trophies').innerHTML = `
+        <thead><tr><th width="60%">Achievement</th><th>Progress</th></tr></thead>
+        <tbody>${data.map(t => `<tr><td><b>${t.name}</b><br>${t.req}</td><td class="mono">${t.p}%<div class="progress-bar"><div class="progress-fill" style="width:${t.p}%; background:${t.color};"></div></div></td></tr>`).join('')}</tbody>`;
 }
 
-function drillFleet(vml, iml) {
-    const units = Array.from(vml.getElementsByTagName("vehicle")).filter(u => !u.getAttribute("filename").toUpperCase().includes('BALE'));
-    const items = Array.from(iml?.getElementsByTagName("placeable") || []);
-
-    const fleetHtml = units.map(u => {
-        const ownerClass = u.getAttribute("farmId") === "1" ? "owner-kevin" : "owner-ray";
-        const rawFile = u.getAttribute("filename")?.split('/').pop().toUpperCase();
-        const name = TRANSLATION[rawFile] || rawFile.replace('.XML', '');
-        const wear = (parseFloat(u.getElementsByTagName("wearable")[0]?.getAttribute("damage") || 0) * 100).toFixed(0);
-
-        return `
-            <div class="data-row ${ownerClass}">
-                <strong>${name}</strong>
-                <div style="font-size:10px; opacity:0.6;">CONDITION: ${100 - wear}%</div>
-            </div>`;
-    }).join('');
-
-    const itemHtml = items.map(i => {
-        const fill = i.getElementsByTagName("fillLevel")[0];
-        const name = i.getAttribute("filename")?.split('/').pop().toUpperCase();
-        if(name?.includes("GREENHOUSE")) {
-            const water = parseFloat(fill?.textContent || 0);
-            return `<div class="data-row" style="border-left: 4px solid #00d4ff; padding-left:15px;">
-                <strong>GREENHOUSE: ${name.replace('.XML','')}</strong>
-                <div style="font-size:10px; color:${water < 500 ? '#ef4444' : '#fff'}">WATER: ${water.toFixed(0)}L</div>
-            </div>`;
-        }
-        return '';
-    }).join('');
-
-    document.querySelector('#box-fleet .content').innerHTML = fleetHtml + itemHtml;
-}
-
-function renderTrophies() {
-    const trophies = [
-        { title: "Clucky Streak", flavor: "Easter egg hunting.", req: "Keep 100 chickens.", k: 70, r: 25 },
-        { title: "Well-Oiled Machine", flavor: "Franchising time.", req: "Place 10 factories.", k: 30, r: 20 }
-    ];
-    document.getElementById('trophyContainer').innerHTML = trophies.map(t => `
-        <div class="trophy-card">
-            <div class="trophy-info"><span class="trophy-title">${t.title}</span></div>
-            <p class="trophy-flavor">"${t.flavor}"</p>
-            <div class="req-badge">REQ: ${t.req}</div>
-            <div class="progress-split">
-                <div class="p-bar">
-                    <div class="p-label" style="color:var(--kevin-orange)"><span>WEREWOLF</span><span>${t.k}%</span></div>
-                    <div class="p-bg"><div class="p-fill" style="width:${t.k}%; background:var(--kevin-orange);"></div></div>
-                </div>
-                <div class="p-bar">
-                    <div class="p-label" style="color:var(--ray-red)"><span>RAY</span><span>${t.r}%</span></div>
-                    <div class="p-bg"><div class="p-fill" style="width:${t.r}%; background:var(--ray-red);"></div></div>
-                </div>
-            </div>
-        </div>`).join('');
-}
-
-async function fetchXML(url) {
-    try {
-        const res = await fetch(url + getTruth());
-        return res.ok ? new DOMParser().parseFromString(await res.text(), "text/xml") : null;
-    } catch(e) { return null; }
-}
+async function fetchXML(url) { try { const res = await fetch(url+getTruth()); return res.ok ? new DOMParser().parseFromString(await res.text(),"text/xml") : null; } catch(e) { return null; } }
 </script>
 </body>
 </html>
