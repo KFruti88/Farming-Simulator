@@ -1,6 +1,6 @@
 /**
- * FS MASTER UNIFIED ENGINE v1.92 - DEEP RECOVERY
- * REPAIR: Aggressive Node-Drilling for Precision Soil and Motorized Telemetry.
+ * FS MASTER UNIFIED ENGINE v1.94 - DEFINITIVE PRODUCTION
+ * REPAIR: Optimized G-Portal Image Feed and Aggressive XML Node Drilling.
  * MANDATE: Full Detail | Zero Snippets | Zero-Fake Policy [cite: 2026-01-26]
  */
 
@@ -29,7 +29,6 @@ async function masterSyncCycle(slot) {
         fetchLiveGPortal(GPORTAL_FEED),
         fetchDeepXML(`${gitPath}/vehicles.xml`, parseFleetHardDrill),
         fetchDeepXML(`${gitPath}/farms.xml`, parseFinancials),
-        // AGGRESSIVE FIELD SYNC [cite: 2026-02-12]
         injectBladeModule('module-1-field-info', 'field-info.html', `${gitPath}/farmland.xml`, 
             (xml) => parsePrecisionFieldMatrix(xml, `${gitPath}/precisionFarming.xml`, `${gitPath}/fields.xml`)),
         injectBladeModule('module-2-animal-info', 'animal-info.html', `${gitPath}/placeables.xml`, parseAnimalBiometrics),
@@ -49,7 +48,6 @@ async function injectBladeModule(id, file, xmlPath, parser) {
 
 /**
  * RECOVERY: PRECISION INTELLIGENCE [cite: 2026-02-12]
- * Hard-Drills pH and Nitrogen values.
  */
 async function parsePrecisionFieldMatrix(farmlandXml, precisionPath, fieldsPath) {
     try {
@@ -69,7 +67,7 @@ async function parsePrecisionFieldMatrix(farmlandXml, precisionPath, fieldsPath)
                     const pData = pNodes.find(n => n.getAttribute("id") === id);
                     const fData = fNodes.find(n => n.getAttribute("id") === id);
 
-                    // Aggressive Extraction [cite: 2026-02-12]
+                    // Aggressive attribute pull [cite: 2026-02-12]
                     const ph = pData ? parseFloat(pData.getAttribute("phValue") || 0) : 0;
                     const nitro = pData ? parseFloat(pData.getAttribute("nitrogenValue") || 0) : 0;
                     const fruit = fData ? fData.getAttribute("fruitType") || "STUBBLE" : "PLOWED";
@@ -93,7 +91,6 @@ async function parsePrecisionFieldMatrix(farmlandXml, precisionPath, fieldsPath)
 
 /**
  * RECOVERY: FLEET TELEMETRY [cite: 2026-02-12]
- * Fixed "Implement" error by checking Engine-based fuel nodes more aggressively.
  */
 function parseFleetHardDrill(xml) {
     const excluded = ['PALLET', 'BIGBAG', 'ROLLER', 'BALE', 'QUICKBALE'];
@@ -104,18 +101,15 @@ function parseFleetHardDrill(xml) {
 
     const html = units.map(u => {
         const cleanName = u.getAttribute("filename")?.split('/').pop().replace('.xml', '').toUpperCase().replace(/_/g, ' ') || "UNIT";
-        
-        // RECOVERY DRILL: Try multiple paths for fuel [cite: 2026-02-12]
         const fNode = u.getElementsByTagName("fuelConsumer")[0] || u.getElementsByTagName("consumer")[0];
         const wearNode = u.getElementsByTagName("wearable")[0] || u;
-        const cargoNode = u.getElementsByTagName("fillUnit")[0];
+        const fillUnit = u.getElementsByTagName("fillUnit")[0];
         
         const fuelRaw = fNode ? fNode.getAttribute("fillLevel") : null;
         const fuelPercent = (fuelRaw !== null) ? (parseFloat(fuelRaw) * 100).toFixed(0) : null;
         const wear = (parseFloat(wearNode?.getAttribute("damage") || 0) * 100).toFixed(0);
-        const cargo = cargoNode ? parseFloat(cargoNode.getAttribute("fillLevel") || 0).toFixed(0) : 0;
+        const cargo = fillUnit ? parseFloat(fillUnit.getAttribute("fillLevel") || 0).toFixed(0) : 0;
 
-        // Correctly Identify Motorized vs Implement [cite: 2026-02-12]
         const fuelDisplay = (fuelPercent !== null) ? 
             `<span style="color:var(--fuel); font-weight:900;">${fuelPercent}% FUEL</span>` : 
             `<span style="opacity:0.4;">TRAILER / IMPLEMENT</span>`;
