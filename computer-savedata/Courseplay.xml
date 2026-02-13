@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<Courseplay>
+    <GlobalSettings>
+        <GlobalSetting currentValue="100" name="wageModifier"/>
+        <GlobalSetting currentValue="70" name="autoRepair"/>
+        <GlobalSetting currentValue="5" name="fuelThreshold"/>
+        <GlobalSetting currentValue="false" name="waitForRefueling"/>
+        <GlobalSetting currentValue="100" name="brokenThreshold"/>
+        <GlobalSetting currentValue="true" name="stopThreshingDuringRain"/>
+        <GlobalSetting currentValue="0" name="fruitDestruction"/>
+        <GlobalSetting currentValue="45" name="maxDeltaAngleAtGoalDeg"/>
+        <GlobalSetting currentValue="10" name="deltaAngleRelaxFactorDeg"/>
+    </GlobalSettings>
+</Courseplay>

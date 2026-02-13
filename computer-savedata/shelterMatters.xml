@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<ShelterMatters>
+    <hideShelterStatusIcon>false</hideShelterStatusIcon>
+    <damageRates>
+        <rate type="default" rate="10.000000"/>
+        <rate type="windrower" rate="10.000000"/>
+        <rate type="cultivator" rate="10.000000"/>
+        <rate type="balerWrapper" rate="10.000000"/>
+        <rate type="baler" rate="15.000000"/>
+        <rate type="tractor" rate="10.000000"/>
+        <rate type="trailer" rate="5.000000"/>
+        <rate type="plow" rate="15.000000"/>
+        <rate type="transport" rate="5.000000"/>
+        <rate type="mower" rate="10.000000"/>
+        <rate type="seeder" rate="12.000000"/>
+        <rate type="vehicle" rate="10.000000"/>
+        <rate type="sprayer" rate="12.000000"/>
+        <rate type="combineHarvester" rate="20.000000"/>
+        <rate type="fertilizerSpreader" rate="10.000000"/>
+        <rate type="slurrySpreader" rate="15.000000"/>
+        <rate type="seedDrill" rate="12.000000"/>
+        <rate type="car" rate="10.000000"/>
+        <rate type="manureSpreader" rate="15.000000"/>
+        <rate type="harvester" rate="20.000000"/>
+        <rate type="stonePicker" rate="10.000000"/>
+    </damageRates>
+    <weatherMultipliers>
+        <multiplier type="snow" multiplier="2.000000"/>
+        <multiplier type="rain" multiplier="5.000000"/>
+        <multiplier type="cloudy" multiplier="1.000000"/>
+        <multiplier type="sunny" multiplier="1.000000"/>
+        <multiplier type="fog" multiplier="1.500000"/>
+    </weatherMultipliers>
+    <baleWeatherDecay>
+        <rate type="default" rate="0.000000"/>
+        <rate type="rain" rate="3000.000000"/>
+        <rate type="snow" rate="2000.000000"/>
+        <rate type="fog" rate="1000.000000"/>
+    </baleWeatherDecay>
+</ShelterMatters>

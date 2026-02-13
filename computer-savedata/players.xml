@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<players>
+    <player uniqueUserId="9CtOVu0WAR2i29PfI9RQmIR+ax+hY+U0ShVJisU1CQc=" timeLastConnected="2026/01/01 10:05">
+        <style filename="dataS/character/humans/player/player01.xml" bottomConfigId="jeans" bottomConfigColor="1" faceConfigId="head01" faceConfigColor="1" footwearConfigId="workBoots2" footwearConfigColor="1" hairStyleConfigId="hair02" hairStyleConfigColor="6" topConfigId="denimJacket" topConfigColor="1"/>
+    </player>
+</players>

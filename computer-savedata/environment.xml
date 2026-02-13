@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<environment>
+    <dayTime>504.161804</dayTime>
+    <currentDay>14</currentDay>
+    <currentMonotonicDay>14</currentMonotonicDay>
+    <realHourTimer>1063541</realHourTimer>
+    <daysPerPeriod>1</daysPerPeriod>
+    <weather timeSinceLastRain="142">
+        <forecast>
+            <instance durationLeft="4.630637" typeName="CLOUDY" variationIndex="1" duration="7.000000" season="0"/>
+            <instance typeName="CLOUDY" variationIndex="3" duration="10.000000" season="0"/>
+            <instance typeName="SUN" variationIndex="4" duration="11.000000" season="0"/>
+            <instance typeName="CLOUDY" variationIndex="3" duration="8.000000" season="0"/>
+            <instance typeName="RAIN" variationIndex="3" duration="2.000000" season="0"/>
+            <instance typeName="CLOUDY" variationIndex="4" duration="5.033333" season="0"/>
+            <instance typeName="CLOUDY" variationIndex="4" duration="9.000000" season="1"/>
+            <instance typeName="SUN" variationIndex="1" duration="7.000000" season="1"/>
+            <instance typeName="RAIN" variationIndex="1" duration="2.000000" season="1"/>
+            <instance typeName="CLOUDY" variationIndex="1" duration="8.000000" season="1"/>
+            <instance typeName="CLOUDY" variationIndex="2" duration="8.000000" season="1"/>
+            <instance typeName="CLOUDY" variationIndex="2" duration="8.000000" season="1"/>
+            <instance typeName="CLOUDY" variationIndex="4" duration="9.000000" season="1"/>
+            <instance typeName="CLOUDY" variationIndex="2" duration="8.000000" season="1"/>
+            <instance typeName="RAIN" variationIndex="4" duration="3.000000" season="1"/>
+            <instance typeName="SUN" variationIndex="1" duration="8.966666" season="1"/>
+            <instance typeName="RAIN" variationIndex="4" duration="2.000000" season="2"/>
+            <instance typeName="RAIN" variationIndex="1" duration="3.000000" season="2"/>
+            <instance typeName="SUN" variationIndex="4" duration="12.000000" season="2"/>
+            <instance typeName="SUN" variationIndex="1" duration="8.000000" season="2"/>
+            <instance typeName="CLOUDY" variationIndex="3" duration="5.000000" season="2"/>
+            <instance typeName="CLOUDY" variationIndex="2" duration="5.000000" season="2"/>
+            <instance typeName="SUN" variationIndex="2" duration="6.000000" season="2"/>
+            <instance typeName="CLOUDY" variationIndex="4" duration="9.000000" season="2"/>
+            <instance typeName="CLOUDY" variationIndex="4" duration="8.000000" season="2"/>
+            <instance typeName="CLOUDY" variationIndex="2" duration="9.000000" season="2"/>
+            <instance typeName="SUN" variationIndex="3" duration="5.016667" season="2"/>
+            <instance typeName="CLOUDY" variationIndex="3" duration="6.000000" season="3"/>
+            <instance typeName="SUN" variationIndex="1" duration="11.000000" season="3"/>
+            <instance typeName="SNOW" variationIndex="4" duration="1.000000" season="3"/>
+            <instance typeName="CLOUDY" variationIndex="1" duration="10.000000" season="3"/>
+            <instance typeName="CLOUDY" variationIndex="4" duration="9.000000" season="3"/>
+        </forecast>
+        <fog currentMieScale="27.081110" lastMieScale="30.000000" targetMieScale="1.000000" alpha="0.100651" duration="14400000.000000" nightFactor="0.250000" dayFactor="0.250000"/>
+        <snow height="0.000000"/>
+    </weather>
+    <snow physicalHeight="0.000000" height="0.000000"/>
+</environment>

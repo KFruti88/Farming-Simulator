@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<sales>
+    <item timeLeft="15" isGenerated="true" xmlFilename="data/vehicles/fendt/dynaFlex9255/dynaFlex9255.xml" age="13" price="42156" damage="0.268664" wear="0.334246" operatingTime="25635.826172"/>
+    <item timeLeft="20" isGenerated="true" xmlFilename="E:/XboxGames/Farming Simulator 22 - Window 10 Edition/Content/mods/FS22_colossusHarvester/colossus6000/headers/forageMowerGrass.xml" age="36" price="18609" damage="0.426724" wear="0.731777" operatingTime="167975.171875"/>
+    <item timeLeft="26" isGenerated="true" xmlFilename="E:/XboxGames/Farming Simulator 22 - Window 10 Edition/Content/mods/FS22_Legacy_Premium_Cutter_Pack/xml/Trailer_35FT.xml" age="27" price="6009" damage="0.526545" wear="0.278266" operatingTime="114202.656250">
+        <boughtConfiguration name="design3" id="5"/>
+    </item>
+    <item timeLeft="26" isGenerated="true" xmlFilename="E:/XboxGames/Farming Simulator 22 - Window 10 Edition/Content/mods/FS22_colossusHarvester/colossus6000/headers/foragePoplarUnreal.xml" age="12" price="5847" damage="0.230907" wear="0.485949" operatingTime="25352.046875"/>
+    <item timeLeft="12" isGenerated="true" xmlFilename="E:/XboxGames/Farming Simulator 22 - Window 10 Edition/Content/mods/FS22_TransportTrailer25M/xml/transportTrailer19M.xml" age="26" price="7791" damage="0.588956" wear="0.739069" operatingTime="119064.570312">
+        <boughtConfiguration name="design" id="1"/>
+        <boughtConfiguration name="design8" id="2"/>
+    </item>
+</sales>
