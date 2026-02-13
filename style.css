@@ -2,28 +2,61 @@
     --gold: #ffd700; --kevin: #7cfc00; --bg: #0d0a00; --glass: rgba(255, 255, 255, 0.04);
     --border: rgba(255, 215, 0, 0.3); --safe: #7cfc00; --fuel: #00d4ff; --danger: #ff4d4d;
 }
+
 * { box-sizing: border-box; margin: 0; padding: 0; }
+
 body {
     background-color: var(--bg); font-family: 'Inter', sans-serif; color: #fff;
     min-height: 100vh; display: flex; justify-content: center;
     background-image: radial-gradient(circle at center, #1a1400 0%, #0d0a00 100%);
 }
-.dashboard-container { width: 95%; max-width: 1920px; padding: 20px 0; display: flex; flex-direction: column; gap: 15px; }
+
+.dashboard-container { width: 90%; max-width: 1920px; padding: 20px 0; display: flex; flex-direction: column; gap: 15px; }
+
 .glass-panel { background: var(--glass); backdrop-filter: blur(25px); border: 1px solid var(--border); border-radius: 12px; padding: 15px; }
+
 .header-main { border-left: 8px solid var(--gold); }
-.header-content { display: flex; justify-content: space-between; align-items: center; }
 
 .ops-matrix { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; }
+
 .data-matrix { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; flex-grow: 1; }
 
-.telemetry-header { display: grid; font-weight: 900; color: var(--gold); font-size: 0.75rem; border-bottom: 1px solid var(--border); padding-bottom: 8px; margin-bottom: 15px; }
-.growth-header, .animal-header, .fleet-header { grid-template-columns: 0.5fr 1.5fr 1.5fr; }
+/* INDEPENDENT SCROLL ZONES [cite: 2026-02-12] */
+.glass-panel.card {
+    display: flex;
+    flex-direction: column;
+    max-height: 600px; /* Locked to fit screen standards */
+    overflow: hidden;
+}
 
-.scroll-list { overflow-y: auto; font-size: 0.85rem; height: 600px; padding-right: 10px; }
-.telemetry-row { display: grid; grid-template-columns: 0.5fr 1.5fr 1.5fr; padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.05); align-items: center; }
+#module-1-field-info, 
+#module-2-animal-info, 
+#module-3-factory-info, 
+#fleetLog {
+    overflow-y: auto;
+    flex-grow: 1;
+    padding-right: 10px;
+    scrollbar-width: thin;
+    scrollbar-color: var(--gold) rgba(255,255,255,0.05);
+}
 
-.bar-bg { height: 4px; background: #222; border-radius: 2px; margin-top: 5px; width: 100%; overflow: hidden; }
-.bar-fill { height: 100%; transition: width 1.5s ease; }
-.ready-badge { background: var(--safe); color: #000; font-weight: 900; padding: 2px 6px; border-radius: 3px; font-size: 0.7rem; }
+/* CUSTOM SCROLLBARS [cite: 2026-01-26] */
+#fleetLog::-webkit-scrollbar,
+.card div::-webkit-scrollbar {
+    width: 6px;
+}
+
+#fleetLog::-webkit-scrollbar-track,
+.card div::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.02);
+    border-radius: 10px;
+}
+
+#fleetLog::-webkit-scrollbar-thumb,
+.card div::-webkit-scrollbar-thumb {
+    background: var(--gold);
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+}
 
 @media (max-width: 1400px) { .data-matrix { grid-template-columns: 1fr; } }
