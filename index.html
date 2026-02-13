@@ -3,33 +3,58 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Strategic Ops - ABSOLUTE MAXIMUM DATA DUMP v2.33</title>
-    <script src="https://cdn.tailwindcss.com"></script>
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
+    <title>618 CREW | READABILITY MATRIX v2.34</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=JetBrains+Mono:wght@500;800&display=swap" rel="stylesheet">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=JetBrains+Mono:wght@500;800&display=swap');
-        body { background: #020202; color: #cbd5e1; font-family: 'Inter', sans-serif; font-size: 11px; margin: 0; padding: 30px; line-height: 1.5; }
-        .glass { background: rgba(15, 17, 20, 0.98); border: 2px solid rgba(255, 255, 255, 0.05); border-radius: 8px; padding: 30px; position: relative; margin-bottom: 30px; width: 100%; box-shadow: 0 20px 50px rgba(0,0,0,0.5); display: flex; flex-direction: column; }
+        :root {
+            --kevin-orange: #FF8C00;
+            --ray-red: #C41E3A;
+            --bg-tactical: #020617; /* Deep Background */
+            --font-light: #e2e8f0;   /* Readable Light Font */
+            --panel-bg: rgba(15, 17, 20, 0.98);
+        }
+
+        body { 
+            background: var(--bg-tactical); 
+            color: var(--font-light); 
+            font-family: 'Inter', sans-serif; 
+            font-size: 11px; 
+            padding: 30px; 
+            line-height: 1.5; 
+        }
+
+        /* REVERSE COLOR READABILITY */
+        .live-reverse {
+            background: var(--kevin-orange) !important;
+            color: #000 !important; /* Force black text on orange background */
+            border: 4px solid #fff !important;
+        }
+
+        .live-reverse h1, .live-reverse h3, .live-reverse p, .live-reverse .mono, .live-reverse td {
+            color: #000 !important;
+            font-weight: 800 !important;
+        }
+
+        .live-reverse .glass {
+            background: rgba(0, 0, 0, 0.05) !important;
+            border-color: rgba(0, 0, 0, 0.2) !important;
+        }
+
+        /* STANDARD THEME ELEMENTS [cite: 2026-02-13] */
+        .glass { background: var(--panel-bg); border: 2px solid rgba(255, 255, 255, 0.05); border-radius: 8px; padding: 30px; margin-bottom: 30px; width: 100%; box-shadow: 0 20px 50px rgba(0,0,0,0.5); }
         .scroll-area { max-height: 450px; overflow-y: auto; padding-right: 12px; }
-        .scroll-area::-webkit-scrollbar { width: 4px; }
-        .scroll-area::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.15); border-radius: 2px; }
-        .f1-text { color: #FF8C00; } .f2-text { color: #00D4FF; }
-        .f1-bg { background: #FF8C00; } .f2-bg { background: #00D4FF; }
-        .f1-border { border-left: 10px solid #FF8C00; } .f2-border { border-left: 10px solid #00D4FF; }
-        .live-reverse { background: #FF8C00 !important; color: #000 !important; border: 4px solid #fff !important; }
-        .live-reverse h1, .live-reverse h3, .live-reverse p, .live-reverse .mono { color: #000 !important; }
-        table { width: 100%; border-collapse: collapse; table-layout: fixed; }
+        
+        table { width: 100%; border-collapse: collapse; }
         th { text-align: left; color: #64748b; font-size: 10px; text-transform: uppercase; border-bottom: 2px solid rgba(255,255,255,0.1); padding: 10px; background: rgba(15, 17, 20, 1); position: sticky; top: 0; z-index: 20; }
-        td { padding: 10px; border-bottom: 1px solid rgba(255,255,255,0.05); word-wrap: break-word; vertical-align: top; }
-        .mono { font-family: 'JetBrains Mono', monospace; font-size: 11px; }
-        .progress-bar { height: 8px; background: rgba(255,255,255,0.05); border-radius: 4px; margin-top: 5px; width: 100%; overflow: hidden; }
-        .progress-fill { height: 100%; border-radius: 4px; transition: width 1s ease; }
-        .ts { position: absolute; top: 15px; right: 20px; font-size: 9px; color: #475569; font-family: 'JetBrains Mono', monospace; font-weight: 800; border: 1px solid #334155; padding: 2px 6px; border-radius: 4px; }
-        h3 { font-size: 18px; font-weight: 900; letter-spacing: 2px; color: white; text-transform: uppercase; margin-bottom: 15px; display: flex; align-items: center; gap: 10px; }
-        h3::after { content: ''; flex-grow: 1; height: 1px; background: rgba(255,255,255,0.1); }
-        .stat-card { background: rgba(255,255,255,0.02); padding: 15px; border-radius: 4px; border: 1px solid rgba(255,255,255,0.05); }
+        td { padding: 10px; border-bottom: 1px solid rgba(255,255,255,0.05); color: var(--font-light); }
+        
+        .f1-text { color: #FF8C00; } .f2-text { color: #00D4FF; }
+        .mono { font-family: 'JetBrains Mono', monospace; }
+        
         #slotSelector { background: #000; color: #fff; border: 1px solid #FF8C00; padding: 5px 15px; border-radius: 4px; font-weight: 900; }
     </style>
 </head>
@@ -38,9 +63,9 @@
 <div id="mainWrapper" class="max-w-[1850px] mx-auto">
     <header class="flex flex-col xl:flex-row justify-between items-center bg-white/5 p-10 rounded-lg border-2 border-white/10 mb-10 shadow-2xl">
         <div class="flex flex-col md:flex-row gap-16 md:gap-32">
-            <div><p class="text-xs uppercase text-slate-500 font-black mb-2">FARM 01 TOTAL LIQUIDITY</p><p id="f1-money" class="text-7xl font-black f1-text tracking-tighter">$0</p></div>
+            <div><p class="text-xs uppercase text-slate-500 font-black mb-2">FARM 01 LIQUIDITY</p><p id="f1-money" class="text-7xl font-black f1-text tracking-tighter">$0</p></div>
             <div class="md:border-l-2 border-white/10 md:pl-32">
-                <p class="text-xs uppercase text-slate-500 font-black mb-2">FARM 02 TOTAL LIQUIDITY</p><p id="f2-money" class="text-7xl font-black f2-text tracking-tighter">$0</p>
+                <p class="text-xs uppercase text-slate-500 font-black mb-2">FARM 02 LIQUIDITY</p><p id="f2-money" class="text-7xl font-black f2-text tracking-tighter">$0</p>
             </div>
         </div>
         <div class="text-center xl:text-right">
@@ -52,64 +77,59 @@
         </div>
     </header>
 
-    <div class="grid grid-cols-1 xl:grid-cols-2 gap-8 mb-8">
-        <div class="glass f1-border"><span class="ts">F01 OBJECTIVES</span><h3>Trophy Progress</h3><div class="scroll-area"><table id="f1-trophies"></table></div></div>
-        <div class="glass f2-border"><span class="ts">F02 OBJECTIVES</span><h3>Achievement Flow</h3><div class="scroll-area"><table id="f2-trophies"></table></div></div>
-    </div>
-
     <div class="grid grid-cols-1 xl:grid-cols-3 gap-8 mb-8">
-        <div class="glass f1-border"><span class="ts">ENGINES</span><h3>Farm 01: Vehicles</h3><div class="scroll-area"><table id="f1-engines"></table></div></div>
-        <div class="glass f1-border"><span class="ts">ATTACHMENTS</span><h3>Farm 01: Support</h3><div class="scroll-area"><table id="f1-support"></table></div></div>
-        <div class="glass f1-border"><span class="ts">LOGISTICS</span><h3>Farm 01: Pallets</h3><div class="scroll-area"><table id="f1-pallets"></table></div></div>
+        <div class="glass border-l-8 border-l-[#FF8C00]"><h3>Farm 01: Engines</h3><div class="scroll-area"><table id="f1-engines"></table></div></div>
+        <div class="glass border-l-8 border-l-[#FF8C00]"><h3>Farm 01: Support</h3><div class="scroll-area"><table id="f1-support"></table></div></div>
+        <div class="glass border-l-8 border-l-[#FF8C00]"><h3>Farm 01: Pallets</h3><div class="scroll-area"><table id="f1-pallets"></table></div></div>
     </div>
 
     <div class="grid grid-cols-1 xl:grid-cols-2 gap-8 mb-8">
-        <div class="glass f1-border"><span class="ts">F01 FIELDS</span><h3>Werewolf Registry</h3><div class="scroll-area"><table id="f1-fields"></table></div></div>
-        <div class="glass f2-border"><span class="ts">F02 FIELDS</span><h3>Lividman Registry</h3><div class="scroll-area"><table id="f2-fields"></table></div></div>
-    </div>
-
-    <div class="grid grid-cols-1 xl:grid-cols-2 gap-8 mb-8">
-        <div class="glass"><span class="ts">PRODUCTION</span><h3>Industrial Supply Chains</h3><div class="scroll-area"><table id="global-production"></table></div></div>
-        <div class="glass"><span class="ts">PLACEABLES</span><h3>Static Assets</h3><div class="scroll-area"><table id="global-assets"></table></div></div>
+        <div class="glass border-l-8 border-l-[#FF8C00]"><h3>Werewolf Field Registry</h3><div class="scroll-area"><table id="f1-fields"></table></div></div>
+        <div class="glass border-l-8 border-l-[#00D4FF]"><h3>Lividman Field Registry</h3><div class="scroll-area"><table id="f2-fields"></table></div></div>
     </div>
 </div>
 
 <script>
-/** 618 STRATEGIC ENGINE v2.33 | ABSOLUTE MAXIMUM DATA DUMP */
+/** 618 STRATEGIC ENGINE v2.34 | CONTRAST LOCK */
 const GITHUB_ROOT = "https://raw.githubusercontent.com/KFruti88/Farming-Simulator/main";
 const GPORTAL_FEED = "http://176.57.165.81:8080/feed/dedicated-server-stats.xml?code=DIaoyx8jutkGtlDr";
 const getTruth = () => `?truth=${Date.now()}`;
-const DICT = { "ZATS3200.XML": "ZTS Slurry Tanker", "SERIES9RX.XML": "JD 9RX", "CP690.XML": "JD Cotton Picker", "WATER": "Water" };
 const MAPS = { 1:"ELMCREEK", 2:"BIG FLATS TEXAS", 3:"ZIELONKA", 5:"LAND OF ITALY" };
 
 document.addEventListener('DOMContentLoaded', async () => {
     const sel = document.getElementById('slotSelector');
-    const liveMap = await fetchLiveMap();
-    const liveSlot = Object.keys(MAPS).find(k => MAPS[k] === liveMap.toUpperCase()) || 2;
+    const liveMapName = await fetchLiveMap();
+    const liveSlot = Object.keys(MAPS).find(k => MAPS[k] === liveMapName.toUpperCase()) || 2;
 
     for(let i=1; i<=20; i++) {
         const opt = document.createElement('option');
-        opt.value = i; opt.innerText = `SLOT ${i}: ${MAPS[i] || 'UNASSIGNED'} ${i == liveSlot ? '[LIVE]' : ''}`;
+        opt.value = i; opt.innerText = `SLOT ${i}: ${MAPS[i] || 'ARCHIVE'} ${i == liveSlot ? '[LIVE]' : ''}`;
         sel.appendChild(opt);
     }
     sel.value = liveSlot;
-    updateAbsoluteDashboard(liveSlot, liveSlot);
-    sel.addEventListener('change', (e) => updateAbsoluteDashboard(e.target.value, liveSlot));
-    setInterval(() => updateAbsoluteDashboard(sel.value, liveSlot), 45000);
+    updateReadability(liveSlot, liveSlot);
+
+    sel.addEventListener('change', (e) => updateReadability(e.target.value, liveSlot));
+    setInterval(() => updateReadability(sel.value, liveSlot), 45000);
 });
 
-async function updateAbsoluteDashboard(slot, live) {
-    const path = `${GITHUB_ROOT}/saved-game-${slot}`;
+async function updateReadability(slot, live) {
+    const wrapper = document.getElementById('mainWrapper');
     const badge = document.getElementById('live-badge');
-    const wrap = document.getElementById('mainWrapper');
+    const path = `${GITHUB_ROOT}/saved-game-${slot}`;
 
-    if(slot == live) { wrap.classList.add('live-reverse'); badge.innerText = `[LIVE] SERVER ON ${MAPS[slot]}`; }
-    else { wrap.classList.remove('live-reverse'); badge.innerText = `ARCHIVE: ${MAPS[slot] || 'REGION'}`; }
+    // THEME READABILITY SWITCH [cite: 2026-02-13]
+    if(slot == live) {
+        wrapper.classList.add('live-reverse');
+        badge.innerText = `ACTIVE OPS: ${MAPS[slot]}`;
+    } else {
+        wrapper.classList.remove('live-reverse');
+        badge.innerText = `ARCHIVE VIEW: ${MAPS[slot] || 'REGION'}`;
+    }
 
-    const [fml, pre, fld, mis, vml, iml, farms] = await Promise.all([
+    const [fml, pre, fld, farms, vml] = await Promise.all([
         fetchXML(`${path}/farmland.xml`), fetchXML(`${path}/precisionFarming.xml`),
-        fetchXML(`${path}/fields.xml`), fetchXML(`${path}/missions.xml`),
-        fetchXML(`${path}/vehicles.xml`), fetchXML(`${path}/items.xml`), fetchXML(`${path}/farms.xml`)
+        fetchXML(`${path}/fields.xml`), fetchXML(`${path}/farms.xml`), fetchXML(`${path}/vehicles.xml`)
     ]);
 
     if(farms) {
@@ -119,31 +139,29 @@ async function updateAbsoluteDashboard(slot, live) {
         document.getElementById('f2-money').innerText = `$${parseInt(f2?.getAttribute("money") || 0).toLocaleString()}`;
     }
 
-    if(vml) {
-        const units = Array.from(vml.getElementsByTagName("vehicle"));
-        const f1Eng = units.filter(u => u.getAttribute("farmId") === "1" && !u.getAttribute("filename").includes("BALE"));
-        document.getElementById('f1-engines').innerHTML = `<thead><tr><th>Unit</th><th>Fuel (Gal)</th><th>Dmg</th></tr></thead><tbody>` + 
-            f1Eng.map(u => {
-                const f = u.getAttribute("filename").split('/').pop().toUpperCase();
-                const d = (parseFloat(u.getElementsByTagName("wearable")[0]?.getAttribute("damage") || 0) * 100).toFixed(1);
-                const g = (parseFloat(u.getElementsByTagName("fillUnit")[0]?.getAttribute("fillLevel") || 0) * 0.264).toFixed(1);
-                return `<tr><td>${DICT[f] || f.replace('.XML','')}</td><td class="mono">${g} gal</td><td class="text-green-500">${d}%</td></tr>`;
-            }).join('') + `</tbody>`;
-    }
-
     if(fml) {
         const owned = Array.from(fml.getElementsByTagName("farmland")).filter(f => f.getAttribute("farmId") === "1");
         const pNodes = Array.from(pre?.getElementsByTagName("field") || []);
-        document.getElementById('f1-fields').innerHTML = `<thead><tr><th>Field</th><th>Nitrogen</th><th>Lime</th></tr></thead><tbody>` + 
+        document.getElementById('f1-fields').innerHTML = `<thead><tr><th>Field</th><th>Nitrogen (lbs/ac)</th><th>Lime</th></tr></thead><tbody>` + 
             owned.map(l => {
                 const p = pNodes.find(n => n.getAttribute("id") === l.getAttribute("id"));
                 const lbs = (parseFloat(p?.getAttribute("nitrogenValue") || 0) * 2.204).toFixed(0);
-                return `<tr><td class="f1-text">#${l.getAttribute("id")}</td><td class="mono">${lbs} lbs/ac</td><td>${p?.getAttribute("needsLime") === 'true' ? 'REQUIRED' : 'OK'}</td></tr>`;
+                return `<tr><td class="font-black">#${l.getAttribute("id")}</td><td class="mono">${lbs}</td><td>${p?.getAttribute("needsLime") === 'true' ? 'REQUIRED' : 'OK'}</td></tr>`;
+            }).join('') + `</tbody>`;
+    }
+
+    if(vml) {
+        const units = Array.from(vml.getElementsByTagName("vehicle")).filter(u => u.getAttribute("farmId") === "1" && !u.getAttribute("filename").includes("BALE"));
+        document.getElementById('f1-engines').innerHTML = `<thead><tr><th>Unit</th><th>Fuel (Gal)</th><th>Dmg</th></tr></thead><tbody>` + 
+            units.map(u => {
+                const d = (parseFloat(u.getElementsByTagName("wearable")[0]?.getAttribute("damage") || 0) * 100).toFixed(1);
+                const g = (parseFloat(u.getElementsByTagName("fillUnit")[0]?.getAttribute("fillLevel") || 0) * 0.264).toFixed(1);
+                return `<tr><td>${u.getAttribute("filename").split('/').pop().replace('.XML','')}</td><td class="mono">${g} gal</td><td>${d}%</td></tr>`;
             }).join('') + `</tbody>`;
     }
 }
 
-async function fetchLiveMap() { try { const res = await fetch(GPORTAL_FEED+getTruth()); const xml = new DOMParser().parseFromString(await res.text(),"text/xml"); return xml.getElementsByTagName("Server")[0]?.getAttribute("mapName") || "Unknown"; } catch(e) { return "Unknown"; } }
+async function fetchLiveMap() { try { const res = await fetch(GPORTAL_FEED+getTruth()); const xml = new DOMParser().parseFromString(await res.text(),"text/xml"); return xml.getElementsByTagName("Server")[0]?.getAttribute("mapName") || ""; } catch(e) { return ""; } }
 async function fetchXML(url) { try { const res = await fetch(url+getTruth()); return res.ok ? new DOMParser().parseFromString(await res.text(),"text/xml") : null; } catch(e) { return null; } }
 </script>
 </body>
