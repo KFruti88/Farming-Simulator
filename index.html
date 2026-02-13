@@ -6,15 +6,15 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
-    <title>FS MASTER COMMAND | TIME-SYNC v2.05</title>
-    <link rel="stylesheet" href="style.css?v=2.05">
+    <title>FS MASTER COMMAND | FARM MATRIX v2.06</title>
+    <link rel="stylesheet" href="style.css?v=2.06">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;900&display=swap" rel="stylesheet">
 </head>
 <body>
     <div class="dashboard-container" style="width: 90%; margin: 20px auto;">
         
         <div class="sandbox-alert" style="background: rgba(0, 255, 204, 0.1); border: 1px solid #00ffcc; color: #00ffcc; padding: 10px; text-align: center; font-weight: 900; border-radius: 8px; margin-bottom: 15px;">
-            🛰️ ENVIRONMENTAL CLOCK ACTIVE: 1:1 SERVER TIME v2.05 🛰️
+            🛰️ FARM OWNERSHIP SYNC: 1:1 REPOSITORY TRUTH v2.06 🛰️
         </div>
 
         <header class="glass-panel header-main">
@@ -25,9 +25,9 @@
                         <div class="slot-badge" id="currentSlotLabel" style="position: absolute; bottom: 5px; right: 5px; background: #000; color: var(--gold); padding: 2px 6px; font-size: 10px; font-weight: 900;">SYNCING...</div>
                     </div>
                     <div class="header-text">
-                        <h1 style="color: var(--gold); font-size: 1.8rem; font-weight: 900;">Werewolf Red Operations <span id="linkStatus" style="font-size: 10px; padding: 2px 6px; border-radius: 4px;">PENDING</span></h1>
+                        <h1 style="color: var(--gold); font-size: 1.8rem; font-weight: 900;">Werewolf Operations Hub <span id="linkStatus" class="conn-status conn-blocked">PENDING</span></h1>
                         <div class="status-bar" style="font-size: 0.9rem; opacity: 0.7;">
-                            <span id="mapDisplay">Map: Detecting...</span> | <span id="gameClock">Clock: 00:00 AM</span> | <span id="gameCalendar">Day: 0</span>
+                            <span id="mapDisplay">Map: Detecting...</span> | <span id="gameClock">Clock: 00:00 AM</span>
                         </div>
                     </div>
                 </div>
@@ -47,35 +47,37 @@
             <article class="glass-panel card">
                 <div class="card-tag" style="color: var(--gold); font-weight: 900; font-size: 0.7rem;">💰 werewolf3788 (FARM 1)</div>
                 <div id="kevinFinance" style="font-size: 1.5rem; font-weight: 900;">$0.00</div>
+                <div id="farm1Lands" style="font-size:10px; opacity:0.6; margin-top:5px;">Fields: Scan Pending...</div>
             </article>
             <article class="glass-panel card">
                 <div class="card-tag" style="color: var(--gold); font-weight: 900; font-size: 0.7rem;">💰 raymystro (FARM 2)</div>
                 <div id="rayFinance" style="font-size: 1.5rem; font-weight: 900;">$0.00</div>
+                <div id="farm2Lands" style="font-size:10px; opacity:0.6; margin-top:5px;">Fields: Scan Pending...</div>
             </article>
             <article class="glass-panel card">
-                <div class="card-tag" style="color: var(--gold); font-weight: 900; font-size: 0.7rem;">📈 TOTAL MONOTONIC DAYS</div>
-                <div id="monotonicDay" style="font-size: 1.5rem; font-weight: 900;">0</div>
+                <div class="card-tag" style="color: var(--gold); font-weight: 900; font-size: 0.7rem;">📑 ACTIVE MISSIONS</div>
+                <div id="missionLog" style="font-size: 11px; max-height: 100px; overflow-y: auto;">Scanning Contracts...</div>
             </article>
         </section>
 
         <main class="data-matrix" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-top: 15px;">
-            <article class="glass-panel card" style="max-height: 600px; overflow: hidden; display: flex; flex-direction: column;">
+            <article class="glass-panel card" id="module-container-1" style="max-height: 600px; overflow: hidden; display: flex; flex-direction: column;">
                 <div id="module-1-field-info" style="overflow-y: auto; flex-grow: 1;"></div>
             </article>
-            <article class="glass-panel card" style="max-height: 600px; overflow: hidden; display: flex; flex-direction: column;">
+            <article class="glass-panel card" id="module-container-2" style="max-height: 600px; overflow: hidden; display: flex; flex-direction: column;">
                 <div id="module-2-animal-info" style="overflow-y: auto; flex-grow: 1;"></div>
             </article>
-            <article class="glass-panel card" style="max-height: 600px; overflow: hidden; display: flex; flex-direction: column;">
+            <article class="glass-panel card" id="module-container-3" style="max-height: 600px; overflow: hidden; display: flex; flex-direction: column;">
                 <div id="module-3-factory-info" style="overflow-y: auto; flex-grow: 1;"></div>
             </article>
         </main>
 
         <section class="glass-panel card fleet-section" style="margin-top: 20px; max-height: 400px; overflow: hidden; display: flex; flex-direction: column;">
-            <div class="card-tag" style="color: var(--gold); font-weight: 900; font-size: 0.7rem; margin-bottom: 10px;">🚜 SERVER FLEET INVENTORY (VEHICLES.XML)</div>
-            <div id="fleetLog" style="overflow-y: auto; flex-grow: 1;">Parsing Telemetry...</div>
+            <div class="card-tag" style="color: var(--gold); font-weight: 900; font-size: 0.7rem; margin-bottom: 10px;">🚜 OWNER-IDENTIFIED FLEET TELEMETRY</div>
+            <div id="fleetLog" style="overflow-y: auto; flex-grow: 1;">Drilling Unit Data...</div>
         </section>
     </div>
 
-    <script src="script.js?v=2.05"></script>
+    <script src="script.js?v=2.06"></script>
 </body>
 </html>
