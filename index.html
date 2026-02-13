@@ -6,52 +6,33 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
-    <title>FS MASTER COMMAND | SYSTEM INTEGRITY v2.01</title>
-    <link rel="stylesheet" href="style.css?v=2.01">
+    <title>FS MASTER COMMAND | SCROLL MATRIX v2.04</title>
+    <link rel="stylesheet" href="style.css?v=2.04">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;900&display=swap" rel="stylesheet">
-    <style>
-        .sandbox-alert {
-            background: rgba(0, 255, 204, 0.1); border: 1px solid #00ffcc; color: #00ffcc;
-            padding: 10px; text-align: center; font-weight: 900; text-transform: uppercase;
-            letter-spacing: 2px; margin-bottom: 15px; border-radius: 8px; backdrop-filter: blur(10px);
-            animation: pulse 2s infinite;
-        }
-        @keyframes pulse {
-            0% { box-shadow: 0 0 0 0 rgba(0, 255, 204, 0.4); }
-            70% { box-shadow: 0 0 0 15px rgba(0, 255, 204, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(0, 255, 204, 0); }
-        }
-        .conn-status { font-size: 10px; padding: 2px 6px; border-radius: 4px; margin-left: 10px; }
-        .conn-live { background: #00ffcc; color: #000; }
-        .conn-blocked { background: #ff4500; color: #fff; }
-    </style>
 </head>
 <body>
     <div class="dashboard-container" style="width: 90%; margin: 20px auto;">
         
-        <div class="sandbox-alert">
-            🛰️ SYSTEM INTEGRITY ACTIVE: 1:1 SERVER EXTRACTION v2.01 🛰️
+        <div class="sandbox-alert" style="background: rgba(0, 255, 204, 0.1); border: 1px solid #00ffcc; color: #00ffcc; padding: 10px; text-align: center; font-weight: 900; border-radius: 8px; margin-bottom: 15px;">
+            🛰️ TOTAL SERVER SYNC: SCROLL-LOCK v2.04 ACTIVE 🛰️
         </div>
 
         <header class="glass-panel header-main">
-            <div class="header-content">
-                <div class="map-branding">
-                    <div class="image-container">
-                        <img id="activeMapImage" 
-                             src="http://176.57.165.81:8080/feed/dedicated-server-stats-map.jpg?code=DIaoyx8jutkGtlDr&quality=60&size=512" 
-                             alt="Live Map" 
-                             onerror="this.src='https://via.placeholder.com/512x256?text=Allow+Insecure+Content+In+Browser'">
-                        <div class="slot-badge" id="currentSlotLabel">SYNCING...</div>
+            <div class="header-content" style="display: flex; justify-content: space-between; align-items: center;">
+                <div class="map-branding" style="display: flex; gap: 20px; align-items: center;">
+                    <div class="image-container" style="position: relative;">
+                        <img id="activeMapImage" src="http://176.57.165.81:8080/feed/dedicated-server-stats-map.jpg?code=DIaoyx8jutkGtlDr&quality=60&size=512" style="width: 250px; border-radius: 8px;" alt="Live Map">
+                        <div class="slot-badge" id="currentSlotLabel" style="position: absolute; bottom: 5px; right: 5px; background: #000; color: var(--gold); padding: 2px 6px; font-size: 10px; font-weight: 900;">SYNCING...</div>
                     </div>
                     <div class="header-text">
-                        <h1>Werewolf Command Hub <span id="linkStatus" class="conn-status conn-blocked">G-PORTAL PENDING</span></h1>
-                        <div class="status-bar">
-                            <span id="mapDisplay">Map: Detecting...</span> | <span id="gameClock">Time: 00:00</span> | <span id="envDate">Day: Detecting...</span>
+                        <h1 style="color: var(--gold); font-size: 1.8rem; font-weight: 900;">Werewolf Red Operations <span id="linkStatus" style="font-size: 10px; padding: 2px 6px; border-radius: 4px; background: #ff4500;">PENDING</span></h1>
+                        <div class="status-bar" style="font-size: 0.9rem; opacity: 0.7;">
+                            <span id="mapDisplay">Map: Detecting...</span> | <span id="gameClock">Time: 00:00</span>
                         </div>
                     </div>
                 </div>
                 <div class="selector-box">
-                    <select id="saveSelector">
+                    <select id="saveSelector" style="background: #111; color: #fff; border: 1px solid var(--gold); padding: 8px; border-radius: 6px;">
                         <option value="1">Saved Game 1</option>
                         <option value="2" selected>Saved Game 2 (Texas)</option>
                         <option value="3">Saved Game 3</option>
@@ -62,41 +43,39 @@
             </div>
         </header>
 
-        <section class="ops-matrix" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 15px; margin-bottom: 20px;">
+        <section class="ops-matrix">
             <article class="glass-panel card">
-                <div class="card-tag">💰 werewolf3788 (FARM 1)</div>
-                <div id="kevinFinance" class="telemetry-body">$0.00</div>
-                <div id="kevinStats" style="font-size:10px; opacity:0.7; margin-top:8px;"></div>
+                <div class="card-tag" style="color: var(--gold); font-weight: 900; font-size: 0.7rem;">💰 werewolf3788 (FARM 1)</div>
+                <div id="kevinFinance" style="font-size: 1.5rem; font-weight: 900;">$0.00</div>
             </article>
             <article class="glass-panel card">
-                <div class="card-tag">💰 raymystro (FARM 2)</div>
-                <div id="rayFinance" class="telemetry-body">$0.00</div>
-                <div id="rayStats" style="font-size:10px; opacity:0.7; margin-top:8px;"></div>
+                <div class="card-tag" style="color: var(--gold); font-weight: 900; font-size: 0.7rem;">💰 raymystro (FARM 2)</div>
+                <div id="rayFinance" style="font-size: 1.5rem; font-weight: 900;">$0.00</div>
             </article>
             <article class="glass-panel card">
-                <div class="card-tag">📑 ACTIVE SERVER MISSIONS (MISSIONS.XML)</div>
-                <div id="missionLog" class="telemetry-body" style="font-size:11px; max-height: 100px; overflow-y: auto;">Drilling Contracts...</div>
+                <div class="card-tag" style="color: var(--gold); font-weight: 900; font-size: 0.7rem;">📑 SERVER MISSIONS</div>
+                <div id="missionLog" style="font-size: 0.8rem; max-height: 100px; overflow-y: auto;">Scanning...</div>
             </article>
         </section>
 
-        <main class="data-matrix triple-col">
-            <article class="glass-panel card" id="module-container-1" style="flex: 2.5;">
+        <main class="data-matrix">
+            <article class="glass-panel card">
                 <div id="module-1-field-info"></div>
             </article>
-            <article class="glass-panel card" id="module-container-2">
+            <article class="glass-panel card">
                 <div id="module-2-animal-info"></div>
             </article>
-            <article class="glass-panel card" id="module-container-3" style="flex: 2;">
+            <article class="glass-panel card">
                 <div id="module-3-factory-info"></div>
             </article>
         </main>
 
-        <section class="glass-panel card fleet-section" style="margin-top: 20px;">
-            <div class="card-tag">🚜 1:1 SERVER FLEET INVENTORY (VEHICLES.XML)</div>
-            <div id="fleetLog" class="telemetry-grid">Parsing Unit Telemetry...</div>
+        <section class="glass-panel card fleet-section" style="max-height: 400px;">
+            <div class="card-tag" style="color: var(--gold); font-weight: 900; font-size: 0.7rem; margin-bottom: 10px;">🚜 SERVER FLEET INVENTORY (VEHICLES.XML)</div>
+            <div id="fleetLog">Hydrating Unit Data...</div>
         </section>
     </div>
 
-    <script src="script.js?v=2.01"></script>
+    <script src="script.js?v=2.04"></script>
 </body>
 </html>
