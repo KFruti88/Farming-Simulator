@@ -1,7 +1,7 @@
 /**
- * FS MASTER UNIFIED ENGINE v1.94 - DEFINITIVE PRODUCTION
- * REPAIR: Optimized G-Portal Image Feed and Aggressive XML Node Drilling.
- * MANDATE: Full Detail | Zero Snippets | Zero-Fake Policy [cite: 2026-01-26]
+ * FS MASTER UNIFIED ENGINE v1.95 - HYPER-DRILL RECOVERY
+ * REPAIR: Comprehensive search for fuel fillTypes and precise node matching.
+ * MANDATE: Full Detail | Zero Snippets | Zero-Fake Policy
  */
 
 const GITHUB_ROOT = "https://raw.githubusercontent.com/KFruti88/Farming-Simulator/main";
@@ -64,14 +64,14 @@ async function parsePrecisionFieldMatrix(farmlandXml, precisionPath, fieldsPath)
             <div style="display:grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap:10px; margin-top:15px;">
                 ${owned.map(fmland => {
                     const id = fmland.getAttribute("id");
-                    const pData = pNodes.find(n => n.getAttribute("id") === id);
-                    const fData = fNodes.find(n => n.getAttribute("id") === id);
+                    // Force string match for ID [cite: 2026-02-12]
+                    const pData = pNodes.find(n => String(n.getAttribute("id")) === String(id));
+                    const fData = fNodes.find(n => String(n.getAttribute("id")) === String(id));
 
-                    // Aggressive attribute pull [cite: 2026-02-12]
                     const ph = pData ? parseFloat(pData.getAttribute("phValue") || 0) : 0;
                     const nitro = pData ? parseFloat(pData.getAttribute("nitrogenValue") || 0) : 0;
-                    const fruit = fData ? fData.getAttribute("fruitType") || "STUBBLE" : "PLOWED";
-                    const state = fData ? fData.getAttribute("state") || "READY" : "CULTIVATED";
+                    const fruit = fData ? fData.getAttribute("fruitType") || "STUBBLE" : "EMPTY";
+                    const state = fData ? fData.getAttribute("state") || "READY" : "STILL GROWING";
 
                     return `
                         <div class="field-card" style="background:rgba(255,255,255,0.05); padding:12px; border-radius:6px; border:1px solid rgba(255,255,255,0.1);">
@@ -80,17 +80,18 @@ async function parsePrecisionFieldMatrix(farmlandXml, precisionPath, fieldsPath)
                                 <span style="font-size:10px; opacity:0.6; text-transform:uppercase;">${state}</span>
                             </div>
                             <div style="font-size:13px; font-weight:900; margin-bottom:10px; color:white;">${fruit}</div>
-                            <div style="font-size:11px;">pH: ${ph.toFixed(1)} ${ph < 6.5 ? '[LIME]' : '[OK]'}</div>
-                            <div style="font-size:11px;">N: ${nitro.toFixed(0)}kg ${nitro < 150 ? '[FERT]' : '[OK]'}</div>
+                            <div style="font-size:11px;">pH: ${ph.toFixed(1)} ${ph < 6.5 ? '<span style="color:var(--danger)">[LIME]</span>' : '[OK]'}</div>
+                            <div style="font-size:11px;">N: ${nitro.toFixed(0)}kg ${nitro < 150 ? '<span style="color:var(--gold)">[FERT]</span>' : '[OK]'}</div>
                         </div>`;
                 }).join('') || "NO FIELDS DETECTED"}
             </div>`;
         updateAndCache('module-1-field-info', html);
-    } catch (e) { updateAndCache('module-1-field-info', "N/A: PRECISION DATA PENDING"); }
+    } catch (e) { updateAndCache('module-1-field-info', "N/A: PRECISION SYNC ERROR"); }
 }
 
 /**
- * RECOVERY: FLEET TELEMETRY [cite: 2026-02-12]
+ * RECOVERY: HYPER-DRILL FLEET [cite: 2026-02-12]
+ * Searches for all motorized fillTypes (Diesel, Electric, DEF).
  */
 function parseFleetHardDrill(xml) {
     const excluded = ['PALLET', 'BIGBAG', 'ROLLER', 'BALE', 'QUICKBALE'];
@@ -101,17 +102,26 @@ function parseFleetHardDrill(xml) {
 
     const html = units.map(u => {
         const cleanName = u.getAttribute("filename")?.split('/').pop().replace('.xml', '').toUpperCase().replace(/_/g, ' ') || "UNIT";
-        const fNode = u.getElementsByTagName("fuelConsumer")[0] || u.getElementsByTagName("consumer")[0];
-        const wearNode = u.getElementsByTagName("wearable")[0] || u;
-        const fillUnit = u.getElementsByTagName("fillUnit")[0];
         
-        const fuelRaw = fNode ? fNode.getAttribute("fillLevel") : null;
-        const fuelPercent = (fuelRaw !== null) ? (parseFloat(fuelRaw) * 100).toFixed(0) : null;
+        // HYPER-DRILL: Search fillUnits for Diesel or Electric [cite: 2026-02-12]
+        const fillUnits = Array.from(u.getElementsByTagName("fillUnit"));
+        const fuelUnit = fillUnits.find(fu => {
+            const ft = fu.getAttribute("fillType")?.toUpperCase() || "";
+            return ft === "DIESEL" || ft === "ELECTRICCHARGE";
+        });
+        
+        const wearNode = u.getElementsByTagName("wearable")[0] || u;
+        const cargoUnit = fillUnits.find(fu => {
+            const ft = fu.getAttribute("fillType")?.toUpperCase() || "";
+            return ft !== "DIESEL" && ft !== "ELECTRICCHARGE" && ft !== "DEF";
+        });
+        
+        const fuel = fuelUnit ? (parseFloat(fuelUnit.getAttribute("fillLevel") || 0) / parseFloat(fuelUnit.getAttribute("capacity") || 1) * 100).toFixed(0) : null;
         const wear = (parseFloat(wearNode?.getAttribute("damage") || 0) * 100).toFixed(0);
-        const cargo = fillUnit ? parseFloat(fillUnit.getAttribute("fillLevel") || 0).toFixed(0) : 0;
+        const cargo = cargoUnit ? parseFloat(cargoUnit.getAttribute("fillLevel") || 0).toFixed(0) : 0;
 
-        const fuelDisplay = (fuelPercent !== null) ? 
-            `<span style="color:var(--fuel); font-weight:900;">${fuelPercent}% FUEL</span>` : 
+        const fuelDisplay = (fuel !== null) ? 
+            `<span style="color:var(--fuel); font-weight:900;">${fuel}% FUEL</span>` : 
             `<span style="opacity:0.4;">TRAILER / IMPLEMENT</span>`;
 
         return `
