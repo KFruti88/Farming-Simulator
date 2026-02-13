@@ -7,7 +7,7 @@
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
     <title>FS MASTER COMMAND | TOTAL DETAIL MATRIX</title>
-    <link rel="stylesheet" href="style.css?v=1.72">
+    <link rel="stylesheet" href="style.css?v=1.66">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;900&display=swap" rel="stylesheet">
 </head>
 <body>
@@ -52,18 +52,57 @@
         </section>
 
         <main class="data-matrix triple-col">
-            <article class="glass-panel card" id="module-container-1">
-                <div id="module-1-field-info"><div class="loading">Inbound: Field Matrix...</div></div>
+            <article class="glass-panel card" id="card-module-1">
+                <div id="module-1-field-info"><div class="loading">Syncing Field Preparation...</div></div>
             </article>
-            <article class="glass-panel card" id="module-container-2">
-                <div id="module-2-animal-info"><div class="loading">Inbound: Livestock...</div></div>
+            <article class="glass-panel card" id="card-module-2">
+                <div id="module-2-animal-info"><div class="loading">Analyzing Livestock Biometrics...</div></div>
             </article>
-            <article class="glass-panel card" id="module-container-3">
-                <div id="module-3-factory-info"><div class="loading">Inbound: Production...</div></div>
+            <article class="glass-panel card" id="card-module-3">
+                <div id="module-3-factory-info"><div class="loading">Syncing Production Lines...</div></div>
             </article>
         </main>
     </div>
 
-    <script src="script.js?v=1.72"></script>
+    <script src="script.js?v=1.66"></script>
+    <script>
+        /**
+         * TRUTH-ENABLED MODULE LOADER
+         * Prevents 404s and ensures all blades update with the Truth ID [cite: 2026-01-26]
+         */
+        async function loadModules(slot) {
+            const gitPath = `https://raw.githubusercontent.com/KFruti88/Farming-Simulator/main/saved-game-${slot}`;
+            const truthID = `?truth=${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+            
+            const modules = [
+                { id: 'module-1-field-info', file: 'field-info.html', sync: 'syncFieldBlade' },
+                { id: 'module-2-animal-info', file: 'animal-info.html', sync: 'syncAnimalBlade' },
+                { id: 'module-3-factory-info', file: 'factory-info.html', sync: 'syncFactoryBlade' }
+            ];
+
+            modules.forEach(mod => {
+                fetch(`${mod.file}${truthID}`).then(r => {
+                    if(!r.ok) throw new Error();
+                    return r.text();
+                }).then(html => {
+                    document.getElementById(mod.id).innerHTML = html;
+                    // Global Handshake with individual blade logic [cite: 2026-02-10]
+                    if (window[mod.sync]) window[mod.sync](gitPath);
+                }).catch(e => {
+                    document.getElementById(mod.id).innerHTML = `
+                        <div class="error-state">
+                            <h3>404: MODULE MISSING</h3>
+                            <p>Verify ${mod.file} is in GitHub root.</p>
+                        </div>`;
+                });
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const selector = document.getElementById('saveSelector');
+            loadModules(selector.value);
+            selector.addEventListener('change', (e) => loadModules(e.target.value));
+        });
+    </script>
 </body>
 </html>
