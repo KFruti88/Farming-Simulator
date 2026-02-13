@@ -1,6 +1,6 @@
 :root {
-    --gold: #ffd700; --kevin: #7cfc00; --ray: #ffd700; --bg: #0d0a00; 
-    --glass: rgba(255, 255, 255, 0.04); --border: rgba(255, 215, 0, 0.2);
+    --gold: #ffd700; --kevin: #7cfc00; --ray: #ffd700; --bg: #050505; 
+    --glass: rgba(255, 255, 255, 0.03); --border: rgba(255, 255, 255, 0.1);
     --safe: #7cfc00; --fuel: #00d4ff; --danger: #ff4d4d;
 }
 
@@ -8,39 +8,34 @@
 
 body {
     background-color: var(--bg); font-family: 'Inter', sans-serif; color: #fff;
-    background-image: radial-gradient(circle at center, #1a1400 0%, #0d0a00 100%);
+    background-image: radial-gradient(circle at center, #1a1400 0%, #050505 100%);
 }
 
-.glass-panel { background: var(--glass); backdrop-filter: blur(20px); border: 1px solid var(--border); border-radius: 12px; padding: 15px; }
+.glass-panel { background: var(--glass); backdrop-filter: blur(25px); border: 1px solid var(--border); border-radius: 12px; padding: 15px; }
 
-/* 20-Slot Row Architecture [cite: 2026-02-13] */
-.save-row {
-    display: flex; flex-direction: column; gap: 10px;
-    border-left: 5px solid var(--gold); padding-left: 15px;
-}
+/* 20-Slot Row Styles [cite: 2026-02-13] */
+.save-row { display: flex; flex-direction: column; gap: 15px; }
+.row-header { font-weight: 900; color: rgba(255,255,255,0.4); font-size: 1.1rem; letter-spacing: 2px; }
 
-.row-header { font-weight: 900; color: var(--gold); font-size: 1.2rem; text-transform: uppercase; }
-
-.box-container {
-    display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px;
-}
+.box-container { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
 
 /* Independent Scroll Zones [cite: 2026-02-13] */
 .scroll-box {
-    background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.05);
-    border-radius: 8px; padding: 12px; height: 400px; overflow-y: auto;
-    scrollbar-width: thin; scrollbar-color: var(--gold) transparent;
+    background: rgba(255,255,255,0.02); border-radius: 10px; padding: 15px; height: 450px; 
+    overflow-y: auto; border: 1px solid rgba(255,255,255,0.05);
 }
 
 .scroll-box::-webkit-scrollbar { width: 4px; }
-.scroll-box::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 10px; }
+.scroll-box::-webkit-scrollbar-thumb { background: rgba(255,215,0,0.3); border-radius: 10px; }
 
 .box-title { 
-    font-size: 0.7rem; font-weight: 900; color: rgba(255,215,0,0.6); 
-    margin-bottom: 10px; border-bottom: 1px solid rgba(255,215,0,0.2); padding-bottom: 5px;
+    font-size: 0.75rem; font-weight: 900; text-transform: uppercase; margin-bottom: 12px; 
+    padding-bottom: 8px; border-bottom: 1px solid rgba(255,255,255,0.1);
 }
 
-.detail-row { font-size: 0.8rem; padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.03); }
-.status-tag { font-weight: 900; font-size: 0.65rem; padding: 2px 5px; border-radius: 3px; }
+.item-row { padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.03); font-size: 0.85rem; }
+.status-tag { font-weight: 900; font-size: 0.7rem; padding: 3px 8px; border-radius: 4px; }
 
-@media (max-width: 1200px) { .box-container { grid-template-columns: 1fr; } }
+/* Ownership Colors [cite: 2026-01-27] */
+.owner-kevin { border-left: 4px solid var(--kevin); padding-left: 10px; }
+.owner-ray { border-left: 4px solid var(--ray); padding-left: 10px; }
