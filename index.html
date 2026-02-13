@@ -6,8 +6,8 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
-    <title>FS MASTER COMMAND | RECOVERY v1.95</title>
-    <link rel="stylesheet" href="style.css?v=1.95">
+    <title>FS MASTER COMMAND | FULL EXTRACTION v1.97</title>
+    <link rel="stylesheet" href="style.css?v=1.97">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;900&display=swap" rel="stylesheet">
     <style>
         .sandbox-alert {
@@ -24,13 +24,15 @@
         .conn-status { font-size: 10px; padding: 2px 6px; border-radius: 4px; margin-left: 10px; }
         .conn-live { background: #00ffcc; color: #000; }
         .conn-blocked { background: #ff4500; color: #fff; }
+        /* Expanded Grid for Full Detail [cite: 2026-01-26] */
+        .full-detail-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 15px; margin-top: 15px; }
     </style>
 </head>
 <body>
     <div class="dashboard-container" style="width: 90%; margin: 20px auto;">
         
         <div class="sandbox-alert">
-            ⚠️ G-PORTAL RECOVERY ACTIVE: HYPER-DRILL v1.95 ⚠️
+            🚨 FULL EXTRACTION MODE: NO DATA HIDDEN v1.97 🚨
         </div>
 
         <header class="glass-panel header-main">
@@ -40,8 +42,8 @@
                         <img id="activeMapImage" 
                              src="http://176.57.165.81:8080/feed/dedicated-server-stats-map.jpg?code=DIaoyx8jutkGtlDr&quality=60&size=512" 
                              alt="Live Map" 
-                             onerror="this.src='https://via.placeholder.com/512x256?text=Allow+Insecure+Content+To+View+Map'">
-                        <div class="slot-badge" id="currentSlotLabel">SYNC READY</div>
+                             onerror="this.src='https://via.placeholder.com/512x256?text=Allow+Insecure+Content+In+Browser'">
+                        <div class="slot-badge" id="currentSlotLabel">FULL SYNC READY</div>
                     </div>
                     <div class="header-text">
                         <h1>Werewolf Red Operations <span id="linkStatus" class="conn-status conn-blocked">LINK BLOCKED</span></h1>
@@ -73,28 +75,28 @@
             </article>
             <article class="glass-panel card">
                 <div class="card-tag">👥 LIVE TEAM</div>
-                <div id="playerLog" class="telemetry-body">Scanning Sector...</div>
+                <div id="playerLog" class="telemetry-body">Scanning...</div>
             </article>
         </section>
 
         <main class="data-matrix triple-col">
-            <article class="glass-panel card" id="module-container-1" style="flex: 2;">
+            <article class="glass-panel card" id="module-container-1" style="flex: 2.5;">
                 <div id="module-1-field-info"></div>
             </article>
             <article class="glass-panel card" id="module-container-2">
                 <div id="module-2-animal-info"></div>
             </article>
-            <article class="glass-panel card" id="module-container-3" style="flex: 1.5;">
+            <article class="glass-panel card" id="module-container-3" style="flex: 2;">
                 <div id="module-3-factory-info"></div>
             </article>
         </main>
 
         <section class="glass-panel card fleet-section" style="margin-top: 20px;">
-            <div class="card-tag">🚜 ACTIVE FLEET TELEMETRY</div>
-            <div id="fleetLog" class="telemetry-grid">Hydrating Motorized Fleet Data...</div>
+            <div class="card-tag">🚜 FULL FLEET TELEMETRY (NO FILTERS)</div>
+            <div id="fleetLog" class="telemetry-grid">Drilling Fleet Data...</div>
         </section>
     </div>
 
-    <script src="script.js?v=1.95"></script>
+    <script src="script.js?v=1.97"></script>
 </body>
 </html>
