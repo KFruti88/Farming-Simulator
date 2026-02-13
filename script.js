@@ -1,160 +1,100 @@
-/**
- * FS MASTER UNIFIED ENGINE v1.76 - PRECISION MATRIX
- * REPAIR: Cross-Reference Drill for detailed Field Status and Layout.
- * MANDATE: Full Detail | Zero-Fake Policy [cite: 2026-01-26, 2026-02-08]
- */
-
-const GITHUB_ROOT = "https://raw.githubusercontent.com/KFruti88/Farming-Simulator/main";
-const GPORTAL_FEED = "http://176.57.165.81:8080/feed/dedicated-server-stats.xml?code=DIaoyx8jutkGtlDr";
-const getTruthID = () => `?truth=${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
-
-document.addEventListener('DOMContentLoaded', () => {
-    const selector = document.getElementById('saveSelector');
-    hydrateDashboardFromCache();
-    masterSyncCycle(selector.value);
-    
-    selector.addEventListener('change', (e) => {
-        localStorage.clear(); 
-        masterSyncCycle(e.target.value);
-    });
-    
-    setInterval(() => masterSyncCycle(selector.value), 30000);
-});
-
-async function masterSyncCycle(slot) {
-    const gitPath = `${GITHUB_ROOT}/saved-game-${slot}`;
-    document.getElementById('currentSlotLabel').textContent = `SLOT ${slot} ACTIVE`;
-    
-    await Promise.all([
-        fetchLiveGPortal(GPORTAL_FEED),
-        fetchDeepXML(`${gitPath}/vehicles.xml`, parseFleetHardDrill),
-        fetchDeepXML(`${gitPath}/farms.xml`, parseFinancials),
-        // HARD-DRILL HANDSHAKE: Cross-referencing Farmland with Precision Data [cite: 2026-02-12]
-        injectBladeModule('module-1-field-info', 'field-info.html', `${gitPath}/farmland.xml`, (xml) => parsePrecisionFieldMatrix(xml, `${gitPath}/precisionFarming.xml`)),
-        injectBladeModule('module-2-animal-info', 'animal-info.html', `${gitPath}/placeables.xml`, parseAnimalBiometrics),
-        injectBladeModule('module-3-factory-info', 'factory-info.html', `${gitPath}/items.xml`, parseProductionChains)
-    ]);
-}
-
-async function injectBladeModule(id, file, xmlPath, parser) {
-    try {
-        const res = await fetch(`${file}${getTruthID()}`);
-        if (res.ok) {
-            document.getElementById(id).innerHTML = await res.text();
-            fetchDeepXML(xmlPath, parser);
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <title>FS MASTER COMMAND | TOTAL DETAIL MATRIX v1.77</title>
+    <link rel="stylesheet" href="style.css?v=1.77">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;900&display=swap" rel="stylesheet">
+    <style>
+        .sandbox-alert {
+            background: rgba(255, 69, 0, 0.15);
+            border: 1px solid #ff4500;
+            color: #ff4500;
+            padding: 10px;
+            text-align: center;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 15px;
+            border-radius: 8px;
+            backdrop-filter: blur(10px);
+            animation: pulse 2s infinite;
         }
-    } catch (e) { console.warn(`Blade ${file} failed.`); }
-}
-
-/**
- * MODULE 1: PRECISION FIELD MATRIX [cite: 2026-02-12]
- * Drills into Farmland and PrecisionFarming XMLs for total detail.
- */
-async function parsePrecisionFieldMatrix(farmlandXml, precisionPath) {
-    try {
-        const pRes = await fetch(precisionPath + getTruthID());
-        const pXml = new DOMParser().parseFromString(await pRes.text(), "text/xml");
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(255, 69, 0, 0.4); }
+            70% { box-shadow: 0 0 0 15px rgba(255, 69, 0, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(255, 69, 0, 0); }
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard-container" style="width: 90%; margin: 20px auto;">
         
-        const ownedFields = Array.from(farmlandXml.getElementsByTagName("farmland")).filter(f => f.getAttribute("farmId") === "1");
-        const precisionNodes = Array.from(pXml.getElementsByTagName("field"));
+        <div class="sandbox-alert">
+            ⚠️ Sandbox Mode Active: Livestock & Production Matrix v1.77 ⚠️
+        </div>
 
-        const html = `
-            <div class="module-header" style="color:var(--gold); border-bottom:1px solid rgba(255,215,0,0.3); padding-bottom:10px;">🌾 PRECISION SOIL MATRIX</div>
-            <div class="field-grid-container" style="display:grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap:10px; margin-top:15px;">
-                ${ownedFields.map(f => {
-                    const id = f.getAttribute("id");
-                    const pData = precisionNodes.find(n => n.getAttribute("id") === id);
-                    
-                    // Precision Data Drill [cite: 2026-02-12]
-                    const nitrogen = pData ? parseFloat(pData.getAttribute("nitrogenValue") || 0).toFixed(0) : "N/A";
-                    const ph = pData ? parseFloat(pData.getAttribute("phValue") || 0).toFixed(1) : "N/A";
-                    const yieldPot = pData ? (parseFloat(pData.getAttribute("yieldPotential") || 0) * 100).toFixed(0) : "N/A";
-
-                    return `
-                        <div class="field-card" style="background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); padding:10px; border-radius:6px; font-size:12px;">
-                            <div style="font-weight:900; color:var(--safe); margin-bottom:5px;">FIELD ${id}</div>
-                            <div style="opacity:0.7">N: <span style="color:white">${nitrogen}kg</span></div>
-                            <div style="opacity:0.7">pH: <span style="color:white">${ph}</span></div>
-                            <div style="opacity:0.7">YIELD: <span style="color:white">${yieldPot}%</span></div>
-                        </div>`;
-                }).join('')}
-            </div>`;
-        updateAndCache('module-1-field-info', html);
-    } catch (e) { /* Fallback to basic list if Precision XML missing */ }
-}
-
-/**
- * FLEET HARD-DRILL [cite: 2026-02-12]
- */
-function parseFleetHardDrill(xml) {
-    const list = document.getElementById('fleetLog');
-    if (!list) return;
-    const units = Array.from(xml.getElementsByTagName("vehicle"));
-    const html = units.map(u => {
-        const name = u.getAttribute("filename")?.split('/').pop().replace('.xml', '').toUpperCase() || "UNIT";
-        const fuel = (parseFloat(u.getElementsByTagName("fuelConsumer")[0]?.getAttribute("fillLevel") || 0) * 100).toFixed(0);
-        const wear = (parseFloat(u.getElementsByTagName("wearable")[0]?.getAttribute("damage") || 0) * 100).toFixed(0);
-        const cargo = u.getElementsByTagName("fillUnit")[0]?.getAttribute("fillLevel") || 0;
-        return `
-            <div class="telemetry-row" style="display:grid; grid-template-columns: 2fr 1fr 2fr; gap:10px; padding:8px; border-bottom:1px solid rgba(255,255,255,0.05);">
-                <span style="font-weight:600;">${name}</span>
-                <span style="color:var(--gold); text-align:right;">${parseFloat(cargo).toFixed(0)}L</span>
-                <div style="display:flex; flex-direction:column; gap:4px;">
-                    <div class="bar-bg" style="height:4px; background:#222; border-radius:2px;"><div style="width:${fuel}%; height:100%; background:var(--fuel); border-radius:2px;"></div></div>
-                    <div class="bar-bg" style="height:4px; background:#222; border-radius:2px;"><div style="width:${wear}%; height:100%; background:var(--danger); border-radius:2px;"></div></div>
+        <header class="glass-panel header-main">
+            <div class="header-content">
+                <div class="map-branding">
+                    <div class="image-container">
+                        <img id="activeMapImage" src="http://176.57.165.81:8080/feed/dedicated-server-stats-map.jpg?code=DIaoyx8jutkGtlDr" alt="Live Map">
+                        <div class="slot-badge" id="currentSlotLabel">MATRIX v1.77</div>
+                    </div>
+                    <div class="header-text">
+                        <h1 id="serverNameDisplay">Werewolf Red Operations</h1>
+                        <div class="status-bar">
+                            <span id="mapDisplay">Map: Detecting...</span> | <span id="gameClock">Time: 00:00</span>
+                        </div>
+                    </div>
                 </div>
-            </div>`;
-    }).join('');
-    updateAndCache('fleetLog', html);
-}
+                <div class="selector-box">
+                    <select id="saveSelector">
+                        <option value="2" selected>Saved Game 2 (Texas)</option>
+                        <option value="5">Saved Game 5 (Missouri)</option>
+                        <option value="1">Saved Game 1</option>
+                    </select>
+                </div>
+            </div>
+        </header>
 
-function parseFinancials(xml) {
-    Array.from(xml.getElementsByTagName("farm")).forEach(f => {
-        const money = `$${parseInt(f.getAttribute("money")).toLocaleString()}`;
-        if (f.getAttribute("farmId") === "1") updateAndCache('kevinFinance', money);
-        if (f.getAttribute("farmId") === "2") updateAndCache('rayFinance', money);
-    });
-}
+        <section class="ops-matrix">
+            <article class="glass-panel card">
+                <div class="card-tag">💰 werewolf3788 (FARM 1)</div>
+                <div id="kevinFinance" class="telemetry-body">$1,080,707,968</div>
+            </article>
+            <article class="glass-panel card">
+                <div class="card-tag">💰 raymystro (FARM 2)</div>
+                <div id="rayFinance" class="telemetry-body">$0.00</div>
+            </article>
+            <article class="glass-panel card">
+                <div class="card-tag">👥 LIVE TEAM</div>
+                <div id="playerLog" class="telemetry-body">Scanning...</div>
+            </article>
+        </section>
 
-/**
- * G-PORTAL LIVE SYNC [cite: 2026-02-08, 2026-02-10]
- */
-async function fetchLiveGPortal(url) {
-    try {
-        const res = await fetch(url + getTruthID());
-        const xml = new DOMParser().parseFromString(await res.text(), "text/xml");
-        const server = xml.getElementsByTagName("Server")[0];
-        if (server) {
-            updateAndCache('mapDisplay', `Map: ${server.getAttribute('mapName')}`);
-            const rawTime = parseInt(server.getAttribute('dayTime'));
-            const hours = Math.floor(rawTime / 3600000) % 24;
-            const mins = Math.floor((rawTime % 3600000) / 60000);
-            updateAndCache('gameClock', `Time: ${hours.toString().padStart(2, '0')}:${mins.toString().padStart(2, '0')}`);
-            const players = Array.from(xml.getElementsByTagName("Player")).filter(p => p.getAttribute('isUsed') === 'true');
-            updateAndCache('playerLog', players.map(p => `👤 ${p.textContent}`).join(', ') || "No Players Online");
-        }
-    } catch (e) { }
-}
+        <main class="data-matrix triple-col">
+            <article class="glass-panel card" id="module-container-1">
+                <div id="module-1-field-info"></div>
+            </article>
+            <article class="glass-panel card" id="module-container-2">
+                <div id="module-2-animal-info"></div>
+            </article>
+            <article class="glass-panel card" id="module-container-3">
+                <div id="module-3-factory-info"></div>
+            </article>
+        </main>
 
-// Animal and Production Placeholders for Consolidated Engine [cite: 2026-01-26]
-function parseAnimalBiometrics(xml) { updateAndCache('module-2-animal-info', '<div class="loading">Analyzing Livestock Biometrics...</div>'); }
-function parseProductionChains(xml) { updateAndCache('module-3-factory-info', '<div class="loading">Syncing Production Chains...</div>'); }
+        <section class="glass-panel card fleet-section" style="margin-top: 20px;">
+            <div class="card-tag">🚜 ACTIVE FLEET TELEMETRY</div>
+            <div id="fleetLog" class="telemetry-grid">Initializing Hard-Drill Sync...</div>
+        </section>
+    </div>
 
-function hydrateDashboardFromCache() {
-    ['kevinFinance', 'rayFinance', 'playerLog', 'fleetLog', 'mapDisplay', 'gameClock'].forEach(key => {
-        const val = localStorage.getItem(key);
-        if (val && document.getElementById(key)) document.getElementById(key).innerHTML = val;
-    });
-}
-
-function updateAndCache(id, content) {
-    const el = document.getElementById(id);
-    if (el) { el.innerHTML = content; localStorage.setItem(id, content); }
-}
-
-async function fetchDeepXML(url, parser) {
-    try {
-        const res = await fetch(url + getTruthID());
-        if (res.ok) parser(new DOMParser().parseFromString(await res.text(), "text/xml"));
-    } catch (e) { }
-}
+    <script src="script.js?v=1.77"></script>
+</body>
+</html>
