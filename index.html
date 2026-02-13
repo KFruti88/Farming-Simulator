@@ -6,49 +6,46 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
-    <title>FS MASTER COMMAND | LIVE SYNC v2.17</title>
-    <link rel="stylesheet" href="style.css?v=2.17">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;900&display=swap" rel="stylesheet">
+    <title>WEREWOLF RED | FULL SPECTRUM v2.22</title>
+    <link rel="stylesheet" href="style.css?v=2.22">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;900&display=swap" rel="stylesheet">
 </head>
 <body>
     <div class="dashboard-container">
-        
         <header class="glass-panel header-main">
             <div class="header-content">
                 <div class="branding">
                     <h1>WEREWOLF RED OPERATIONS</h1>
-                    <div id="statusLights">
-                        <span class="status-tag kevin-tag">KEVIN (ORANGE/BLACK)</span>
-                        <span class="status-tag ray-tag">RAY (RED/BLUE)</span>
+                    <div class="identity-tags">
+                        <span class="tag kevin">KEVIN: ORANGE/BLACK</span>
+                        <span class="tag ray">RAY: RED/BLUE</span>
                     </div>
                 </div>
-                
                 <div class="selector-box">
-                    <div id="liveBadge" class="live-indicator">SCANNING SERVER...</div>
-                    <select id="slotSelector">
-                        </select>
+                    <div id="liveStatus" class="live-label">SCANNING G-PORTAL...</div>
+                    <select id="slotSelector"></select>
                 </div>
             </div>
         </header>
 
-        <div id="activeSlotView">
-            <div class="row-header" id="activeSlotTitle">INITIALIZING MATRIX...</div>
-            <div class="box-container">
-                <div class="scroll-box" id="active-farmland">
-                    <div class="box-title">🌾 FARMLAND INTELLIGENCE</div>
-                    <div class="content">...</div>
+        <div id="activeView">
+            <h2 id="slotTitle">SYSTEM DRILLING...</h2>
+            <div class="box-grid">
+                <div class="scroll-box" id="box-farmland">
+                    <div class="box-header">🌾 PRECISION AGRICULTURE & SOIL INTELLIGENCE</div>
+                    <div class="content">Drilling pH, Nitrogen, Lime, Weeds, Growth...</div>
                 </div>
-                <div class="scroll-box" id="active-missions">
-                    <div class="box-title">📑 IDENTITY CONTRACTS</div>
-                    <div class="content">...</div>
+                <div class="scroll-box" id="box-missions">
+                    <div class="box-header">📑 IDENTITY CONTRACTS & LOGISTICS</div>
+                    <div class="content">Scanning Active Rewards & Destinations...</div>
                 </div>
-                <div class="scroll-box" id="active-fleet">
-                    <div class="box-title">🚜 UNIT TELEMETRY</div>
-                    <div class="content">...</div>
+                <div class="scroll-box" id="box-fleet">
+                    <div class="box-header">🚜 FLEET, ATTACHMENTS & GREENHOUSE ASSETS</div>
+                    <div class="content">Analyzing Fuel, Damage, Water, Pallets...</div>
                 </div>
             </div>
         </div>
     </div>
-    <script src="script.js?v=2.17"></script>
+    <script src="script.js?v=2.22"></script>
 </body>
 </html>
