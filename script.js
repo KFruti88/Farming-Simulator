@@ -1,130 +1,118 @@
 /**
- * FS MASTER UNIFIED ENGINE v2.14 - 60-BOX IDENTITY SYNC
- * REPAIR: Cross-references farmId ownership for Kevin (F1) and Ray (F2) across all 20 slots.
+ * FS MASTER UNIFIED ENGINE v2.17 - LIVE-MAP SYNC
+ * REPAIR: Maps "Big Flats Texas" to Slot 2 and highlights LIVE status in dropdown.
  * MANDATE: Full Detail | Zero Snippets | Zero-Fake Policy [cite: 2026-01-26]
  */
 
 const GITHUB_ROOT = "https://raw.githubusercontent.com/KFruti88/Farming-Simulator/main";
+const GPORTAL_FEED = "http://176.57.165.81:8080/feed/dedicated-server-stats.xml?code=DIaoyx8jutkGtlDr";
 const getTruthID = () => `?truth=${Date.now()}`;
 
-document.addEventListener('DOMContentLoaded', () => {
-    buildMatrixStructure(); // Generates the 60-box viewport [cite: 2026-02-13]
-    syncGlobalMatrix();
-    setInterval(syncGlobalMatrix, 60000);
+// Map Name to Slot ID Configuration [cite: 2026-02-13]
+const SLOT_MAP = {
+    "Big Flats Texas": 2,
+    "Land of Italy": 5 // Example for Missouri slot
+};
+
+document.addEventListener('DOMContentLoaded', async () => {
+    const selector = document.getElementById('slotSelector');
+    
+    // 1. Initial G-Portal Scan [cite: 2026-02-12]
+    const liveMap = await fetchLiveMapStatus();
+    const liveSlot = SLOT_MAP[liveMap] || 2; // Default to Slot 2 if unknown
+
+    // 2. Populate Dropdown with Live Logic
+    for (let i = 1; i <= 20; i++) {
+        const opt = document.createElement('option');
+        opt.value = i;
+        let label = `SAVE SLOT ${i}`;
+        if (i === 2) label += " (TEXAS)";
+        if (i === 5) label += " (MISSOURI)";
+        if (i === liveSlot) label += " - [LIVE ON SERVER]";
+        
+        opt.innerText = label;
+        selector.appendChild(opt);
+    }
+
+    selector.value = liveSlot;
+    syncData(liveSlot);
+
+    selector.addEventListener('change', (e) => syncData(e.target.value));
+    setInterval(async () => {
+        const updatedMap = await fetchLiveMapStatus();
+        updateLiveBadge(updatedMap);
+    }, 60000);
 });
 
-function buildMatrixStructure() {
-    const grid = document.getElementById('masterMatrixGrid');
-    for (let i = 1; i <= 20; i++) {
-        const row = document.createElement('div');
-        row.className = 'save-row';
-        row.innerHTML = `
-            <div class="row-header">OPERATIONAL MATRIX: SLOT ${i}</div>
-            <div class="box-container">
-                <div class="scroll-box" id="slot-${i}-farmland">
-                    <div class="box-title">🌾 FARMLAND OWNERSHIP</div>
-                    <div class="content">Drilling XML...</div>
-                </div>
-                <div class="scroll-box" id="slot-${i}-missions">
-                    <div class="box-title">📑 IDENTITY CONTRACTS</div>
-                    <div class="content">Drilling XML...</div>
-                </div>
-                <div class="scroll-box" id="slot-${i}-fleet">
-                    <div class="box-title">🚜 UNIT & ASSET TELEMETRY</div>
-                    <div class="content">Drilling XML...</div>
-                </div>
-            </div>`;
-        grid.appendChild(row);
-    }
-}
-
-async function syncGlobalMatrix() {
-    for (let i = 1; i <= 20; i++) {
-        const path = `${GITHUB_ROOT}/saved-game-${i}`;
-        processSlotData(i, path);
-    }
-}
-
-async function processSlotData(id, path) {
+async function fetchLiveMapStatus() {
     try {
-        const [fml, pre, mis, vml, iml] = await Promise.all([
-            fetchXML(`${path}/farmland.xml`), fetchXML(`${path}/precisionFarming.xml`),
-            fetchXML(`${path}/missions.xml`), fetchXML(`${path}/vehicles.xml`), fetchXML(`${path}/items.xml`)
-        ]);
-
-        if (fml) renderFarmlandDetailed(id, fml, pre);
-        if (mis) renderMissionsDetailed(id, mis);
-        if (vml) renderFleetDetailed(id, vml, iml);
-    } catch (e) { console.warn(`Slot ${id} sync pending.`); }
+        const res = await fetch(GPORTAL_FEED + getTruthID());
+        const xml = new DOMParser().parseFromString(await res.text(), "text/xml");
+        const server = xml.getElementsByTagName("Server")[0];
+        return server ? server.getAttribute('mapName') : "Unknown";
+    } catch (e) { return "Unknown"; }
 }
 
-/**
- * BOX 1: FARMLAND [cite: 2026-02-13]
- */
-function renderFarmlandDetailed(id, fml, pre) {
+function updateLiveBadge(mapName) {
+    const badge = document.getElementById('liveBadge');
+    badge.innerHTML = `SERVER LIVE: <span class="live-pulse">${mapName.toUpperCase()}</span>`;
+}
+
+async function syncData(slotId) {
+    const path = `${GITHUB_ROOT}/saved-game-${slotId}`;
+    document.getElementById('activeSlotTitle').innerText = `DRILLING DATA: SLOT ${slotId}`;
+    
+    const [fml, pre, mis, vml, iml] = await Promise.all([
+        fetchXML(`${path}/farmland.xml`), fetchXML(`${path}/precisionFarming.xml`),
+        fetchXML(`${path}/missions.xml`), fetchXML(`${path}/vehicles.xml`), fetchXML(`${path}/items.xml`)
+    ]);
+
+    if (fml) renderFarmland(fml, pre);
+    if (mis) renderMissions(mis);
+    if (vml) renderFleet(vml, iml);
+}
+
+function renderFarmland(fml, pre) {
     const lands = Array.from(fml.getElementsByTagName("farmland")).filter(f => f.getAttribute("farmId") !== "0");
     const pNodes = Array.from(pre?.getElementsByTagName("field") || []);
-
-    const html = lands.map(l => {
-        const ownerId = l.getAttribute("farmId");
-        const colorClass = ownerId === "1" ? "owner-kevin" : "owner-ray";
-        const lid = l.getAttribute("id");
-        const p = pNodes.find(n => n.getAttribute("id") === lid);
-
-        return `
-            <div class="item-row ${colorClass}">
-                <strong>FIELD ${lid}</strong> | ${ownerId === "1" ? 'KEVIN' : 'RAY'}
-                <div style="font-size:10px; margin-top:5px; opacity:0.7;">
-                    pH: ${parseFloat(p?.getAttribute("phValue") || 0).toFixed(1)} | 
-                    N: ${parseFloat(p?.getAttribute("nitrogenValue") || 0).toFixed(0)}kg
-                </div>
-            </div>`;
-    }).join('');
-    document.querySelector(`#slot-${id}-farmland .content`).innerHTML = html || "NO LAND OWNED";
+    document.querySelector(`#active-farmland .content`).innerHTML = lands.map(l => {
+        const farmId = l.getAttribute("farmId");
+        const color = farmId === "1" ? "owner-kevin" : "owner-ray";
+        const p = pNodes.find(n => n.getAttribute("id") === l.getAttribute("id"));
+        return `<div class="item-row ${color}">
+            <strong style="color:${farmId === "1" ? 'var(--kevin-orange)' : 'var(--ray-red)'}">FIELD ${l.getAttribute("id")}</strong>
+            <div style="font-size:11px; opacity:0.7;">pH: ${parseFloat(p?.getAttribute("phValue") || 0).toFixed(1)} | N: ${parseFloat(p?.getAttribute("nitrogenValue") || 0).toFixed(0)}kg</div>
+        </div>`;
+    }).join('') || "NO DATA";
 }
 
-/**
- * BOX 2: MISSIONS [cite: 2026-02-13]
- */
-function renderMissionsDetailed(id, xml) {
+function renderMissions(xml) {
     const active = Array.from(xml.getElementsByTagName("mission")).filter(m => m.getAttribute("status") === "1");
-    const html = active.map(m => {
+    document.querySelector(`#active-missions .content`).innerHTML = active.map(m => {
         const farmId = m.getAttribute("farmId");
-        const colorClass = farmId === "1" ? "owner-kevin" : "owner-ray";
-        
-        return `
-            <div class="item-row ${colorClass}">
-                <div style="font-weight:900;">${m.getAttribute("type").toUpperCase()}</div>
-                <div style="font-size:10px;">Field ${m.getAttribute("fieldId")} | $${parseFloat(m.getAttribute("reward")).toLocaleString()}</div>
-            </div>`;
+        const color = farmId === "1" ? "owner-kevin" : "owner-ray";
+        return `<div class="item-row ${color}">
+            <strong style="color:${farmId === "1" ? 'var(--kevin-orange)' : 'var(--ray-red)'}">${m.getAttribute("type").toUpperCase()}</strong>
+            <div style="font-size:11px;">Field ${m.getAttribute("fieldId")} | $${parseFloat(m.getAttribute("reward")).toLocaleString()}</div>
+        </div>`;
     }).join('') || "NO CONTRACTS";
-    document.querySelector(`#slot-${id}-missions .content`).innerHTML = html;
 }
 
-/**
- * BOX 3: FLEET & ASSETS [cite: 2026-02-13]
- */
-function renderFleetDetailed(id, vml, iml) {
+function renderFleet(vml, iml) {
     const units = Array.from(vml.getElementsByTagName("vehicle")).filter(u => !u.getAttribute("filename").toUpperCase().includes('BALE'));
-    
-    const html = units.map(u => {
+    document.querySelector(`#active-fleet .content`).innerHTML = units.map(u => {
         const farmId = u.getAttribute("farmId") || "1";
-        const colorClass = farmId === "1" ? "owner-kevin" : "owner-ray";
-        const name = u.getAttribute("filename")?.split('/').pop().toUpperCase().replace('.XML', '');
-        const wear = (parseFloat(u.getElementsByTagName("wearable")[0]?.getAttribute("damage") || 0) * 100).toFixed(0);
-
-        return `
-            <div class="item-row ${colorClass}">
-                <strong>${name}</strong>
-                <div style="font-size:10px; opacity:0.7;">OWNER: ${farmId === "1" ? 'KEVIN' : 'RAY'} | DMG: ${wear}%</div>
-            </div>`;
-    }).join('');
-    document.querySelector(`#slot-${id}-fleet .content`).innerHTML = html;
+        const color = farmId === "1" ? "owner-kevin" : "owner-ray";
+        return `<div class="item-row ${color}">
+            <strong style="color:${farmId === "1" ? 'var(--kevin-orange)' : 'var(--ray-red)'}">${u.getAttribute("filename").split('/').pop().toUpperCase()}</strong>
+            <div style="font-size:11px; opacity:0.6;">Damage: ${(parseFloat(u.getElementsByTagName("wearable")[0]?.getAttribute("damage") || 0) * 100).toFixed(0)}%</div>
+        </div>`;
+    }).join('') || "NO UNITS";
 }
 
 async function fetchXML(url) {
     try {
         const res = await fetch(url + getTruthID());
-        if (res.ok) return new DOMParser().parseFromString(await res.text(), "text/xml");
+        return res.ok ? new DOMParser().parseFromString(await res.text(), "text/xml") : null;
     } catch (e) { return null; }
 }
