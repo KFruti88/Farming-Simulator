@@ -6,22 +6,14 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
-    <title>FS MASTER COMMAND | GLOBAL SYNC v1.90</title>
-    <link rel="stylesheet" href="style.css?v=1.90">
+    <title>FS MASTER COMMAND | RECOVERY v1.91</title>
+    <link rel="stylesheet" href="style.css?v=1.91">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;900&display=swap" rel="stylesheet">
     <style>
         .sandbox-alert {
-            background: rgba(255, 69, 0, 0.15);
-            border: 1px solid #ff4500;
-            color: #ff4500;
-            padding: 10px;
-            text-align: center;
-            font-weight: 900;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            margin-bottom: 15px;
-            border-radius: 8px;
-            backdrop-filter: blur(10px);
+            background: rgba(255, 69, 0, 0.15); border: 1px solid #ff4500; color: #ff4500;
+            padding: 10px; text-align: center; font-weight: 900; text-transform: uppercase;
+            letter-spacing: 2px; margin-bottom: 15px; border-radius: 8px; backdrop-filter: blur(10px);
             animation: pulse 2s infinite;
         }
         @keyframes pulse {
@@ -29,24 +21,27 @@
             70% { box-shadow: 0 0 0 15px rgba(255, 69, 0, 0); }
             100% { box-shadow: 0 0 0 0 rgba(255, 69, 0, 0); }
         }
+        .conn-status { font-size: 10px; padding: 2px 6px; border-radius: 4px; margin-left: 10px; }
+        .conn-live { background: #00ffcc; color: #000; }
+        .conn-blocked { background: #ff4500; color: #fff; }
     </style>
 </head>
 <body>
     <div class="dashboard-container" style="width: 90%; margin: 20px auto;">
         
         <div class="sandbox-alert">
-            ⚠️ G-PORTAL LIVE SYNC ACTIVE: 5-SLOT MATRIX v1.90 ⚠️
+            ⚠️ G-PORTAL RECOVERY ACTIVE: DETAILED SYNC v1.91 ⚠️
         </div>
 
         <header class="glass-panel header-main">
             <div class="header-content">
                 <div class="map-branding">
                     <div class="image-container">
-                        <img id="activeMapImage" src="http://176.57.165.81:8080/feed/dedicated-server-stats-map.jpg?code=DIaoyx8jutkGtlDr" alt="Live Map">
-                        <div class="slot-badge" id="currentSlotLabel">SYNC READY</div>
+                        <img id="activeMapImage" src="http://176.57.165.81:8080/feed/dedicated-server-stats-map.jpg?code=DIaoyx8jutkGtlDr" alt="Live Map" onerror="this.src='https://via.placeholder.com/512x256?text=Browser+Blocking+HTTP+Image'">
+                        <div class="slot-badge" id="currentSlotLabel">MATRIX v1.91</div>
                     </div>
                     <div class="header-text">
-                        <h1 id="serverNameDisplay">Werewolf Red Operations</h1>
+                        <h1>Werewolf Red Operations <span id="linkStatus" class="conn-status conn-blocked">LINK PENDING</span></h1>
                         <div class="status-bar">
                             <span id="mapDisplay">Map: Detecting...</span> | <span id="gameClock">Time: 00:00</span>
                         </div>
@@ -97,6 +92,6 @@
         </section>
     </div>
 
-    <script src="script.js?v=1.90"></script>
+    <script src="script.js?v=1.91"></script>
 </body>
 </html>
