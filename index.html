@@ -3,152 +3,115 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Zieonka Strategic Ops - ABSOLUTE MAXIMUM DATA DUMP v2.37</title>
-    <script src="https://cdn.tailwindcss.com"></script>
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <title>FS MASTER COMMAND | PRECISION MATRIX v1.78</title>
+    <link rel="stylesheet" href="style.css?v=1.78">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;900&display=swap" rel="stylesheet">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=JetBrains+Mono:wght@500;800&display=swap');
-        
-        body { background: #020202; color: #cbd5e1; font-family: 'Inter', sans-serif; font-size: 11px; margin: 0; padding: 30px; line-height: 1.5; }
-        
-        .glass { 
-            background: rgba(15, 17, 20, 0.98); 
-            border: 2px solid rgba(255, 255, 255, 0.05); 
-            border-radius: 8px; padding: 30px; margin-bottom: 30px; width: 100%;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.5); display: flex; flex-direction: column;
+        .sandbox-alert {
+            background: rgba(255, 69, 0, 0.15);
+            border: 1px solid #ff4500;
+            color: #ff4500;
+            padding: 10px;
+            text-align: center;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 15px;
+            border-radius: 8px;
+            backdrop-filter: blur(10px);
+            animation: pulse 2s infinite;
         }
-
-        .scroll-area { max-height: 450px; overflow-y: auto; padding-right: 12px; }
-        .scroll-area::-webkit-scrollbar { width: 4px; }
-        .scroll-area::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.15); border-radius: 2px; }
-
-        .f1-text { color: #FF8C00; } .f2-text { color: #00D4FF; }
-        .f1-border { border-left: 10px solid #FF8C00; } .f2-border { border-left: 10px solid #00D4FF; }
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(255, 69, 0, 0.4); }
+            70% { box-shadow: 0 0 0 15px rgba(255, 69, 0, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(255, 69, 0, 0); }
+        }
+        .data-label { opacity: 0.6; font-size: 0.8em; text-transform: uppercase; }
+        .data-value { font-weight: 900; color: #ffd700; }
         
-        /* REVERSE MENU LOCK */
-        .menu-live-reverse { background: #FF8C00 !important; color: #000 !important; border: 2px solid #fff !important; font-weight: 900; }
-
-        table { width: 100%; border-collapse: collapse; table-layout: fixed; }
-        th { text-align: left; color: #64748b; font-size: 10px; text-transform: uppercase; border-bottom: 2px solid rgba(255,255,255,0.1); padding: 10px; background: rgba(15, 17, 20, 1); position: sticky; top: 0; }
-        td { padding: 10px; border-bottom: 1px solid rgba(255,255,255,0.05); color: #cbd5e1; }
-        
-        .mono { font-family: 'JetBrains Mono', monospace; }
-        .ts { position: absolute; top: 15px; right: 20px; font-size: 9px; color: #475569; font-family: 'JetBrains Mono', monospace; border: 1px solid #334155; padding: 2px 6px; border-radius: 4px; }
-        h3 { font-size: 18px; font-weight: 900; letter-spacing: 2px; color: white; text-transform: uppercase; margin-bottom: 15px; display: flex; align-items: center; gap: 10px; }
-        h3::after { content: ''; flex-grow: 1; height: 1px; background: rgba(255,255,255,0.1); }
-
-        #slotSelector { background: #111; color: #fff; border: 1px solid #FF8C00; padding: 5px 15px; border-radius: 4px; font-weight: 900; }
+        /* Trophy Section Styling */
+        .trophy-matrix-frame {
+            width: 100%;
+            height: 500px;
+            border: none;
+            border-radius: 8px;
+            background: transparent;
+        }
     </style>
 </head>
 <body>
-
-<div class="max-w-[1850px] mx-auto">
-    <header class="flex flex-col xl:flex-row justify-between items-center bg-white/5 p-10 rounded-lg border-2 border-white/10 mb-10 shadow-2xl">
-        <div class="flex flex-col md:flex-row gap-16 md:gap-32">
-            <div><p class="text-xs uppercase text-slate-500 font-black mb-2">FARM 01 LIQUIDITY</p><p id="f1-money" class="text-7xl font-black f1-text tracking-tighter">$0</p></div>
-            <div class="md:border-l-2 border-white/10 md:pl-32"><p class="text-xs uppercase text-slate-500 font-black mb-2">FARM 02 LIQUIDITY</p><p id="f2-money" class="text-7xl font-black f2-text tracking-tighter">$0</p></div>
+    <div class="dashboard-container" style="width: 90%; margin: 20px auto;">
+        
+        <div class="sandbox-alert">
+            ⚠️ Sandbox Active: Hard-Drill Logic v1.78 ⚠️
         </div>
-        <div class="text-center xl:text-right">
-            <h1 class="text-5xl font-black italic uppercase text-white mb-2">Strategic Operations</h1>
-            <div class="flex items-center gap-4 justify-center xl:justify-end">
-                <select id="slotSelector"></select>
-                <p id="save-time" class="mono text-sm bg-white/10 px-4 py-2 rounded text-white">SYNCING...</p>
+
+        <header class="glass-panel header-main">
+            <div class="header-content">
+                <div class="map-branding">
+                    <div class="image-container">
+                        <img id="activeMapImage" src="http://176.57.165.81:8080/feed/dedicated-server-stats-map.jpg?code=DIaoyx8jutkGtlDr" alt="Live Map">
+                        <div class="slot-badge" id="currentSlotLabel">MATRIX v1.78</div>
+                    </div>
+                    <div class="header-text">
+                        <h1 id="serverNameDisplay">Werewolf Red Operations</h1>
+                        <div class="status-bar">
+                            <span id="mapDisplay">Map: Detecting...</span> | <span id="gameClock">Time: 00:00</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="selector-box">
+                    <select id="saveSelector">
+                        <option value="2" selected>Saved Game 2 (Texas)</option>
+                        <option value="5">Saved Game 5 (Missouri)</option>
+                        <option value="1">Saved Game 1</option>
+                    </select>
+                </div>
             </div>
-        </div>
-    </header>
+        </header>
 
-    <div class="grid grid-cols-1 xl:grid-cols-2 gap-8 mb-8">
-        <div class="glass f1-border"><span class="ts">F01 OBJECTIVES</span><h3>Trophy Progress</h3><div class="scroll-area"><table id="f1-trophies"></table></div></div>
-        <div class="glass f2-border"><span class="ts">F02 OBJECTIVES</span><h3>Achievement Flow</h3><div class="scroll-area"><table id="f2-trophies"></table></div></div>
+        <section class="ops-matrix">
+            <article class="glass-panel card">
+                <div class="card-tag">💰 werewolf3788 (FARM 1)</div>
+                <div id="kevinFinance" class="telemetry-body">$0.00</div>
+            </article>
+            <article class="glass-panel card">
+                <div class="card-tag">💰 raymystro (FARM 2)</div>
+                <div id="rayFinance" class="telemetry-body">$0.00</div>
+            </article>
+            <article class="glass-panel card">
+                <div class="card-tag">👥 LIVE TEAM</div>
+                <div id="playerLog" class="telemetry-body">Scanning...</div>
+            </article>
+        </section>
+
+        <main class="data-matrix triple-col">
+            <article class="glass-panel card" id="module-container-1">
+                <div id="module-1-field-info"></div>
+            </article>
+            <article class="glass-panel card" id="module-container-2">
+                <div id="module-2-animal-info"></div>
+            </article>
+            <article class="glass-panel card" id="module-container-3">
+                <div id="module-3-factory-info"></div>
+            </article>
+        </main>
+
+        <section class="glass-panel card fleet-section" style="margin-top: 20px;">
+            <div class="card-tag">🚜 ACTIVE FLEET TELEMETRY</div>
+            <div id="fleetLog" class="telemetry-grid">Initializing Truth Sync...</div>
+        </section>
+
+        <section class="glass-panel card trophy-section" style="margin-top: 20px; padding: 0; overflow: hidden;">
+            <div class="card-tag" style="margin: 15px;">🏆 PSN UPLINK: RAYMYSTRO PROGRESSION</div>
+            <iframe src="ray_trophies.html" class="trophy-matrix-frame"></iframe>
+        </section>
+
     </div>
 
-    <div class="grid grid-cols-1 xl:grid-cols-3 gap-8 mb-8">
-        <div class="glass f1-border"><span class="ts">F01 ENGINES</span><h3>Vehicles</h3><div class="scroll-area"><table id="f1-engines"></table></div></div>
-        <div class="glass f1-border"><span class="ts">F01 SUPPORT</span><h3>Attachments</h3><div class="scroll-area"><table id="f1-support"></table></div></div>
-        <div class="glass f1-border"><span class="ts">F01 LOGISTICS</span><h3>Pallets</h3><div class="scroll-area"><table id="f1-pallets"></table></div></div>
-    </div>
-
-    <div class="grid grid-cols-1 xl:grid-cols-2 gap-8 mb-8">
-        <div class="glass f1-border"><span class="ts">F01 FIELDS</span><h3>Werewolf Registry</h3><div class="scroll-area"><table id="f1-fields"></table></div></div>
-        <div class="glass f2-border"><span class="ts">F02 FIELDS</span><h3>Lividman Registry</h3><div class="scroll-area"><table id="f2-fields"></table></div></div>
-    </div>
-</div>
-
-<script>
-const GITHUB_ROOT = "https://raw.githubusercontent.com/KFruti88/Farming-Simulator/main";
-const GPORTAL_FEED = "http://176.57.165.81:8080/feed/dedicated-server-stats.xml?code=DIaoyx8jutkGtlDr";
-const MAPS = { 1:"ELMCREEK", 2:"BIG FLATS TEXAS", 3:"ZIELONKA", 5:"LAND OF ITALY" };
-const getTruth = () => `?t=${Date.now()}`;
-
-document.addEventListener('DOMContentLoaded', async () => {
-    const sel = document.getElementById('slotSelector');
-    const liveMapName = await fetchLiveMap();
-    const liveSlot = Object.keys(MAPS).find(k => MAPS[k] === liveMapName.toUpperCase()) || 2;
-
-    for(let i=1; i<=20; i++) {
-        const opt = document.createElement('option');
-        opt.value = i;
-        opt.innerText = `SLOT ${i}: ${MAPS[i] || 'ARCHIVE'} ${i == liveSlot ? '[LIVE]' : ''}`;
-        sel.appendChild(opt);
-    }
-    sel.value = liveSlot;
-    updateTruthMatrix(liveSlot, liveSlot);
-    sel.addEventListener('change', (e) => updateTruthMatrix(e.target.value, liveSlot));
-    setInterval(() => updateTruthMatrix(sel.value, liveSlot), 45000);
-});
-
-async function updateTruthMatrix(slot, live) {
-    const sel = document.getElementById('slotSelector');
-    if(slot == live) sel.classList.add('menu-live-reverse'); else sel.classList.remove('menu-live-reverse');
-
-    const path = `${GITHUB_ROOT}/saved-game-${slot}`;
-    const [fml, pre, fld, farms, vml, career] = await Promise.all([
-        fetchXML(`${path}/farmland.xml`), fetchXML(`${path}/precisionFarming.xml`),
-        fetchXML(`${path}/fields.xml`), fetchXML(`${path}/farms.xml`), 
-        fetchXML(`${path}/vehicles.xml`), fetchXML(`${path}/careerSavegame.xml`)
-    ]);
-
-    if(career) document.getElementById('save-time').innerText = `SYNC: ${career.getElementsByTagName("saveDate")[0]?.textContent || 'N/A'}`;
-
-    if(farms) {
-        const f1 = Array.from(farms.getElementsByTagName("farm")).find(f => f.getAttribute("farmId") === "1");
-        const f2 = Array.from(farms.getElementsByTagName("farm")).find(f => f.getAttribute("farmId") === "2");
-        document.getElementById('f1-money').innerText = `$${parseInt(f1?.getAttribute("money") || 0).toLocaleString()}`;
-        document.getElementById('f2-money').innerText = `$${parseInt(f2?.getAttribute("money") || 0).toLocaleString()}`;
-    }
-
-    if(fml) {
-        const owned = Array.from(fml.getElementsByTagName("farmland")).filter(f => f.getAttribute("farmId") === "1");
-        const pNodes = Array.from(pre?.getElementsByTagName("field") || []);
-        const fNodes = Array.from(fld?.getElementsByTagName("field") || []);
-        document.getElementById('f1-fields').innerHTML = `<thead><tr><th>Field</th><th>Nitrogen (lbs/ac)</th><th>Lime</th><th>State</th></tr></thead><tbody>` + 
-            owned.map(l => {
-                const id = l.getAttribute("id");
-                const p = pNodes.find(n => n.getAttribute("id") === id);
-                const f = fNodes.find(n => n.getAttribute("id") === id);
-                const lbs = (parseFloat(p?.getAttribute("nitrogenValue") || 0) * 2.204).toFixed(0);
-                const state = (f?.getAttribute("growthState") || "EMPTY").toUpperCase();
-                let color = "#94a3b8";
-                if(state.includes("GROWING")) color = "#22c55e";
-                if(state.includes("HARVEST")) color = "#f97316";
-                return `<tr><td class="f1-text font-black">#${id}</td><td class="mono">${lbs}</td><td>${p?.getAttribute("needsLime")==='true'?'REQUIRED':'OK'}</td><td style="color:${color}; font-weight:900;">${state}</td></tr>`;
-            }).join('') + `</tbody>`;
-    }
-
-    if(vml) {
-        const units = Array.from(vml.getElementsByTagName("vehicle")).filter(u => u.getAttribute("farmId") === "1" && !u.getAttribute("filename").includes("BALE"));
-        document.getElementById('f1-engines').innerHTML = `<thead><tr><th>Unit</th><th>Fuel (Gal)</th><th>Dmg</th></tr></thead><tbody>` + 
-            units.map(u => {
-                const f = u.getAttribute("filename").split('/').pop().replace('.XML','');
-                const d = (parseFloat(u.getElementsByTagName("wearable")[0]?.getAttribute("damage") || 0) * 100).toFixed(1);
-                const g = (parseFloat(u.getElementsByTagName("fillUnit")[0]?.getAttribute("fillLevel") || 0) * 0.264).toFixed(1);
-                return `<tr><td>${f}</td><td class="mono">${g} gal</td><td class="${d > 10 ? 'text-orange-500' : 'text-green-500'}">${d}%</td></tr>`;
-            }).join('') + `</tbody>`;
-    }
-}
-
-async function fetchLiveMap() { try { const res = await fetch(GPORTAL_FEED+getTruth()); const xml = new DOMParser().parseFromString(await res.text(),"text/xml"); return xml.getElementsByTagName("Server")[0]?.getAttribute("mapName") || ""; } catch(e) { return ""; } }
-async function fetchXML(url) { try { const res = await fetch(url+getTruth()); return res.ok ? new DOMParser().parseFromString(await res.text(),"text/xml") : null; } catch(e) { return null; } }
-</script>
+    <script src="script.js?v=1.78"></script>
 </body>
 </html>
