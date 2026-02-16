@@ -65,7 +65,7 @@
             <div class="header-content">
                 <div class="map-branding">
                     <div class="image-container">
-                        <img id="activeMapImage" src="dedicated_server/map.jpg" alt="Live Map">
+                        <img id="activeMapImage" src="http://176.57.165.81:8080/feed/dedicated-server-stats-map.jpg?code=DIaoyx8jutkGtlDr&quality=60&size=512" alt="Live Map">
                         <div class="slot-badge" id="currentSlotLabel">MATRIX v1.78</div>
                     </div>
                     <div class="header-text">
@@ -146,6 +146,14 @@
                 <div><label style="color:#aaa; font-size:0.7rem; font-weight:900; display:block; margin-bottom:4px;">MAP SIZE</label><div id="detail-size">Loading...</div></div>
                 <div><label style="color:#aaa; font-size:0.7rem; font-weight:900; display:block; margin-bottom:4px;">DISCORD</label><div><a href="https://discord.gg/sMeYydGGyb" target="_blank" style="color:#ffd700; text-decoration:none;">Join Community</a></div></div>
                 <div style="grid-column: 1 / -1;"><label style="color:#aaa; font-size:0.7rem; font-weight:900; display:block; margin-bottom:4px;">TAGS</label><div style="font-size:0.8rem;">Farming, Grain, Easy Mode, Crossplay, PC, Console, Mods</div></div>
+                <div style="grid-column: 1 / -1; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 10px;">
+                    <label style="color:#aaa; font-size:0.7rem; font-weight:900; display:block; margin-bottom:4px;">LIVE XML FEEDS</label>
+                    <div style="display: flex; gap: 15px; font-size: 0.8rem;">
+                        <a href="http://176.57.165.81:8080/feed/dedicated-server-savegame.html?code=DIaoyx8jutkGtlDr&file=careerSavegame" target="_blank" style="color:#ffd700; text-decoration:none;">📄 CAREER SAVEGAME</a>
+                        <a href="http://176.57.165.81:8080/feed/dedicated-server-savegame.html?code=DIaoyx8jutkGtlDr&file=vehicles" target="_blank" style="color:#ffd700; text-decoration:none;">🚜 VEHICLES</a>
+                        <a href="http://176.57.165.81:8080/feed/dedicated-server-savegame.html?code=DIaoyx8jutkGtlDr&file=economy" target="_blank" style="color:#ffd700; text-decoration:none;">💰 ECONOMY</a>
+                    </div>
+                </div>
             </div>
         </section>
 
@@ -206,9 +214,18 @@
         }
 
         async function updateServerStats(sheetData = []) {
+            let xml = null;
+            const liveUrl = "http://176.57.165.81:8080/feed/dedicated-server-stats.xml?code=DIaoyx8jutkGtlDr";
+            const localUrl = `${REPO_ROOT}/dedicated_server/dedicated-server-stats.xml?v=${Date.now()}`;
+
             try {
                 const res = await fetch(`${REPO_ROOT}/dedicated_server/dedicated-server-stats.xml?v=${Date.now()}`);
                 if (!res.ok) throw new Error("Stats missing");
+                // 1. Try Live Feed (Client-Side)
+                const controller = new AbortController();
+                const timeoutId = setTimeout(() => controller.abort(), 2000); // 2s Timeout
+                const res = await fetch(liveUrl, { signal: controller.signal });
+                clearTimeout(timeoutId);
                 
                 // Update Last Sync Time from File Headers
                 const lastMod = res.headers.get('Last-Modified');
@@ -217,12 +234,38 @@
                     const timeStr = date.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
                     document.getElementById('lastSyncDisplay').textContent = `Synced: ${timeStr}`;
                 }
+                if (res.ok) {
+                    xml = new DOMParser().parseFromString(await res.text(), "text/xml");
+                    document.getElementById('lastSyncDisplay').textContent = "LIVE FEED: ONLINE";
+                    document.getElementById('lastSyncDisplay').style.color = "#22c55e"; // Green
+                }
+            } catch(e) {
+                console.log("Live feed unreachable (CORS/Mixed Content). Falling back to repo.");
+            }
 
                 const xml = new DOMParser().parseFromString(await res.text(), "text/xml");
+            if (!xml) {
+                // 2. Fallback to Repository (Synced every 15m)
+                try {
+                    const res = await fetch(localUrl);
+                    if (res.ok) {
+                        xml = new DOMParser().parseFromString(await res.text(), "text/xml");
+                        
+                        const lastMod = res.headers.get('Last-Modified');
+                        if(lastMod) {
+                            const timeStr = new Date(lastMod).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+                            document.getElementById('lastSyncDisplay').textContent = `Repo Sync: ${timeStr}`;
+                            document.getElementById('lastSyncDisplay').style.color = "#00d4ff"; // Blue
+                        }
+                    }
+                } catch(e) { console.warn("All data sources failed", e); }
+            }
+
+            if (xml) {
                 const server = xml.getElementsByTagName("Server")[0];
 
                 // Refresh Map Image
-                document.getElementById('activeMapImage').src = `${REPO_ROOT}/dedicated_server/map.jpg?v=${Date.now()}`;
+                document.getElementById('activeMapImage').src = `http://176.57.165.81:8080/feed/dedicated-server-stats-map.jpg?code=DIaoyx8jutkGtlDr&quality=60&size=512&v=${Date.now()}`;
                 
                 document.getElementById('serverNameDisplay').textContent = server.getAttribute("name");
                 document.getElementById('mapDisplay').textContent = `Map: ${server.getAttribute("mapName")} (v${server.getAttribute("version")})`;
@@ -488,66 +531,42 @@
             const container = document.getElementById('modsLog');
             
             container.innerHTML = mods.map(m => {
-                const name = m.textContent.trim();
+                const xmlName = m.textContent.trim().toLowerCase();
                 const author = m.getAttribute("author");
                 const version = m.getAttribute("version");
                 
-                // Find matching row in sheet
+                // Find the match in the sheet
                 const sheetMod = sheetRows.find(row => {
                     const values = Object.values(row);
-                    // Layout: 0:Name, 3:Filename. Match either against XML name.
-                    const sName = (values[0] || '').trim().toLowerCase();
-                    const sFile = (values[3] || '').trim().toLowerCase();
-                    const xmlName = name.toLowerCase();
+                    const sName = (values[0] || '').trim().toLowerCase(); 
+                    const sFile = (values[3] || '').trim().toLowerCase(); 
                     return sName === xmlName || sFile === xmlName;
                 });
 
-                let img = '';
-                let downloadUrl = '';
-                let fileInfo = '';
-
+                let imgUrl = '';
                 if (sheetMod) {
                     const values = Object.values(sheetMod);
-                    // Layout: 3:Filename, 4:Size, 5:URL, 6:Image
-                    const fName = values[3];
-                    const fSize = values[4];
-                    downloadUrl = values[5] || '';
-                    img = values[6] || '';
+                    // G is index 6
+                    imgUrl = values[6] || ''; 
                     
-                    if (fName || fSize) {
-                        fileInfo = `<div style="font-size:0.65rem; color:#888; margin-top:2px; word-break:break-all;">${fName || ''} ${fSize ? `(${fSize})` : ''}</div>`;
-                    }
-                    
-                    if (img && img.toLowerCase().startsWith('http')) {
-                        img = img.replace(/^http:\/\//i, 'https://');
+                    // Fix insecure links on the fly
+                    if (imgUrl.startsWith('http:')) {
+                        imgUrl = imgUrl.replace('http:', 'https:');
                     }
                 }
 
-                const imgHtml = img ? `<div style="width:100%; height:120px; background:url('${img}') center/cover no-repeat; border-radius:4px; margin-bottom:8px;"></div>` : '';
-                const cardStyle = downloadUrl ? 
-                    `background:rgba(255,255,255,0.05); padding:8px; border-radius:4px; border: 1px solid rgba(255,255,255,0.1); transition: all 0.2s ease; cursor: pointer;` :
-                    `background:rgba(255,255,255,0.05); padding:8px; border-radius:4px; border-left: 3px solid #ffd700;`;
+                // Use a placeholder if imgUrl is empty so you can see the card structure
+                const imageHtml = imgUrl ? 
+                    `<img src="${imgUrl}" style="width:100%; height:120px; object-fit:cover; border-radius:4px; margin-bottom:8px;" onerror="this.src='https://placehold.co/250x120/222/ffd700?text=IMAGE+ERROR'">` :
+                    `<div style="width:100%; height:120px; background:rgba(255,255,255,0.05); border-radius:4px; margin-bottom:8px; display:flex; align-items:center; justify-content:center; color:#444;">NO IMAGE</div>`;
 
-                const content = `
-                    ${imgHtml}
-                    <div style="font-weight:bold; color:#fff; font-size:0.8rem;">${name}</div>
-                    <div style="font-size:0.7rem; color:#aaa;">v${version} | ${author}</div>
-                    ${fileInfo}
-                    ${downloadUrl ? '<div style="margin-top:8px; font-size:0.7rem; color:#ffd700; text-align:right; font-weight:bold;">⬇ DOWNLOAD</div>' : ''}
-                `;
-
-                if (downloadUrl) {
-                    return `<a href="${downloadUrl}" target="_blank" style="text-decoration:none; display:block;">
-                        <div style="${cardStyle}" onmouseover="this.style.borderColor='#ffd700'; this.style.background='rgba(255,215,0,0.1)'" onmouseout="this.style.borderColor='rgba(255,255,255,0.1)'; this.style.background='rgba(255,255,255,0.05)'">
-                            ${content}
-                        </div>
-                    </a>`;
-                }
-
-                return `<div style="${cardStyle}">
-                    ${content}
-                </div>`;
-            }).join('') || '<div style="padding:10px; color:#aaa;">No Active Mods Detected</div>';
+                return `
+                    <div style="background:rgba(255,255,255,0.05); padding:10px; border-radius:6px; border:1px solid rgba(255,215,0,0.1);">
+                        ${imageHtml}
+                        <div style="font-weight:bold; color:#fff; font-size:0.8rem; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${m.textContent.trim()}</div>
+                        <div style="font-size:0.7rem; color:#ffd700;">v${version}</div>
+                    </div>`;
+            }).join('');
         }
 
         // --- TROPHY SYNC ---

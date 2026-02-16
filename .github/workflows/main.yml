@@ -31,6 +31,7 @@ jobs:
           mirror --verbose --parallel=2 /savegame6 ./saved-game-6"
           wget -O dedicated_server/dedicated-server-stats.xml "http://${{ secrets.FTP_SERVER }}:8080/feed/dedicated-server-stats.xml?code=DIaoyx8jutkGtlDr"
           wget -O dedicated_server/map.jpg "http://${{ secrets.FTP_SERVER }}:8080/feed/dedicated-server-stats-map.jpg?code=DIaoyx8jutkGtlDr&quality=60&size=512"
+          wget -O dedicated_server/dedicated-server-savegame.html "http://${{ secrets.FTP_SERVER }}:8080/feed/dedicated-server-savegame.html?code=DIaoyx8jutkGtlDr&file=careerSavegame"
 
       - name:  Commit & Push Live Data
         run: |
