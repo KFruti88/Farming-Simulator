@@ -51,6 +51,11 @@
         .stat-line { display: flex; justify-content: space-between; margin-bottom: 4px; font-weight: 600; }
         .production-lines { margin-bottom: 15px; font-size: 0.75rem; display: flex; flex-direction: column; gap: 5px; }
         .bar-info { display: flex; justify-content: space-between; font-size: 0.7rem; font-weight: 700; margin-bottom: 4px; }
+        .animal-card.warning { border-color: #ff4d4d; box-shadow: inset 0 0 10px rgba(255, 77, 77, 0.1); }
+        .bee-card { border-color: #ffd700; background: rgba(255, 215, 0, 0.05); }
+        .type-tag { color: #ffd700; letter-spacing: 1px; }
+        .age-tag { color: #888; }
+        .p-line { margin-bottom: 2px; }
     </style>
 </head>
 <body>
@@ -130,15 +135,36 @@
             <div id="fleetLog" class="telemetry-grid">Initializing Truth Sync...</div>
         </section>
 
+        <section class="glass-panel card server-info-section" style="margin-top: 20px;">
+            <div class="card-tag">ℹ️ SERVER DETAILS</div>
+            <div class="server-details-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; padding: 15px; color: #fff;">
+                <div><label style="color:#aaa; font-size:0.7rem; font-weight:900; display:block; margin-bottom:4px;">SERVER NAME</label><div id="detail-name" style="font-weight:bold;">Loading...</div></div>
+                <div><label style="color:#aaa; font-size:0.7rem; font-weight:900; display:block; margin-bottom:4px;">GAME</label><div id="detail-game">Farming Simulator 22</div></div>
+                <div><label style="color:#aaa; font-size:0.7rem; font-weight:900; display:block; margin-bottom:4px;">LOCATION</label><div>Gainesville, FL, United States</div></div>
+                <div><label style="color:#aaa; font-size:0.7rem; font-weight:900; display:block; margin-bottom:4px;">MAP</label><div id="detail-map">Loading...</div></div>
+                <div><label style="color:#aaa; font-size:0.7rem; font-weight:900; display:block; margin-bottom:4px;">MAP SIZE</label><div id="detail-size">Loading...</div></div>
+                <div><label style="color:#aaa; font-size:0.7rem; font-weight:900; display:block; margin-bottom:4px;">DISCORD</label><div><a href="https://discord.gg/sMeYydGGyb" target="_blank" style="color:#ffd700; text-decoration:none;">Join Community</a></div></div>
+                <div style="grid-column: 1 / -1;"><label style="color:#aaa; font-size:0.7rem; font-weight:900; display:block; margin-bottom:4px;">TAGS</label><div style="font-size:0.8rem;">Farming, Grain, Easy Mode, Crossplay, PC, Console, Mods</div></div>
+            </div>
+        </section>
+
         <section class="glass-panel card mods-section" style="margin-top: 20px;">
             <div class="card-tag">📦 ACTIVE MODS & DLC LIBRARY</div>
             <div id="modsLog" class="telemetry-grid" style="max-height: 300px; overflow-y: auto; display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 10px;">Scanning Library...</div>
         </section>
 
-        <section class="glass-panel card trophy-section" style="margin-top: 20px; padding: 0; overflow: hidden;">
-    <div class="card-tag" style="margin: 15px;">🏆 PSN UPLINK: RAYMYSTRO PROGRESSION</div>
-    <iframe src="https://kfruti88.github.io/Farming-Simulator/ray_trophies.html" class="trophy-matrix-frame"></iframe>
-</section>
+        <section class="glass-panel card trophy-section" style="margin-top: 20px;">
+            <div style="display: flex; gap: 15px; flex-wrap: wrap;">
+                <div style="flex: 1; min-width: 300px;">
+                    <div class="card-tag">🏆 PSN: RAYMYSTRO (OneLIVIDMAN)</div>
+                    <div id="trophyLogRay" class="telemetry-grid" style="max-height: 300px; overflow-y: auto; padding: 10px;">Initializing...</div>
+                </div>
+                <div style="flex: 1; min-width: 300px;">
+                    <div class="card-tag">🏆 PSN: KEVIN (Werewolf3788)</div>
+                    <div id="trophyLogKevin" class="telemetry-grid" style="max-height: 300px; overflow-y: auto; padding: 10px;">Initializing...</div>
+                </div>
+            </div>
+        </section>
 
     </div>
 
@@ -170,6 +196,9 @@
             
             // 3. Sync Fleet (Custom implementation for index.html)
             syncFleet(path);
+
+            // 4. Sync Trophies
+            syncTrophies();
         }
 
         async function updateServerStats() {
@@ -192,9 +221,21 @@
                 const used = slots.getAttribute("numUsed");
                 document.getElementById('playerLog').textContent = `${used} / ${slots.getAttribute("capacity")} ONLINE`;
 
+                // Update Server Details Module
+                document.getElementById('detail-name').textContent = server.getAttribute("name");
+                document.getElementById('detail-game').textContent = server.getAttribute("game");
+                document.getElementById('detail-map').textContent = server.getAttribute("mapName");
+                const size = parseInt(server.getAttribute("mapSize"));
+                const sizeLabel = size === 2048 ? "Standard (1x)" : (size === 4096 ? "4x Map" : (size === 8192 ? "16x Map" : `${size}m`));
+                document.getElementById('detail-size').textContent = sizeLabel;
+
                 // Sync Mods
                 syncMods(xml);
-            } catch(e) { console.warn("Server Stats Sync Failed", e); }
+            } catch(e) { 
+                console.warn("Server Stats Sync Failed", e);
+                document.getElementById('serverNameDisplay').textContent = "OFFLINE / NO DATA";
+                document.getElementById('modsLog').innerHTML = "<div style='padding:10px; color:#aaa;'>Waiting for server data...</div>";
+            }
         }
 
         async function updateFinancials(path) {
@@ -210,7 +251,11 @@
                 
                 document.getElementById('kevinFinance').textContent = fmt(f1?.getAttribute("money"));
                 document.getElementById('rayFinance').textContent = fmt(f2?.getAttribute("money"));
-            } catch(e) { console.warn("Financial Sync Failed", e); }
+            } catch(e) { 
+                console.warn("Financial Sync Failed", e); 
+                document.getElementById('kevinFinance').textContent = "---";
+                document.getElementById('rayFinance').textContent = "---";
+            }
         }
 
         // --- MODULE 1: FIELDS ---
@@ -223,48 +268,103 @@
                 const fieldsXml = new DOMParser().parseFromString(await fieldsRes.text(), "text/xml");
                 const fieldData = Array.from(fieldsXml.getElementsByTagName("field"));
                 
-                document.getElementById('fieldCount').textContent = `${fieldData.length} ACTIVE ZONES`;
-                document.getElementById('fieldMatrixContainer').innerHTML = fieldData.map(f => {
                 const activeFields = fieldData.filter(f => (f.getAttribute("fruitType") || "FALLOW").toUpperCase() !== "FALLOW");
 
                 document.getElementById('fieldCount').textContent = `${activeFields.length} ACTIVE ZONES`;
                 document.getElementById('fieldMatrixContainer').innerHTML = activeFields.map(f => {
-                    const id = f.getAttribute("id");
+                    const id = f.getAttribute("id") || f.getAttribute("fieldId");
                     const crop = (f.getAttribute("fruitType") || "FALLOW").toUpperCase();
                     const stage = parseInt(f.getAttribute("growthState") || 0);
                     const fert = (parseFloat(f.getAttribute("fertilizedLevel") || 0) * 100).toFixed(0);
+                    const weeds = (parseFloat(f.getAttribute("weedState") || 0) * 100).toFixed(0);
+                    const stones = (parseFloat(f.getAttribute("stoneLevel") || 0) * 100).toFixed(0);
+                    
                     const needsLime = f.getAttribute("needsLime") === "true";
+                    const needsPlow = f.getAttribute("needsPlowing") === "true";
+                    const isRolled = f.getAttribute("isRolled") === "true";
+                    const isMulched = f.getAttribute("isMulched") === "true";
+                    
+                    const ownerId = f.getAttribute("owner");
+                    const ownerName = ownerId === "2" ? "RAY" : (ownerId === "1" ? "KEVIN" : "VACANT");
                     const isReady = stage >= 6; 
                     
                     return `<div class="field-card ${isReady ? 'harvest-ready' : ''}">
-                        <div class="field-top"><span class="field-id">ZONE ${id}</span></div>
-                        <div class="field-main-info"><div class="field-crop">${crop}</div></div>
+                        <div class="field-top">
+                            <span class="field-id">ZONE ${id}</span>
+                            <span class="owner-tag ${ownerName === 'RAY' ? 'gold' : 'green'}">${ownerName}</span>
+                        </div>
+                        <div class="field-main-info">
+                            <div class="field-crop">${crop}</div>
+                            <div class="field-status" style="color:${isReady ? '#22c55e' : '#999'}">${isReady ? '● READY TO HARVEST' : '● GROWTH STAGE: ' + stage}</div>
+                        </div>
                         <div class="telemetry-grid">
                             <div class="stat-unit"><label>Fert: ${fert}%</label><div class="bar-bg"><div class="bar-fill" style="width:${fert}%; background:${fert>=100?'#22c55e':'#ffd700'}"></div></div></div>
+                            <div class="stat-unit"><label>Weeds: ${weeds}%</label><div class="bar-bg"><div class="bar-fill" style="width:${weeds}%; background:#ff4d4d"></div></div></div>
+                            <div class="stat-unit"><label>Stones: ${stones}%</label><div class="bar-bg"><div class="bar-fill" style="width:${stones}%; background:#888"></div></div></div>
                         </div>
-                        <div class="requirement-tags">${needsLime ? '<span class="req-badge lime">LIME</span>' : ''}</div>
+                        <div class="requirement-tags">
+                            ${needsLime ? '<span class="req-badge lime">LIME</span>' : ''}
+                            ${needsPlow ? '<span class="req-badge plow">PLOW</span>' : ''}
+                            ${!isRolled && stage === 1 ? '<span class="req-badge roll">ROLL</span>' : ''}
+                            ${isMulched ? '<span class="req-badge mulched">MULCHED</span>' : ''}
+                        </div>
                     </div>`;
                 }).join('');
-            } catch (e) { console.warn("Field Sync Failed"); }
+            } catch (e) { 
+                console.warn("Field Sync Failed"); 
+                document.getElementById('fieldCount').textContent = "NO DATA";
+                document.getElementById('fieldMatrixContainer').innerHTML = "<div style='padding:15px; color:#aaa;'>Waiting for field data...</div>";
+            }
         }
 
         // --- MODULE 2: ANIMALS ---
         async function syncAnimalBlade(gitPath) {
             try {
-                const res = await fetch(`${gitPath}/animals.xml?v=${Date.now()}`);
-                const xml = new DOMParser().parseFromString(await res.text(), "text/xml");
+                const [animRes, placeRes] = await Promise.all([
+                    fetch(`${gitPath}/animals.xml?v=${Date.now()}`),
+                    fetch(`${gitPath}/placeables.xml?v=${Date.now()}`)
+                ]);
+                const xml = new DOMParser().parseFromString(await animRes.text(), "text/xml");
+                const placeXml = new DOMParser().parseFromString(await placeRes.text(), "text/xml");
+                
                 const animals = Array.from(xml.getElementsByTagName("animal"));
+                const placeables = Array.from(placeXml.getElementsByTagName("placeable"));
                 
                 document.getElementById('animalCount').textContent = `${animals.length} ACTIVE HEAD`;
-                document.getElementById('animalMatrixContainer').innerHTML = animals.map(a => {
+                
+                let htmlContent = animals.map(a => {
                     const type = a.getAttribute("type").split('_').pop().toUpperCase();
                     const health = (parseFloat(a.getAttribute("health") || 0) * 100).toFixed(0);
-                    return `<div class="animal-card">
-                        <div class="card-top"><span class="type-tag">${type}</span></div>
-                        <div class="telemetry-bars"><label>Health: ${health}%</label><div class="bar-bg"><div class="bar-fill" style="width:${health}%; background:#22c55e"></div></div></div>
+                    const age = a.getAttribute("age") || 0;
+                    const food = parseFloat(a.getAttribute("foodLevel") || 0).toFixed(0);
+                    const repro = (parseFloat(a.getAttribute("reproductionWeight") || 0) * 100).toFixed(0);
+                    const milk = parseFloat(a.getAttribute("milkLevel") || 0).toFixed(0);
+                    
+                    return `<div class="animal-card ${health < 50 ? 'warning' : ''}">
+                        <div class="card-top"><span class="type-tag">${type}</span><span class="age-tag">${age}M</span></div>
+                        <div class="telemetry-bars">
+                            <label>Health: ${health}%</label><div class="bar-bg"><div class="bar-fill" style="width:${health}%; background:${health<50?'#ff4d4d':'#22c55e'}"></div></div>
+                            <label>Repro: ${repro}%</label><div class="bar-bg"><div class="bar-fill" style="width:${repro}%; background:#ffd700"></div></div>
+                            <label>Food: ${food}L</label><div class="bar-bg"><div class="bar-fill" style="width:${Math.min(100, (food/5000)*100)}%; background:#00d4ff"></div></div>
+                        </div>
+                        ${milk > 0 ? `<div class="production-stats"><div class="stat-line">🥛 MILK: <strong>${milk}L</strong></div></div>` : ''}
                     </div>`;
                 }).join('');
-            } catch (e) { console.warn("Animal Sync Failed"); }
+
+                const beeHives = placeables.filter(p => p.getAttribute("filename")?.includes("beeHive"));
+                if(beeHives.length > 0) {
+                    htmlContent += `<div class="animal-card bee-card">
+                        <div class="card-top"><span class="type-tag">BEES</span><span class="age-tag">AUTO</span></div>
+                        <div class="production-stats"><div class="stat-line">🍯 HIVES: <strong>${beeHives.length}</strong></div></div>
+                    </div>`;
+                }
+                
+                document.getElementById('animalMatrixContainer').innerHTML = htmlContent;
+            } catch (e) { 
+                console.warn("Animal Sync Failed"); 
+                document.getElementById('animalCount').textContent = "NO DATA";
+                document.getElementById('animalMatrixContainer').innerHTML = "<div style='padding:15px; color:#aaa;'>Waiting for animal data...</div>";
+            }
         }
 
         // --- MODULE 3: FACTORIES ---
@@ -276,10 +376,36 @@
                 
                 document.getElementById('factoryCount').textContent = `${factories.length} FACILITIES`;
                 document.getElementById('factoryMatrixContainer').innerHTML = factories.map(f => {
-                    const name = f.parentElement.getAttribute("filename").split('/').pop().replace('.xml','').toUpperCase();
-                    return `<div class="factory-card"><div class="card-top"><span class="factory-id">${name}</span></div></div>`;
+                    const parent = f.parentElement;
+                    const name = parent.getAttribute("filename").split('/').pop().replace('.xml','').toUpperCase();
+                    const ownerId = parent.getAttribute("farmId");
+                    const ownerName = ownerId === "2" ? "RAY" : "KEVIN";
+                    
+                    const productions = Array.from(f.getElementsByTagName("production"));
+                    const storage = Array.from(f.getElementsByTagName("storage")[0]?.children || []);
+
+                    return `<div class="factory-card">
+                        <div class="card-top"><span class="factory-id">${name}</span><span class="owner-tag ${ownerName === 'RAY' ? 'gold' : 'green'}">${ownerName}</span></div>
+                        <div class="production-lines">
+                            ${productions.map(p => {
+                                const pStatus = p.getAttribute("isEnabled") === "true" ? "ACTIVE" : "HALTED";
+                                return `<div class="p-line">⚙️ ${p.getAttribute("id")}: <strong style="color:${pStatus==='ACTIVE'?'#22c55e':'#ff4d4d'}">${pStatus}</strong></div>`;
+                            }).join('')}
+                        </div>
+                        <div class="storage-matrix">
+                            ${storage.map(s => {
+                                const amount = parseFloat(s.textContent || 0).toFixed(0);
+                                const pct = Math.min(100, (amount / 50000 * 100)).toFixed(0); // Approx capacity
+                                return `<div class="stat-unit"><div class="bar-info"><span>${s.tagName.toUpperCase()}</span><span>${amount}L</span></div><div class="bar-bg"><div class="bar-fill" style="width:${pct}%; background:#ffd700"></div></div></div>`;
+                            }).join('')}
+                        </div>
+                    </div>`;
                 }).join('');
-            } catch (e) { console.warn("Factory Sync Failed"); }
+            } catch (e) { 
+                console.warn("Factory Sync Failed"); 
+                document.getElementById('factoryCount').textContent = "NO DATA";
+                document.getElementById('factoryMatrixContainer').innerHTML = "<div style='padding:15px; color:#aaa;'>Waiting for production data...</div>";
+            }
         }
 
         // --- FLEET SYNC ---
@@ -292,12 +418,19 @@
                 document.getElementById('fleetLog').innerHTML = vehicles.map(v => {
                     const name = v.getAttribute("filename").split('/').pop().replace('.xml','').toUpperCase();
                     const farm = v.getAttribute("farmId") === "1" ? "KEVIN" : "RAY";
-                    const fuel = parseFloat(v.getElementsByTagName("fillUnit")[0]?.getAttribute("fillLevel") || 0).toFixed(0);
+                    const fuelLiters = parseFloat(v.getElementsByTagName("fillUnit")[0]?.getAttribute("fillLevel") || 0);
+                    const fuelGal = (fuelLiters * 0.264).toFixed(1); // US Gallons
+                    const damage = (parseFloat(v.getElementsByTagName("wearable")[0]?.getAttribute("damage") || 0) * 100).toFixed(0);
+                    
                     return `<div style="display:flex; justify-content:space-between; border-bottom:1px solid #333; padding:5px;">
-                        <span>${name}</span><span style="color:${farm==='KEVIN'?'#7cfc00':'#ffd700'}">${farm}</span><span>${fuel}L Fuel</span>
+                        <span>${name}</span><span style="color:${farm==='KEVIN'?'#7cfc00':'#ffd700'}">${farm}</span>
+                        <span>${fuelGal} gal</span><span style="color:${damage>10?'#ff4d4d':'#22c55e'}">${damage}% Dmg</span>
                     </div>`;
                 }).join('');
-            } catch(e) { console.warn("Fleet Sync Failed"); }
+            } catch(e) { 
+                console.warn("Fleet Sync Failed"); 
+                document.getElementById('fleetLog').innerHTML = "<div style='padding:10px; color:#aaa;'>Waiting for vehicle data...</div>";
+            }
         }
 
         // --- MODS SYNC ---
@@ -314,6 +447,41 @@
                     <div style="font-size:0.7rem; color:#aaa;">v${version} | ${author}</div>
                 </div>`;
             }).join('') || '<div style="padding:10px; color:#aaa;">No Active Mods Detected</div>';
+        }
+
+        // --- TROPHY SYNC ---
+        async function syncTrophies() {
+            await fetchTrophies("OneLIVIDMAN", "trophyLogRay");
+            await fetchTrophies("Werewolf3788", "trophyLogKevin");
+        }
+
+        async function fetchTrophies(username, elementId) {
+            try {
+                const feedUrl = `https://psntrophyleaders.com/user/view/${username}/rss`;
+                const res = await fetch(`https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(feedUrl)}`);
+                const data = await res.json();
+                
+                if(data.status === 'ok') {
+                    // Filter for Farming Simulator related trophies
+                    const fsTrophies = data.items.filter(item => 
+                        (item.description && item.description.includes("Farming Simulator")) || 
+                        (item.title && item.title.includes("Farming Simulator"))
+                    );
+
+                    document.getElementById(elementId).innerHTML = fsTrophies.map(item => {
+                        const date = new Date(item.pubDate).toLocaleDateString();
+                        return `<div style="display:flex; justify-content:space-between; border-bottom:1px solid rgba(255,255,255,0.1); padding:8px;">
+                            <span style="color:#fff; font-size:0.8rem;">${item.title}</span>
+                            <span style="color:#ffd700; font-size:0.7rem;">${date}</span>
+                        </div>`;
+                    }).join('') || '<div style="padding:10px; color:#aaa;">No Recent Farming Simulator Trophies Found</div>';
+                } else {
+                    document.getElementById(elementId).innerHTML = '<div style="padding:10px; color:#ff4d4d;">Uplink Failed (Profile Private or Not Found)</div>';
+                }
+            } catch(e) { 
+                console.warn(`Trophy Sync Failed for ${username}`);
+                document.getElementById(elementId).innerHTML = '<div style="padding:10px; color:#ff4d4d;">Connection Error</div>';
+            }
         }
     </script>
 </body>
