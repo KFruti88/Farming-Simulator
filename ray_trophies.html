@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ray's FS22 Trophies</title>
+    <style>
+        :root {
+            --glass: rgba(255, 255, 255, 0.1);
+            --gold: #ffd700;
+            --text: #ffffff;
+        }
+
+        body {
+            background: #0f0f0f;
+            font-family: 'Inter', sans-serif;
+            color: var(--text);
+            margin: 0;
+            display: flex;
+            justify-content: center;
+        }
+
+        #trophy-container {
+            width: 90%;
+            margin: 20px auto;
+            background: var(--glass);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .trophy-header {
+            font-size: 1.2em;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--gold);
+            margin-bottom: 15px;
+            border-bottom: 2px solid var(--gold);
+            padding-bottom: 5px;
+        }
+
+        .trophy-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 15px;
+        }
+
+        .trophy-item {
+            background: rgba(0, 0, 0, 0.4);
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #555;
+            transition: transform 0.2s;
+        }
+
+        .trophy-item.unearned {
+            border-left: 4px solid #ff4500;
+            background: rgba(255, 69, 0, 0.05);
+        }
+
+        .trophy-item.earned {
+            border-left: 4px solid #00ff00;
+            opacity: 0.7;
+        }
+
+        .trophy-title {
+            font-weight: 700;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .trophy-status {
+            font-size: 0.8em;
+            text-transform: uppercase;
+            font-weight: 900;
+        }
+
+        .unearned .trophy-status { color: #ff4500; }
+        .earned .trophy-status { color: #00ff00; }
+    </style>
+</head>
+<body>
+
+<div id="trophy-container">
+    <div class="trophy-header">🏆 Ray's FS22 Trophy Intelligence</div>
+    <div id="trophyList" class="trophy-list">Scanning PSN Network...</div>
+</div>
+
+<script>
+    const rssUrl = 'https://psntrophyleaders.com/user/view/OneLIVIDMAN/rss';
+    // Using an RSS-to-JSON proxy to bypass CORS
+    const proxy = 'https://api.rss2json.com/v1/api.json?rss_url=';
+
+    async function fetchTrophies() {
+        try {
+            const response = await fetch(proxy + encodeURIComponent(rssUrl));
+            const data = await response.json();
+            
+            if (data.status === 'ok') {
+                // Filter for Farming Simulator 22 and sort (Unearned first)
+                let trophies = data.items.filter(item => item.title.includes('Farming Simulator 22'));
+                
+                // Logic: PSN RSS usually only shows earned. 
+                // To show "unearned" at the top, we identify them by checking the description for a date.
+                // If the feed doesn't provide unearned, we list the most recent progress.
+                
+                trophies.sort((a, b) => {
+                    const aEarned = a.description.includes('Earned on');
+                    const bEarned = b.description.includes('Earned on');
+                    return aEarned - bEarned; // false (0) comes before true (1)
+                });
+
+                displayTrophies(trophies);
+            }
+        } catch (error) {
+            document.getElementById('trophyList').innerHTML = "Error syncing trophy telemetry.";
+        }
+    }
+
+    function displayTrophies(trophies) {
+        const container = document.getElementById('trophyList');
+        container.innerHTML = '';
+
+        trophies.forEach(t => {
+            const isEarned = t.description.includes('Earned on');
+            const div = document.createElement('div');
+            div.className = `trophy-item ${isEarned ? 'earned' : 'unearned'}`;
+            
+            div.innerHTML = `
+                <span class="trophy-title">${t.title.replace('Farming Simulator 22 - ', '')}</span>
+                <span class="trophy-status">${isEarned ? 'Data Synced: Earned' : 'PENDING ACQUISITION'}</span>
+            `;
+            container.appendChild(div);
+        });
+    }
+
+    fetchTrophies();
+</script>
+
+</body>
+</html>
