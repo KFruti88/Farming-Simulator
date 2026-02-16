@@ -522,9 +522,18 @@
                     const findKey = (k) => keys.find(key => key.toLowerCase().includes(k));
                     
                     const name = row[findKey('name') || findKey('mod') || keys[0]] || 'Unknown';
-                    let img = row[findKey('image') || findKey('img') || findKey('pic')] || '';
+                    let img = row[findKey('image') || findKey('img') || findKey('pic') || findKey('screenshot')] || '';
                     const desc = row[findKey('desc') || findKey('author') || findKey('version') || keys[1]] || '';
                     const downloadUrl = row[findKey('url') || findKey('link') || findKey('download') || findKey('href')] || '';
+                    
+                    // Fallback: Scan all columns for image URL if not found by header
+                    if (!img || !img.startsWith('http')) {
+                        const potentialImg = Object.values(row).find(val => 
+                            val && typeof val === 'string' && val.startsWith('http') && 
+                            /\.(jpg|jpeg|png|webp|gif)$/i.test(val)
+                        );
+                        if (potentialImg) img = potentialImg;
+                    }
                     
                     // Upgrade HTTP to HTTPS to prevent mixed content blocking and handle case sensitivity
                     if (img && img.toLowerCase().startsWith('http')) {
