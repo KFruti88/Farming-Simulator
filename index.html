@@ -532,16 +532,19 @@
             
             container.innerHTML = mods.map(m => {
                 const name = m.textContent.trim();
-                const xmlName = name.toLowerCase();
+                const internalName = m.getAttribute("name") || "";
                 const author = m.getAttribute("author");
                 const version = m.getAttribute("version");
                 
+                const nName = name.toLowerCase();
+                const nInternal = internalName.toLowerCase();
+
                 // Find matching row in your Google Sheet (Column G is index 6)
                 const sheetMod = sheetRows.find(row => {
                     const values = Object.values(row);
                     const sName = (values[0] || '').trim().toLowerCase(); // Mod Name (Col A)
                     const sFile = (values[3] || '').trim().toLowerCase(); // Filename (Col D)
-                    return sName === xmlName || sFile === xmlName;
+                    return (sName === nName || sName === nInternal) || (sFile === nName || sFile === nInternal);
                 });
 
                 let img = '';
