@@ -65,7 +65,7 @@
             <div class="header-content">
                 <div class="map-branding">
                     <div class="image-container">
-                        <img id="activeMapImage" src="http://176.57.165.81:8080/feed/dedicated-server-stats-map.jpg?code=DIaoyx8jutkGtlDr" alt="Live Map">
+                        <img id="activeMapImage" src="dedicated_server/map.jpg" alt="Live Map">
                         <div class="slot-badge" id="currentSlotLabel">MATRIX v1.78</div>
                     </div>
                     <div class="header-text">
@@ -211,6 +211,9 @@
                 const res = await fetch(`${REPO_ROOT}/dedicated_server/dedicated-server-stats.xml?v=${Date.now()}`);
                 const xml = new DOMParser().parseFromString(await res.text(), "text/xml");
                 const server = xml.getElementsByTagName("Server")[0];
+
+                // Refresh Map Image
+                document.getElementById('activeMapImage').src = `${REPO_ROOT}/dedicated_server/map.jpg?v=${Date.now()}`;
                 
                 document.getElementById('serverNameDisplay').textContent = server.getAttribute("name");
                 document.getElementById('mapDisplay').textContent = `Map: ${server.getAttribute("mapName")} (v${server.getAttribute("version")})`;

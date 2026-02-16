@@ -29,6 +29,7 @@ jobs:
           mirror --verbose --parallel=2 /savegame4 ./saved-game-4; \
           mirror --verbose --parallel=2 /savegame5 ./saved-game-5; \
           get dedicated-server-stats.xml -o dedicated_server/dedicated-server-stats.xml"
+          wget -O dedicated_server/map.jpg "http://176.57.165.81:8080/feed/dedicated-server-stats-map.jpg?code=DIaoyx8jutkGtlDr"
 
       - name:  Commit & Push Live Data
         run: |
