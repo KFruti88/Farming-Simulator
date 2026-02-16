@@ -130,6 +130,11 @@
             <div id="fleetLog" class="telemetry-grid">Initializing Truth Sync...</div>
         </section>
 
+        <section class="glass-panel card mods-section" style="margin-top: 20px;">
+            <div class="card-tag">📦 ACTIVE MODS & DLC LIBRARY</div>
+            <div id="modsLog" class="telemetry-grid" style="max-height: 300px; overflow-y: auto; display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 10px;">Scanning Library...</div>
+        </section>
+
         <section class="glass-panel card trophy-section" style="margin-top: 20px; padding: 0; overflow: hidden;">
     <div class="card-tag" style="margin: 15px;">🏆 PSN UPLINK: RAYMYSTRO PROGRESSION</div>
     <iframe src="https://kfruti88.github.io/Farming-Simulator/ray_trophies.html" class="trophy-matrix-frame"></iframe>
@@ -175,6 +180,7 @@
                 
                 document.getElementById('serverNameDisplay').textContent = server.getAttribute("name");
                 document.getElementById('mapDisplay').textContent = "Map: " + server.getAttribute("mapName");
+                document.getElementById('mapDisplay').textContent = `Map: ${server.getAttribute("mapName")} (v${server.getAttribute("version")})`;
                 
                 // Format Time
                 const rawTime = parseInt(server.getAttribute("dayTime"));
@@ -186,6 +192,9 @@
                 const slots = xml.getElementsByTagName("Slots")[0];
                 const used = slots.getAttribute("numUsed");
                 document.getElementById('playerLog').textContent = `${used} / ${slots.getAttribute("capacity")} ONLINE`;
+
+                // Sync Mods
+                syncMods(xml);
             } catch(e) { console.warn("Server Stats Sync Failed", e); }
         }
 
@@ -286,6 +295,22 @@
                     </div>`;
                 }).join('');
             } catch(e) { console.warn("Fleet Sync Failed"); }
+        }
+
+        // --- MODS SYNC ---
+        function syncMods(xml) {
+            const mods = Array.from(xml.getElementsByTagName("Mod"));
+            const container = document.getElementById('modsLog');
+            
+            container.innerHTML = mods.map(m => {
+                const name = m.textContent;
+                const author = m.getAttribute("author");
+                const version = m.getAttribute("version");
+                return `<div style="background:rgba(255,255,255,0.05); padding:8px; border-radius:4px; border-left: 3px solid #ffd700;">
+                    <div style="font-weight:bold; color:#fff; font-size:0.8rem;">${name}</div>
+                    <div style="font-size:0.7rem; color:#aaa;">v${version} | ${author}</div>
+                </div>`;
+            }).join('') || '<div style="padding:10px; color:#aaa;">No Active Mods Detected</div>';
         }
     </script>
 </body>
