@@ -152,8 +152,6 @@
         <section class="glass-panel card mods-section" style="margin-top: 20px;">
             <div class="card-tag">📦 ACTIVE MODS & DLC LIBRARY</div>
             <div id="modsLog" class="telemetry-grid" style="max-height: 300px; overflow-y: auto; display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 10px;">Scanning Library...</div>
-            <div class="card-tag" style="margin-top: 15px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 10px;">📚 CURATED MOD LIST (GOOGLE SHEET)</div>
-            <div id="sheetModsLog" class="telemetry-grid" style="max-height: 300px; overflow-y: auto; display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 10px;">Loading Sheet...</div>
         </section>
 
         <section class="glass-panel card trophy-section" style="margin-top: 20px;">
@@ -507,7 +505,6 @@
 
                 if (sheetMod) {
                     const keys = Object.keys(sheetMod);
-                    // Layout: 5:URL, 6:Image
                     // Layout: 3:Filename, 4:Size, 5:URL, 6:Image
                     const fName = sheetMod[keys[3]];
                     const fSize = sheetMod[keys[4]];
@@ -591,57 +588,9 @@
             try {
                 const res = await fetch(url);
                 const text = await res.text();
-                const rows = parseCSV(text);
-                
-                const container = document.getElementById('sheetModsLog');
-                if(rows.length === 0) {
-                    container.innerHTML = '<div style="padding:10px; color:#aaa;">No data found in sheet</div>';
-                    return [];
-                }
-
-                container.innerHTML = rows.map(row => {
-                    const keys = Object.keys(row);
-                    // Layout: 0:Name, 1:Version, 2:Author, 3:Filename, 4:Size, 5:URL, 6:Image
-                    
-                    const name = row[keys[0]] || 'Unknown';
-                    const version = row[keys[1]] || '';
-                    const author = row[keys[2]] || '';
-                    const downloadUrl = row[keys[5]] || '';
-                    let img = row[keys[6]] || '';
-                    
-                    // Upgrade HTTP to HTTPS to prevent mixed content blocking and handle case sensitivity
-                    if (img && img.toLowerCase().startsWith('http')) {
-                        img = img.replace(/^http:\/\//i, 'https://');
-                    }
-                    
-                    const imgHtml = (img && img.toLowerCase().startsWith('http')) ? 
-                        `<div style="width:100%; height:120px; background:url('${img}') center/cover no-repeat; border-radius:4px; margin-bottom:8px;"></div>` : '';
-                    
-                    const cardContent = `
-                        ${imgHtml}
-                        <div style="font-weight:900; color:#fff; font-size:0.85rem; margin-bottom:4px;">${name}</div>
-                        <div style="font-size:0.75rem; color:#aaa;">v${version} | ${author}</div>
-                    `;
-
-                    if (downloadUrl && downloadUrl.toLowerCase().startsWith('http')) {
-                        return `<a href="${downloadUrl}" target="_blank" style="text-decoration:none; display:block;">
-                            <div style="background:rgba(255,255,255,0.05); padding:10px; border-radius:6px; border: 1px solid rgba(255,255,255,0.1); transition: all 0.2s ease;" onmouseover="this.style.borderColor='#ffd700'; this.style.background='rgba(255,215,0,0.1)'" onmouseout="this.style.borderColor='rgba(255,255,255,0.1)'; this.style.background='rgba(255,255,255,0.05)'">
-                                ${cardContent}
-                                <div style="margin-top:8px; font-size:0.7rem; color:#ffd700; text-align:right; font-weight:bold;">⬇ DOWNLOAD</div>
-                            </div>
-                        </a>`;
-                    }
-
-                    return `<div style="background:rgba(255,255,255,0.05); padding:10px; border-radius:6px; border: 1px solid rgba(255,255,255,0.1);">
-                        ${cardContent}
-                    </div>`;
-                }).join('');
-                
-                return rows;
                 return parseCSV(text);
             } catch(e) { 
                 console.warn("Sheet Sync Failed", e);
-                document.getElementById('sheetModsLog').innerHTML = '<div style="padding:10px; color:#ff4d4d;">Failed to load sheet data</div>';
                 return [];
             }
         }
