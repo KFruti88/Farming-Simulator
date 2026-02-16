@@ -531,42 +531,70 @@
             const container = document.getElementById('modsLog');
             
             container.innerHTML = mods.map(m => {
-                const xmlName = m.textContent.trim().toLowerCase();
+                const name = m.textContent.trim();
+                const xmlName = name.toLowerCase();
                 const author = m.getAttribute("author");
                 const version = m.getAttribute("version");
                 
-                // Find the match in the sheet
+                // Find matching row in your Google Sheet (Column G is index 6)
                 const sheetMod = sheetRows.find(row => {
                     const values = Object.values(row);
-                    const sName = (values[0] || '').trim().toLowerCase(); 
-                    const sFile = (values[3] || '').trim().toLowerCase(); 
+                    const sName = (values[0] || '').trim().toLowerCase(); // Mod Name (Col A)
+                    const sFile = (values[3] || '').trim().toLowerCase(); // Filename (Col D)
                     return sName === xmlName || sFile === xmlName;
                 });
 
-                let imgUrl = '';
+                let img = '';
+                let downloadUrl = '';
+                let fileInfo = '';
+
                 if (sheetMod) {
                     const values = Object.values(sheetMod);
-                    // G is index 6
-                    imgUrl = values[6] || ''; 
+                    // MAPPING: 0:Name, 1:Ver, 2:Author, 3:Filename, 4:Size, 5:URL, 6:IMAGE (Col G)
+                    downloadUrl = values[5] || '';
+                    img = values[6] || ''; // This is your Column G
+                    
+                    const fName = values[3];
+                    const fSize = values[4];
+                    if (fName || fSize) {
+                        fileInfo = `<div style="font-size:0.65rem; color:#888; margin-top:2px; word-break:break-all;">${fName || ''} ${fSize ? `(${fSize})` : ''}</div>`;
+                    }
                     
                     // Fix insecure links on the fly
-                    if (imgUrl.startsWith('http:')) {
-                        imgUrl = imgUrl.replace('http:', 'https:');
+                    if (img && img.startsWith('http:')) {
+                        img = img.replace('http:', 'https:');
                     }
                 }
 
-                // Use a placeholder if imgUrl is empty so you can see the card structure
-                const imageHtml = imgUrl ? 
-                    `<img src="${imgUrl}" style="width:100%; height:120px; object-fit:cover; border-radius:4px; margin-bottom:8px;" onerror="this.src='https://placehold.co/250x120/222/ffd700?text=IMAGE+ERROR'">` :
-                    `<div style="width:100%; height:120px; background:rgba(255,255,255,0.05); border-radius:4px; margin-bottom:8px; display:flex; align-items:center; justify-content:center; color:#444;">NO IMAGE</div>`;
+                // If no image found in Column G, use a generic FS22 placeholder or hide
+                const imgStyle = img ? 
+                    `background: url('${img}') center/cover no-repeat;` : 
+                    `background: rgba(255,255,255,0.1); display: flex; align-items: center; justify-content: center; color: rgba(255,255,255,0.2); font-size: 2rem;`;
+                
+                const imgHtml = `<div style="width:100%; height:120px; ${imgStyle} border-radius:4px; margin-bottom:8px;">${!img ? '🚜' : ''}</div>`;
 
-                return `
-                    <div style="background:rgba(255,255,255,0.05); padding:10px; border-radius:6px; border:1px solid rgba(255,215,0,0.1);">
-                        ${imageHtml}
-                        <div style="font-weight:bold; color:#fff; font-size:0.8rem; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${m.textContent.trim()}</div>
-                        <div style="font-size:0.7rem; color:#ffd700;">v${version}</div>
-                    </div>`;
-            }).join('');
+                const cardStyle = downloadUrl ? 
+                    `background:rgba(255,255,255,0.05); padding:12px; border-radius:8px; border: 1px solid rgba(255,215,0,0.1); transition: all 0.2s ease; cursor: pointer;` :
+                    `background:rgba(255,255,255,0.03); padding:12px; border-radius:8px; border-left: 4px solid #ffd700;`;
+
+                const content = `
+                    ${imgHtml}
+                    <div style="font-weight:900; color:#fff; font-size:0.85rem; letter-spacing:0.5px;">${name}</div>
+                    <div style="font-size:0.7rem; color:#ffd700; opacity:0.8;">v${version} • ${author}</div>
+                    ${fileInfo}
+                    ${downloadUrl ? '<div style="margin-top:10px; font-size:0.65rem; color:#ffd700; text-align:right; font-weight:900; border-top:1px solid rgba(255,215,0,0.2); padding-top:5px;">⬇ SYSTEM DOWNLOAD</div>' : ''}
+                `;
+
+                if (downloadUrl) {
+                    return `<a href="${downloadUrl}" target="_blank" style="text-decoration:none; display:block;">
+                        <div class="mod-card-link" style="${cardStyle}">
+                            ${content}
+                        </div>
+                    </a>`;
+                }
+
+                return `<div style="${cardStyle}">${content}</div>`;
+            }).join('') || '<div style="padding:20px; color:#aaa; text-align:center;">NO ACTIVE MODS DETECTED IN XML</div>';
         }
 
         // --- TROPHY SYNC ---
