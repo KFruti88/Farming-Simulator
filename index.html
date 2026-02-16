@@ -151,6 +151,8 @@
         <section class="glass-panel card mods-section" style="margin-top: 20px;">
             <div class="card-tag">📦 ACTIVE MODS & DLC LIBRARY</div>
             <div id="modsLog" class="telemetry-grid" style="max-height: 300px; overflow-y: auto; display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 10px;">Scanning Library...</div>
+            <div class="card-tag" style="margin-top: 15px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 10px;">📚 CURATED MOD LIST (GOOGLE SHEET)</div>
+            <div id="sheetModsLog" class="telemetry-grid" style="max-height: 300px; overflow-y: auto; display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 10px;">Loading Sheet...</div>
         </section>
 
         <section class="glass-panel card trophy-section" style="margin-top: 20px;">
@@ -199,6 +201,9 @@
 
             // 4. Sync Trophies
             syncTrophies();
+
+            // 5. Sync Mod Sheet
+            syncModSheet();
         }
 
         async function updateServerStats() {
@@ -482,6 +487,57 @@
                 console.warn(`Trophy Sync Failed for ${username}`);
                 document.getElementById(elementId).innerHTML = '<div style="padding:10px; color:#ff4d4d;">Connection Error</div>';
             }
+        }
+
+        // --- SHEET SYNC ---
+        async function syncModSheet() {
+            const url = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTZipdOjDkX5aeUvTiJHGSc9EVkhC_12IimhVXPCNDPwQlVq5759RIXRBKtZpWPkSoQN-gi7hIkblS2/pub?output=csv";
+            try {
+                const res = await fetch(url);
+                const text = await res.text();
+                const rows = parseCSV(text);
+                
+                const container = document.getElementById('sheetModsLog');
+                if(rows.length === 0) {
+                    container.innerHTML = '<div style="padding:10px; color:#aaa;">No data found in sheet</div>';
+                    return;
+                }
+
+                container.innerHTML = rows.map(row => {
+                    const keys = Object.keys(row);
+                    const findKey = (k) => keys.find(key => key.toLowerCase().includes(k));
+                    
+                    const name = row[findKey('name') || findKey('mod') || keys[0]] || 'Unknown';
+                    const img = row[findKey('image') || findKey('img') || findKey('pic')] || '';
+                    const desc = row[findKey('desc') || findKey('author') || findKey('version') || keys[1]] || '';
+                    
+                    const imgHtml = (img && img.startsWith('http')) ? 
+                        `<div style="width:100%; height:120px; background:url('${img}') center/cover no-repeat; border-radius:4px; margin-bottom:8px;"></div>` : '';
+
+                    return `<div style="background:rgba(255,255,255,0.05); padding:10px; border-radius:6px; border: 1px solid rgba(255,255,255,0.1);">
+                        ${imgHtml}
+                        <div style="font-weight:900; color:#fff; font-size:0.85rem; margin-bottom:4px;">${name}</div>
+                        <div style="font-size:0.75rem; color:#aaa;">${desc}</div>
+                    </div>`;
+                }).join('');
+            } catch(e) { 
+                console.warn("Sheet Sync Failed", e);
+                document.getElementById('sheetModsLog').innerHTML = '<div style="padding:10px; color:#ff4d4d;">Failed to load sheet data</div>';
+            }
+        }
+
+        function parseCSV(str) {
+            const lines = str.trim().split(/\r?\n/);
+            if (lines.length < 2) return [];
+            const headers = lines[0].split(',').map(h => h.trim().replace(/^"|"$/g, ''));
+            
+            return lines.slice(1).map(line => {
+                const values = line.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/).map(v => v.trim().replace(/^"|"$/g, ''));
+                return headers.reduce((obj, header, i) => {
+                    obj[header] = values[i] || '';
+                    return obj;
+                }, {});
+            });
         }
     </script>
 </body>
