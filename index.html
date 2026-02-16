@@ -178,7 +178,7 @@
             selector.addEventListener('change', () => loadDashboard(selector.value));
             loadDashboard(selector.value); // Initial load
             
-            // Refresh every 60s
+            // Refresh every 60s (Live Data)
             setInterval(() => loadDashboard(selector.value), 60000);
         });
 
@@ -190,7 +190,7 @@
             const sheetData = await syncModSheet();
 
             // 1. Update Header & Money
-            updateServerStats(sheetData);
+            await updateServerStats(sheetData); // Wait for live stats first
             updateFinancials(path);
 
             // 2. Sync Modules
@@ -228,9 +228,9 @@
                 document.getElementById('mapDisplay').textContent = `Map: ${server.getAttribute("mapName")} (v${server.getAttribute("version")})`;
                 
                 // Format Time
-                const rawTime = parseInt(server.getAttribute("dayTime"));
-                const hours = Math.floor(rawTime / 60 / 60);
-                const minutes = Math.floor((rawTime / 60) % 60);
+                const rawTime = parseInt(server.getAttribute("dayTime")); // Time in milliseconds
+                const hours = Math.floor((rawTime / (1000 * 60 * 60)) % 24);
+                const minutes = Math.floor((rawTime / (1000 * 60)) % 60);
                 document.getElementById('gameClock').textContent = `Time: ${hours.toString().padStart(2,'0')}:${minutes.toString().padStart(2,'0')}`;
                 
                 // Update Players
