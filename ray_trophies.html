@@ -13,7 +13,7 @@
         }
 
         body {
-            background: transparent; /* Allows main dashboard background to show through */
+            background: transparent;
             font-family: 'Inter', sans-serif;
             color: var(--text);
             margin: 0;
@@ -32,33 +32,35 @@
             border-radius: 6px;
             border-left: 4px solid #444;
             backdrop-filter: blur(5px);
+            display: flex;
+            flex-direction: column;
         }
 
-        /* Unearned styling (Prioritized at top) */
+        /* Unearned styling (Pushed to top) */
         .trophy-item.unearned {
             border-left: 4px solid var(--alert-orange);
-            background: rgba(255, 69, 0, 0.1);
-            order: -1; /* Forces these to the top of the flex/grid */
+            background: rgba(255, 69, 0, 0.15);
+            order: -1;
         }
 
         .trophy-item.earned {
             border-left: 4px solid #00ff00;
             opacity: 0.6;
+            order: 1;
         }
 
         .trophy-title {
             font-weight: 900;
-            display: block;
             font-size: 0.9em;
             text-transform: uppercase;
+            color: var(--gold);
         }
 
         .trophy-status {
-            font-size: 0.7em;
-            font-weight: 600;
+            font-size: 0.75em;
+            font-weight: 700;
+            margin-top: 5px;
             letter-spacing: 1px;
-            margin-top: 4px;
-            display: block;
         }
 
         .unearned .trophy-status { color: var(--alert-orange); }
@@ -67,19 +69,19 @@
 </head>
 <body>
 
-<div id="trophyList">Initializing PSN Uplink...</div>
+<div id="trophyList">UPLINKING TO PSN DATA STREAM...</div>
 
 <script>
-    async function getTrophies() {
+    async function syncTrophies() {
         const rssUrl = 'https://psntrophyleaders.com/user/view/OneLIVIDMAN/rss';
-        // Using a more robust AllOrigins proxy to bypass CORS
+        // AllOrigins proxy handles the CORS bypass for GitHub Pages
         const proxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(rssUrl)}`;
 
         try {
             const response = await fetch(proxyUrl);
             const data = await response.json();
             
-            // Parse the XML string from the proxy response
+            // Convert the raw string content into a searchable XML document
             const parser = new DOMParser();
             const xmlDoc = parser.parseFromString(data.contents, "text/xml");
             const items = Array.from(xmlDoc.querySelectorAll("item"));
@@ -87,39 +89,41 @@
             const listContainer = document.getElementById('trophyList');
             listContainer.innerHTML = '';
 
-            // Filter for FS22 specifically
+            // Filter specifically for Farming Simulator 22
             const fs22Trophies = items.filter(item => 
                 item.querySelector("title").textContent.includes("Farming Simulator 22")
             );
 
             if (fs22Trophies.length === 0) {
-                listContainer.innerHTML = "No FS22 Trophy Data Detected.";
+                listContainer.innerHTML = "NO FS22 TELEMETRY DETECTED IN FEED.";
                 return;
             }
 
             fs22Trophies.forEach(item => {
-                const title = item.querySelector("title").textContent.replace("Farming Simulator 22 - ", "");
+                const fullTitle = item.querySelector("title").textContent;
+                const cleanTitle = fullTitle.split(" - ").pop();
                 const description = item.querySelector("description").textContent;
                 
-                // If the description doesn't contain a date, it's unearned
+                // Identify unearned trophies by checking if the "Earned on" date is missing
                 const isEarned = description.toLowerCase().includes("earned on");
                 
                 const div = document.createElement('div');
                 div.className = `trophy-item ${isEarned ? 'earned' : 'unearned'}`;
                 
                 div.innerHTML = `
-                    <span class="trophy-title">${title}</span>
-                    <span class="trophy-status">${isEarned ? 'STATUS: SECURED' : 'STATUS: PENDING ACQUISITION'}</span>
+                    <span class="trophy-title">${cleanTitle}</span>
+                    <span class="trophy-status">${isEarned ? 'DATA SECURED' : 'PENDING ACQUISITION'}</span>
                 `;
                 listContainer.appendChild(div);
             });
         } catch (error) {
-            document.getElementById('trophyList').innerHTML = "ERROR: Failed to bypass PSN Firewall.";
-            console.error(error);
+            document.getElementById('trophyList').innerHTML = "ERROR: PSN UPLINK INTERRUPTED.";
+            console.error("Telemetry Sync Error:", error);
         }
     }
 
-    getTrophies();
+    // Initialize sync on load
+    syncTrophies();
 </script>
 
 </body>
