@@ -140,7 +140,7 @@
             <div class="server-details-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; padding: 15px; color: #fff;">
                 <div><label style="color:#aaa; font-size:0.7rem; font-weight:900; display:block; margin-bottom:4px;">SERVER NAME</label><div id="detail-name" style="font-weight:bold;">Loading...</div></div>
                 <div><label style="color:#aaa; font-size:0.7rem; font-weight:900; display:block; margin-bottom:4px;">GAME</label><div id="detail-game">Farming Simulator 22</div></div>
-                <div><label style="color:#aaa; font-size:0.7rem; font-weight:900; display:block; margin-bottom:4px;">LOCATION</label><div>Gainesville, FL, United States</div></div>
+                <div><label style="color:#aaa; font-size:0.7rem; font-weight:900; display:block; margin-bottom:4px;">LOCATION</label><div>United States</div></div>
                 <div><label style="color:#aaa; font-size:0.7rem; font-weight:900; display:block; margin-bottom:4px;">MAP</label><div id="detail-map">Loading...</div></div>
                 <div><label style="color:#aaa; font-size:0.7rem; font-weight:900; display:block; margin-bottom:4px;">MAP SIZE</label><div id="detail-size">Loading...</div></div>
                 <div><label style="color:#aaa; font-size:0.7rem; font-weight:900; display:block; margin-bottom:4px;">DISCORD</label><div><a href="https://discord.gg/sMeYydGGyb" target="_blank" style="color:#ffd700; text-decoration:none;">Join Community</a></div></div>
@@ -511,10 +511,15 @@
                     const findKey = (k) => keys.find(key => key.toLowerCase().includes(k));
                     
                     const name = row[findKey('name') || findKey('mod') || keys[0]] || 'Unknown';
-                    const img = row[findKey('image') || findKey('img') || findKey('pic')] || '';
+                    let img = row[findKey('image') || findKey('img') || findKey('pic')] || '';
                     const desc = row[findKey('desc') || findKey('author') || findKey('version') || keys[1]] || '';
                     
-                    const imgHtml = (img && img.startsWith('http')) ? 
+                    // Upgrade HTTP to HTTPS to prevent mixed content blocking and handle case sensitivity
+                    if (img && img.toLowerCase().startsWith('http')) {
+                        img = img.replace(/^http:\/\//i, 'https://');
+                    }
+                    
+                    const imgHtml = (img && img.toLowerCase().startsWith('http')) ? 
                         `<div style="width:100%; height:120px; background:url('${img}') center/cover no-repeat; border-radius:4px; margin-bottom:8px;"></div>` : '';
 
                     return `<div style="background:rgba(255,255,255,0.05); padding:10px; border-radius:6px; border: 1px solid rgba(255,255,255,0.1);">
