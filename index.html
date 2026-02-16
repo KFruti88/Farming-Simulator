@@ -10,20 +10,6 @@
     <link rel="stylesheet" href="style.css?v=1.78">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;900&display=swap" rel="stylesheet">
     <style>
-        .sandbox-alert {
-            background: rgba(255, 69, 0, 0.15);
-            border: 1px solid #ff4500;
-            color: #ff4500;
-            padding: 10px;
-            text-align: center;
-            font-weight: 900;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            margin-bottom: 15px;
-            border-radius: 8px;
-            backdrop-filter: blur(10px);
-            animation: pulse 2s infinite;
-        }
         @keyframes pulse {
             0% { box-shadow: 0 0 0 0 rgba(255, 69, 0, 0.4); }
             70% { box-shadow: 0 0 0 15px rgba(255, 69, 0, 0); }
@@ -40,14 +26,35 @@
             border-radius: 8px;
             background: transparent;
         }
+
+        /* Module Styles */
+        .blade-header { display: flex; justify-content: space-between; border-bottom: 2px solid #ffd700; padding-bottom: 15px; margin-bottom: 20px; color: #fff; }
+        .matrix-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 15px; color: #fff; }
+        .field-card, .animal-card, .factory-card { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,215,0,0.1); border-radius: 10px; padding: 15px; }
+        .harvest-ready { border: 2px solid #22c55e; box-shadow: 0 0 15px rgba(124, 252, 0, 0.15); }
+        .field-top, .card-top { display: flex; justify-content: space-between; font-weight: 900; font-size: 0.75rem; margin-bottom: 12px; }
+        .owner-tag.green { color: #7cfc00; }
+        .owner-tag.gold { color: #ffd700; }
+        .field-crop { font-size: 1.3rem; font-weight: 800; letter-spacing: 1px; color: #fff; }
+        .field-status { font-size: 0.75rem; font-weight: 900; margin-bottom: 15px; }
+        .telemetry-grid, .telemetry-bars, .storage-matrix { display: flex; flex-direction: column; gap: 10px; margin-bottom: 15px; }
+        .stat-unit label, .telemetry-bars label, .storage-matrix label { font-size: 0.65rem; color: #aaa; text-transform: uppercase; display: block; margin-bottom: 4px; font-weight: 900; }
+        .bar-bg { height: 5px; background: #111; border-radius: 3px; overflow: hidden; }
+        .bar-fill { height: 100%; transition: width 1.5s ease-in-out; }
+        .requirement-tags { display: flex; flex-wrap: wrap; gap: 5px; }
+        .req-badge { font-size: 0.65rem; font-weight: 900; padding: 3px 8px; border-radius: 4px; color: #000; }
+        .req-badge.lime { background: #fff; }
+        .req-badge.plow { background: #ff4500; color: #fff; }
+        .req-badge.roll { background: #00d4ff; color: #fff; }
+        .req-badge.mulched { background: #8b4513; color: #fff; }
+        .production-stats { margin-top: 15px; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 10px; font-size: 0.75rem; }
+        .stat-line { display: flex; justify-content: space-between; margin-bottom: 4px; font-weight: 600; }
+        .production-lines { margin-bottom: 15px; font-size: 0.75rem; display: flex; flex-direction: column; gap: 5px; }
+        .bar-info { display: flex; justify-content: space-between; font-size: 0.7rem; font-weight: 700; margin-bottom: 4px; }
     </style>
 </head>
 <body>
     <div class="dashboard-container" style="width: 90%; margin: 20px auto;">
-        
-        <div class="sandbox-alert">
-            ⚠️ Sandbox Active: Hard-Drill Logic v1.78 ⚠️
-        </div>
 
         <header class="glass-panel header-main">
             <div class="header-content">
@@ -90,13 +97,31 @@
 
         <main class="data-matrix triple-col">
             <article class="glass-panel card" id="module-container-1">
-                <div id="module-1-field-info"></div>
+                <div id="fieldModule" class="field-data-blade">
+                    <div class="blade-header">
+                        <h2>🌾 MODULE 1: LAND & SOIL PREPARATION MATRIX</h2>
+                        <span id="fieldCount" class="badge">INITIALIZING DEEP SCAN...</span>
+                    </div>
+                    <div id="fieldMatrixContainer" class="matrix-grid scroll-list main-scroll"></div>
+                </div>
             </article>
             <article class="glass-panel card" id="module-container-2">
-                <div id="module-2-animal-info"></div>
+                <div id="animalModule" class="animal-data-blade">
+                    <div class="blade-header">
+                        <h2>🐾 MODULE 2: LIVESTOCK BIOMETRICS</h2>
+                        <span id="animalCount" class="badge">INITIALIZING SCAN...</span>
+                    </div>
+                    <div id="animalMatrixContainer" class="matrix-grid scroll-list main-scroll"></div>
+                </div>
             </article>
             <article class="glass-panel card" id="module-container-3">
-                <div id="module-3-factory-info"></div>
+                <div id="factoryModule" class="factory-data-blade">
+                    <div class="blade-header">
+                        <h2>🏗️ MODULE 3: PRODUCTION CHAINS</h2>
+                        <span id="factoryCount" class="badge">ANALYZING WAREHOUSES...</span>
+                    </div>
+                    <div id="factoryMatrixContainer" class="matrix-grid scroll-list main-scroll"></div>
+                </div>
             </article>
         </main>
 
@@ -112,6 +137,156 @@
 
     </div>
 
-    <script src="script.js?v=1.78"></script>
+    <script>
+        // Main Dashboard Logic
+        const REPO_ROOT = "."; // Relative path to root
+        
+        document.addEventListener('DOMContentLoaded', () => {
+            const selector = document.getElementById('saveSelector');
+            selector.addEventListener('change', () => loadDashboard(selector.value));
+            loadDashboard(selector.value); // Initial load
+            
+            // Refresh every 60s
+            setInterval(() => loadDashboard(selector.value), 60000);
+        });
+
+        async function loadDashboard(slotId) {
+            const path = `${REPO_ROOT}/saved-game-${slotId}`;
+            console.log(`Loading Data from Slot ${slotId}...`);
+
+            // 1. Update Header & Money
+            updateServerStats();
+            updateFinancials(path);
+
+            // 2. Sync Modules
+            syncFieldBlade(path);
+            syncAnimalBlade(path);
+            syncFactoryBlade(path);
+            
+            // 3. Sync Fleet (Custom implementation for index.html)
+            syncFleet(path);
+        }
+
+        async function updateServerStats() {
+            try {
+                const res = await fetch(`${REPO_ROOT}/dedicated_server/dedicated-server-stats.xml?v=${Date.now()}`);
+                const xml = new DOMParser().parseFromString(await res.text(), "text/xml");
+                const server = xml.getElementsByTagName("Server")[0];
+                
+                document.getElementById('serverNameDisplay').textContent = server.getAttribute("name");
+                document.getElementById('mapDisplay').textContent = "Map: " + server.getAttribute("mapName");
+                
+                // Format Time
+                const rawTime = parseInt(server.getAttribute("dayTime"));
+                const hours = Math.floor(rawTime / 60 / 60);
+                const minutes = Math.floor((rawTime / 60) % 60);
+                document.getElementById('gameClock').textContent = `Time: ${hours.toString().padStart(2,'0')}:${minutes.toString().padStart(2,'0')}`;
+                
+                // Update Players
+                const slots = xml.getElementsByTagName("Slots")[0];
+                const used = slots.getAttribute("numUsed");
+                document.getElementById('playerLog').textContent = `${used} / ${slots.getAttribute("capacity")} ONLINE`;
+            } catch(e) { console.warn("Server Stats Sync Failed", e); }
+        }
+
+        async function updateFinancials(path) {
+            try {
+                const res = await fetch(`${path}/farms.xml?v=${Date.now()}`);
+                const xml = new DOMParser().parseFromString(await res.text(), "text/xml");
+                const farms = Array.from(xml.getElementsByTagName("farm"));
+                
+                const f1 = farms.find(f => f.getAttribute("farmId") === "1");
+                const f2 = farms.find(f => f.getAttribute("farmId") === "2");
+                
+                const fmt = (val) => new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(val || 0);
+                
+                document.getElementById('kevinFinance').textContent = fmt(f1?.getAttribute("money"));
+                document.getElementById('rayFinance').textContent = fmt(f2?.getAttribute("money"));
+            } catch(e) { console.warn("Financial Sync Failed", e); }
+        }
+
+        // --- MODULE 1: FIELDS ---
+        async function syncFieldBlade(gitPath) {
+            try {
+                const [fieldsRes, landRes] = await Promise.all([
+                    fetch(`${gitPath}/fields.xml?v=${Date.now()}`),
+                    fetch(`${gitPath}/farmland.xml?v=${Date.now()}`)
+                ]);
+                const fieldsXml = new DOMParser().parseFromString(await fieldsRes.text(), "text/xml");
+                const fieldData = Array.from(fieldsXml.getElementsByTagName("field"));
+                
+                document.getElementById('fieldCount').textContent = `${fieldData.length} ACTIVE ZONES`;
+                document.getElementById('fieldMatrixContainer').innerHTML = fieldData.map(f => {
+                    const id = f.getAttribute("id");
+                    const crop = (f.getAttribute("fruitType") || "FALLOW").toUpperCase();
+                    const stage = parseInt(f.getAttribute("growthState") || 0);
+                    const fert = (parseFloat(f.getAttribute("fertilizedLevel") || 0) * 100).toFixed(0);
+                    const needsLime = f.getAttribute("needsLime") === "true";
+                    const isReady = stage >= 6; 
+                    
+                    return `<div class="field-card ${isReady ? 'harvest-ready' : ''}">
+                        <div class="field-top"><span class="field-id">ZONE ${id}</span></div>
+                        <div class="field-main-info"><div class="field-crop">${crop}</div></div>
+                        <div class="telemetry-grid">
+                            <div class="stat-unit"><label>Fert: ${fert}%</label><div class="bar-bg"><div class="bar-fill" style="width:${fert}%; background:${fert>=100?'#22c55e':'#ffd700'}"></div></div></div>
+                        </div>
+                        <div class="requirement-tags">${needsLime ? '<span class="req-badge lime">LIME</span>' : ''}</div>
+                    </div>`;
+                }).join('');
+            } catch (e) { console.warn("Field Sync Failed"); }
+        }
+
+        // --- MODULE 2: ANIMALS ---
+        async function syncAnimalBlade(gitPath) {
+            try {
+                const res = await fetch(`${gitPath}/animals.xml?v=${Date.now()}`);
+                const xml = new DOMParser().parseFromString(await res.text(), "text/xml");
+                const animals = Array.from(xml.getElementsByTagName("animal"));
+                
+                document.getElementById('animalCount').textContent = `${animals.length} ACTIVE HEAD`;
+                document.getElementById('animalMatrixContainer').innerHTML = animals.map(a => {
+                    const type = a.getAttribute("type").split('_').pop().toUpperCase();
+                    const health = (parseFloat(a.getAttribute("health") || 0) * 100).toFixed(0);
+                    return `<div class="animal-card">
+                        <div class="card-top"><span class="type-tag">${type}</span></div>
+                        <div class="telemetry-bars"><label>Health: ${health}%</label><div class="bar-bg"><div class="bar-fill" style="width:${health}%; background:#22c55e"></div></div></div>
+                    </div>`;
+                }).join('');
+            } catch (e) { console.warn("Animal Sync Failed"); }
+        }
+
+        // --- MODULE 3: FACTORIES ---
+        async function syncFactoryBlade(gitPath) {
+            try {
+                const res = await fetch(`${gitPath}/placeables.xml?v=${Date.now()}`);
+                const xml = new DOMParser().parseFromString(await res.text(), "text/xml");
+                const factories = Array.from(xml.getElementsByTagName("productionPoint"));
+                
+                document.getElementById('factoryCount').textContent = `${factories.length} FACILITIES`;
+                document.getElementById('factoryMatrixContainer').innerHTML = factories.map(f => {
+                    const name = f.parentElement.getAttribute("filename").split('/').pop().replace('.xml','').toUpperCase();
+                    return `<div class="factory-card"><div class="card-top"><span class="factory-id">${name}</span></div></div>`;
+                }).join('');
+            } catch (e) { console.warn("Factory Sync Failed"); }
+        }
+
+        // --- FLEET SYNC ---
+        async function syncFleet(gitPath) {
+            try {
+                const res = await fetch(`${gitPath}/vehicles.xml?v=${Date.now()}`);
+                const xml = new DOMParser().parseFromString(await res.text(), "text/xml");
+                const vehicles = Array.from(xml.getElementsByTagName("vehicle")).filter(v => v.getAttribute("farmId") !== "0");
+                
+                document.getElementById('fleetLog').innerHTML = vehicles.map(v => {
+                    const name = v.getAttribute("filename").split('/').pop().replace('.xml','').toUpperCase();
+                    const farm = v.getAttribute("farmId") === "1" ? "KEVIN" : "RAY";
+                    const fuel = parseFloat(v.getElementsByTagName("fillUnit")[0]?.getAttribute("fillLevel") || 0).toFixed(0);
+                    return `<div style="display:flex; justify-content:space-between; border-bottom:1px solid #333; padding:5px;">
+                        <span>${name}</span><span style="color:${farm==='KEVIN'?'#7cfc00':'#ffd700'}">${farm}</span><span>${fuel}L Fuel</span>
+                    </div>`;
+                }).join('');
+            } catch(e) { console.warn("Fleet Sync Failed"); }
+        }
+    </script>
 </body>
 </html>
