@@ -71,7 +71,7 @@
                     <div class="header-text">
                         <h1 id="serverNameDisplay">Werewolf Red Operations</h1>
                         <div class="status-bar">
-                            <span id="mapDisplay">Map: Detecting...</span> | <span id="gameClock">Time: 00:00</span>
+                            <span id="mapDisplay">Map: Detecting...</span> | <span id="gameClock">Time: 00:00</span> | <span id="lastSyncDisplay" style="color: #00d4ff; font-weight: bold;">Syncing...</span>
                         </div>
                     </div>
                 </div>
@@ -188,8 +188,11 @@
             const path = `${REPO_ROOT}/saved-game-${slotId}`;
             console.log(`Loading Data from Slot ${slotId}...`);
 
+            // 0. Sync Mod Sheet (Fetch first to use data in server stats)
+            const sheetData = await syncModSheet();
+
             // 1. Update Header & Money
-            updateServerStats();
+            updateServerStats(sheetData);
             updateFinancials(path);
 
             // 2. Sync Modules
@@ -202,15 +205,21 @@
 
             // 4. Sync Trophies
             syncTrophies();
-
-            // 5. Sync Mod Sheet
-            syncModSheet();
         }
 
-        async function updateServerStats() {
+        async function updateServerStats(sheetData = []) {
             try {
                 const res = await fetch(`${REPO_ROOT}/dedicated_server/dedicated-server-stats.xml?v=${Date.now()}`);
                 if (!res.ok) throw new Error("Stats missing");
+                
+                // Update Last Sync Time from File Headers
+                const lastMod = res.headers.get('Last-Modified');
+                if(lastMod) {
+                    const date = new Date(lastMod);
+                    const timeStr = date.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+                    document.getElementById('lastSyncDisplay').textContent = `Synced: ${timeStr}`;
+                }
+
                 const xml = new DOMParser().parseFromString(await res.text(), "text/xml");
                 const server = xml.getElementsByTagName("Server")[0];
 
@@ -240,7 +249,7 @@
                 document.getElementById('detail-size').textContent = sizeLabel;
 
                 // Sync Mods
-                syncMods(xml);
+                syncMods(xml, sheetData);
             } catch(e) { 
                 console.warn("Server Stats Sync Failed", e);
                 document.getElementById('serverNameDisplay').textContent = "OFFLINE / NO DATA";
@@ -299,6 +308,19 @@
                     const ownerId = f.getAttribute("owner");
                     const ownerName = ownerId === "2" ? "raymystro" : (ownerId === "1" ? "werewolf3788" : "VACANT");
                     const isReady = stage >= 6; 
+
+                    // Action Logic
+                    let actions = [];
+                    if(isReady) actions.push("<span style='color:#22c55e'>HARVEST CROP</span>");
+                    if(crop === "FALLOW") actions.push("<span style='color:#ffd700'>SOW/PLANT</span>");
+                    if(needsPlow) actions.push("<span style='color:#ff4500'>PLOW REQUIRED</span>");
+                    if(needsLime) actions.push("<span style='color:#00d4ff'>LIME REQUIRED</span>");
+                    if(weeds > 0) actions.push("<span style='color:#ff4d4d'>REMOVE WEEDS</span>");
+                    if(stones > 0) actions.push("<span style='color:#888'>PICK STONES</span>");
+                    if(!isRolled && stage === 1) actions.push("<span style='color:#aaa'>ROLL SOIL</span>");
+                    if(fert < 100 && crop !== "FALLOW") actions.push(`<span style='color:#ffd700'>FERTILIZE (+${100-fert}%)</span>`);
+                    
+                    const actionHtml = actions.length > 0 ? actions.join(" • ") : "<span style='color:#22c55e'>FIELD OPTIMIZED</span>";
                     
                     return `<div class="field-card ${isReady ? 'harvest-ready' : ''}">
                         <div class="field-top">
@@ -310,15 +332,14 @@
                             <div class="field-status" style="color:${isReady ? '#22c55e' : '#999'}">${isReady ? '● READY TO HARVEST' : '● GROWTH STAGE: ' + stage}</div>
                         </div>
                         <div class="telemetry-grid">
-                            <div class="stat-unit"><label>Fert: ${fert}%</label><div class="bar-bg"><div class="bar-fill" style="width:${fert}%; background:${fert>=100?'#22c55e':'#ffd700'}"></div></div></div>
-                            <div class="stat-unit"><label>Weeds: ${weeds}%</label><div class="bar-bg"><div class="bar-fill" style="width:${weeds}%; background:#ff4d4d"></div></div></div>
-                            <div class="stat-unit"><label>Stones: ${stones}%</label><div class="bar-bg"><div class="bar-fill" style="width:${stones}%; background:#888"></div></div></div>
+                            <div class="stat-unit"><label>Nitrogen (Fertilizer)</label><div class="bar-bg"><div class="bar-fill" style="width:${fert}%; background:${fert>=100?'#22c55e':'#ffd700'}"></div></div><div style="text-align:right; font-size:0.65rem;">${fert}%</div></div>
+                            <div class="stat-unit"><label>Weed Saturation</label><div class="bar-bg"><div class="bar-fill" style="width:${weeds}%; background:#ff4d4d"></div></div><div style="text-align:right; font-size:0.65rem;">${weeds}%</div></div>
                         </div>
-                        <div class="requirement-tags">
-                            ${needsLime ? '<span class="req-badge lime">LIME</span>' : ''}
-                            ${needsPlow ? '<span class="req-badge plow">PLOW</span>' : ''}
-                            ${!isRolled && stage === 1 ? '<span class="req-badge roll">ROLL</span>' : ''}
-                            ${isMulched ? '<span class="req-badge mulched">MULCHED</span>' : ''}
+                        <div style="margin-top:10px; padding-top:10px; border-top:1px solid rgba(255,255,255,0.1);">
+                            <label style="font-size:0.65rem; color:#aaa; font-weight:900;">AGRONOMIC REPORT</label>
+                            <div style="font-size:0.7rem; font-weight:bold; margin-top:4px; line-height:1.4;">
+                                ${actionHtml}
+                            </div>
                         </div>
                     </div>`;
                 }).join('');
@@ -406,11 +427,16 @@
                                 return `<div class="p-line">⚙️ ${p.getAttribute("id")}: <strong style="color:${pStatus==='ACTIVE'?'#22c55e':'#ff4d4d'}">${pStatus}</strong></div>`;
                             }).join('')}
                         </div>
+                        <div style="margin-bottom:5px;"><label style="font-size:0.65rem; color:#aaa; font-weight:900;">WAREHOUSE MANIFEST</label></div>
                         <div class="storage-matrix">
                             ${storage.map(s => {
                                 const amount = parseFloat(s.textContent || 0).toFixed(0);
-                                const pct = Math.min(100, (amount / 50000 * 100)).toFixed(0); // Approx capacity
-                                return `<div class="stat-unit"><div class="bar-info"><span>${s.tagName.toUpperCase()}</span><span>${amount}L</span></div><div class="bar-bg"><div class="bar-fill" style="width:${pct}%; background:#ffd700"></div></div></div>`;
+                                const pct = Math.min(100, (amount / 50000 * 100)).toFixed(0); // Approx visual scale
+                                const displayAmount = new Intl.NumberFormat('en-US').format(amount);
+                                return `<div class="stat-unit">
+                                    <div class="bar-info"><span>${s.tagName.toUpperCase()}</span><span>${displayAmount} L</span></div>
+                                    <div class="bar-bg"><div class="bar-fill" style="width:${pct}%; background:${amount > 1000 ? '#22c55e' : '#ff4d4d'}"></div></div>
+                                </div>`;
                             }).join('')}
                         </div>
                     </div>`;
@@ -459,17 +485,67 @@
         }
 
         // --- MODS SYNC ---
-        function syncMods(xml) {
+        function syncMods(xml, sheetRows = []) {
             const mods = Array.from(xml.getElementsByTagName("Mod"));
             const container = document.getElementById('modsLog');
             
             container.innerHTML = mods.map(m => {
-                const name = m.textContent;
+                const name = m.textContent.trim();
                 const author = m.getAttribute("author");
                 const version = m.getAttribute("version");
-                return `<div style="background:rgba(255,255,255,0.05); padding:8px; border-radius:4px; border-left: 3px solid #ffd700;">
+                
+                // Find matching row in sheet
+                const sheetMod = sheetRows.find(row => {
+                    const keys = Object.keys(row);
+                    const nameKey = keys.find(k => k.toLowerCase().includes('name') || k.toLowerCase().includes('mod')) || keys[0];
+                    return row[nameKey] && row[nameKey].trim() === name;
+                });
+
+                let img = '';
+                let downloadUrl = '';
+
+                if (sheetMod) {
+                    const keys = Object.keys(sheetMod);
+                    const findKey = (k) => keys.find(key => key.toLowerCase().includes(k));
+                    
+                    img = sheetMod[findKey('image') || findKey('img') || findKey('pic') || findKey('screenshot')] || '';
+                    downloadUrl = sheetMod[findKey('url') || findKey('link') || findKey('download') || findKey('href')] || '';
+
+                    if (!img || !img.startsWith('http')) {
+                        const potentialImg = Object.values(sheetMod).find(val => 
+                            val && typeof val === 'string' && val.startsWith('http') && 
+                            /\.(jpg|jpeg|png|webp|gif)$/i.test(val)
+                        );
+                        if (potentialImg) img = potentialImg;
+                    }
+                    
+                    if (img && img.toLowerCase().startsWith('http')) {
+                        img = img.replace(/^http:\/\//i, 'https://');
+                    }
+                }
+
+                const imgHtml = img ? `<div style="width:100%; height:120px; background:url('${img}') center/cover no-repeat; border-radius:4px; margin-bottom:8px;"></div>` : '';
+                const cardStyle = downloadUrl ? 
+                    `background:rgba(255,255,255,0.05); padding:8px; border-radius:4px; border: 1px solid rgba(255,255,255,0.1); transition: all 0.2s ease; cursor: pointer;` :
+                    `background:rgba(255,255,255,0.05); padding:8px; border-radius:4px; border-left: 3px solid #ffd700;`;
+
+                const content = `
+                    ${imgHtml}
                     <div style="font-weight:bold; color:#fff; font-size:0.8rem;">${name}</div>
                     <div style="font-size:0.7rem; color:#aaa;">v${version} | ${author}</div>
+                    ${downloadUrl ? '<div style="margin-top:8px; font-size:0.7rem; color:#ffd700; text-align:right; font-weight:bold;">⬇ DOWNLOAD</div>' : ''}
+                `;
+
+                if (downloadUrl) {
+                    return `<a href="${downloadUrl}" target="_blank" style="text-decoration:none; display:block;">
+                        <div style="${cardStyle}" onmouseover="this.style.borderColor='#ffd700'; this.style.background='rgba(255,215,0,0.1)'" onmouseout="this.style.borderColor='rgba(255,255,255,0.1)'; this.style.background='rgba(255,255,255,0.05)'">
+                            ${content}
+                        </div>
+                    </a>`;
+                }
+
+                return `<div style="${cardStyle}">
+                    ${content}
                 </div>`;
             }).join('') || '<div style="padding:10px; color:#aaa;">No Active Mods Detected</div>';
         }
@@ -520,7 +596,7 @@
                 const container = document.getElementById('sheetModsLog');
                 if(rows.length === 0) {
                     container.innerHTML = '<div style="padding:10px; color:#aaa;">No data found in sheet</div>';
-                    return;
+                    return [];
                 }
 
                 container.innerHTML = rows.map(row => {
@@ -568,9 +644,12 @@
                         ${cardContent}
                     </div>`;
                 }).join('');
+                
+                return rows;
             } catch(e) { 
                 console.warn("Sheet Sync Failed", e);
                 document.getElementById('sheetModsLog').innerHTML = '<div style="padding:10px; color:#ff4d4d;">Failed to load sheet data</div>';
+                return [];
             }
         }
 

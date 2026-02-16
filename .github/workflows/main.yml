@@ -8,7 +8,7 @@ name: G-Portal Live Sync
 
 on:
   schedule:
-    - cron: '*/30 * * * *' # Synchronizes every 30 minutes to ensure live accuracy
+    - cron: '*/15 * * * *' # Synchronizes every 15 minutes to ensure live accuracy
   workflow_dispatch:      # Allows Kevin or Ray to trigger a manual sync at any time
 
 jobs:
