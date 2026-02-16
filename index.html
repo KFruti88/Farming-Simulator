@@ -158,11 +158,11 @@
         <section class="glass-panel card trophy-section" style="margin-top: 20px;">
             <div style="display: flex; gap: 15px; flex-wrap: wrap;">
                 <div style="flex: 1; min-width: 300px;">
-                    <div class="card-tag">🏆 PSN: RAYMYSTRO (OneLIVIDMAN)</div>
+                    <div class="card-tag">🏆 PSN: raymystro (OneLIVIDMAN)</div>
                     <div id="trophyLogRay" class="telemetry-grid" style="max-height: 300px; overflow-y: auto; padding: 10px;">Initializing...</div>
                 </div>
                 <div style="flex: 1; min-width: 300px;">
-                    <div class="card-tag">🏆 PSN: KEVIN (Werewolf3788)</div>
+                    <div class="card-tag">🏆 PSN: werewolf3788 (Werewolf3788)</div>
                     <div id="trophyLogKevin" class="telemetry-grid" style="max-height: 300px; overflow-y: auto; padding: 10px;">Initializing...</div>
                 </div>
             </div>
@@ -293,13 +293,13 @@
                     const isMulched = f.getAttribute("isMulched") === "true";
                     
                     const ownerId = f.getAttribute("owner");
-                    const ownerName = ownerId === "2" ? "RAY" : (ownerId === "1" ? "KEVIN" : "VACANT");
+                    const ownerName = ownerId === "2" ? "raymystro" : (ownerId === "1" ? "werewolf3788" : "VACANT");
                     const isReady = stage >= 6; 
                     
                     return `<div class="field-card ${isReady ? 'harvest-ready' : ''}">
                         <div class="field-top">
                             <span class="field-id">ZONE ${id}</span>
-                            <span class="owner-tag ${ownerName === 'RAY' ? 'gold' : 'green'}">${ownerName}</span>
+                            <span class="owner-tag ${ownerName === 'raymystro' ? 'gold' : 'green'}">${ownerName}</span>
                         </div>
                         <div class="field-main-info">
                             <div class="field-crop">${crop}</div>
@@ -387,13 +387,13 @@
                     const parent = f.parentElement;
                     const name = parent.getAttribute("filename").split('/').pop().replace('.xml','').toUpperCase();
                     const ownerId = parent.getAttribute("farmId");
-                    const ownerName = ownerId === "2" ? "RAY" : "KEVIN";
+                    const ownerName = ownerId === "2" ? "raymystro" : "werewolf3788";
                     
                     const productions = Array.from(f.getElementsByTagName("production"));
                     const storage = Array.from(f.getElementsByTagName("storage")[0]?.children || []);
 
                     return `<div class="factory-card">
-                        <div class="card-top"><span class="factory-id">${name}</span><span class="owner-tag ${ownerName === 'RAY' ? 'gold' : 'green'}">${ownerName}</span></div>
+                        <div class="card-top"><span class="factory-id">${name}</span><span class="owner-tag ${ownerName === 'raymystro' ? 'gold' : 'green'}">${ownerName}</span></div>
                         <div class="production-lines">
                             ${productions.map(p => {
                                 const pStatus = p.getAttribute("isEnabled") === "true" ? "ACTIVE" : "HALTED";
@@ -424,14 +424,24 @@
                 const vehicles = Array.from(xml.getElementsByTagName("vehicle")).filter(v => v.getAttribute("farmId") !== "0");
                 
                 document.getElementById('fleetLog').innerHTML = vehicles.map(v => {
-                    const name = v.getAttribute("filename").split('/').pop().replace('.xml','').toUpperCase();
-                    const farm = v.getAttribute("farmId") === "1" ? "KEVIN" : "RAY";
-                    const fuelLiters = parseFloat(v.getElementsByTagName("fillUnit")[0]?.getAttribute("fillLevel") || 0);
+                    let name = v.getAttribute("filename").split('/').pop().replace('.xml','').toUpperCase();
+                    const farm = v.getAttribute("farmId") === "1" ? "werewolf3788" : "raymystro";
+                    
+                    // Enhanced Naming for Pallets/Bags/Bales
+                    const unit = v.getElementsByTagName("unit")[0];
+                    const fillType = unit ? unit.getAttribute("fillType") : "";
+                    
+                    if ((name.includes("PALLET") || name.includes("BAG") || name.includes("BALE")) && fillType && fillType !== "UNKNOWN") {
+                        name = `${fillType.replace(/_/g, ' ')} ${name.includes("BAG") ? 'BAG' : (name.includes("BALE") ? 'BALE' : 'PALLET')}`;
+                    }
+                    name = name.replace(/_/g, ' ').replace(/([a-zA-Z])(\d)/g, '$1 $2').trim();
+
+                    const fuelLiters = parseFloat(unit?.getAttribute("fillLevel") || 0);
                     const fuelGal = (fuelLiters * 0.264).toFixed(1); // US Gallons
                     const damage = (parseFloat(v.getElementsByTagName("wearable")[0]?.getAttribute("damage") || 0) * 100).toFixed(0);
                     
                     return `<div style="display:flex; justify-content:space-between; border-bottom:1px solid #333; padding:5px;">
-                        <span>${name}</span><span style="color:${farm==='KEVIN'?'#7cfc00':'#ffd700'}">${farm}</span>
+                        <span>${name}</span><span style="color:${farm==='werewolf3788'?'#7cfc00':'#ffd700'}">${farm}</span>
                         <span>${fuelGal} gal</span><span style="color:${damage>10?'#ff4d4d':'#22c55e'}">${damage}% Dmg</span>
                     </div>`;
                 }).join('');
@@ -513,6 +523,7 @@
                     const name = row[findKey('name') || findKey('mod') || keys[0]] || 'Unknown';
                     let img = row[findKey('image') || findKey('img') || findKey('pic')] || '';
                     const desc = row[findKey('desc') || findKey('author') || findKey('version') || keys[1]] || '';
+                    const downloadUrl = row[findKey('url') || findKey('link') || findKey('download') || findKey('href')] || '';
                     
                     // Upgrade HTTP to HTTPS to prevent mixed content blocking and handle case sensitivity
                     if (img && img.toLowerCase().startsWith('http')) {
@@ -521,11 +532,24 @@
                     
                     const imgHtml = (img && img.toLowerCase().startsWith('http')) ? 
                         `<div style="width:100%; height:120px; background:url('${img}') center/cover no-repeat; border-radius:4px; margin-bottom:8px;"></div>` : '';
-
-                    return `<div style="background:rgba(255,255,255,0.05); padding:10px; border-radius:6px; border: 1px solid rgba(255,255,255,0.1);">
+                    
+                    const cardContent = `
                         ${imgHtml}
                         <div style="font-weight:900; color:#fff; font-size:0.85rem; margin-bottom:4px;">${name}</div>
                         <div style="font-size:0.75rem; color:#aaa;">${desc}</div>
+                    `;
+
+                    if (downloadUrl && downloadUrl.toLowerCase().startsWith('http')) {
+                        return `<a href="${downloadUrl}" target="_blank" style="text-decoration:none; display:block;">
+                            <div style="background:rgba(255,255,255,0.05); padding:10px; border-radius:6px; border: 1px solid rgba(255,255,255,0.1); transition: all 0.2s ease;" onmouseover="this.style.borderColor='#ffd700'; this.style.background='rgba(255,215,0,0.1)'" onmouseout="this.style.borderColor='rgba(255,255,255,0.1)'; this.style.background='rgba(255,255,255,0.05)'">
+                                ${cardContent}
+                                <div style="margin-top:8px; font-size:0.7rem; color:#ffd700; text-align:right; font-weight:bold;">⬇ DOWNLOAD</div>
+                            </div>
+                        </a>`;
+                    }
+
+                    return `<div style="background:rgba(255,255,255,0.05); padding:10px; border-radius:6px; border: 1px solid rgba(255,255,255,0.1);">
+                        ${cardContent}
                     </div>`;
                 }).join('');
             } catch(e) { 
