@@ -179,7 +179,6 @@
                 const server = xml.getElementsByTagName("Server")[0];
                 
                 document.getElementById('serverNameDisplay').textContent = server.getAttribute("name");
-                document.getElementById('mapDisplay').textContent = "Map: " + server.getAttribute("mapName");
                 document.getElementById('mapDisplay').textContent = `Map: ${server.getAttribute("mapName")} (v${server.getAttribute("version")})`;
                 
                 // Format Time
@@ -226,6 +225,10 @@
                 
                 document.getElementById('fieldCount').textContent = `${fieldData.length} ACTIVE ZONES`;
                 document.getElementById('fieldMatrixContainer').innerHTML = fieldData.map(f => {
+                const activeFields = fieldData.filter(f => (f.getAttribute("fruitType") || "FALLOW").toUpperCase() !== "FALLOW");
+
+                document.getElementById('fieldCount').textContent = `${activeFields.length} ACTIVE ZONES`;
+                document.getElementById('fieldMatrixContainer').innerHTML = activeFields.map(f => {
                     const id = f.getAttribute("id");
                     const crop = (f.getAttribute("fruitType") || "FALLOW").toUpperCase();
                     const stage = parseInt(f.getAttribute("growthState") || 0);
