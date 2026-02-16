@@ -497,26 +497,25 @@
                 // Find matching row in sheet
                 const sheetMod = sheetRows.find(row => {
                     const keys = Object.keys(row);
-                    const nameKey = keys.find(k => k.toLowerCase().includes('name') || k.toLowerCase().includes('mod')) || keys[0];
-                    return row[nameKey] && row[nameKey].trim() === name;
+                    // Layout: 0:Name
+                    return row[keys[0]] && row[keys[0]].trim() === name;
                 });
 
                 let img = '';
                 let downloadUrl = '';
+                let fileInfo = '';
 
                 if (sheetMod) {
                     const keys = Object.keys(sheetMod);
-                    const findKey = (k) => keys.find(key => key.toLowerCase().includes(k));
+                    // Layout: 5:URL, 6:Image
+                    // Layout: 3:Filename, 4:Size, 5:URL, 6:Image
+                    const fName = sheetMod[keys[3]];
+                    const fSize = sheetMod[keys[4]];
+                    downloadUrl = sheetMod[keys[5]] || '';
+                    img = sheetMod[keys[6]] || '';
                     
-                    img = sheetMod[findKey('image') || findKey('img') || findKey('pic') || findKey('screenshot')] || '';
-                    downloadUrl = sheetMod[findKey('url') || findKey('link') || findKey('download') || findKey('href')] || '';
-
-                    if (!img || !img.startsWith('http')) {
-                        const potentialImg = Object.values(sheetMod).find(val => 
-                            val && typeof val === 'string' && val.startsWith('http') && 
-                            /\.(jpg|jpeg|png|webp|gif)$/i.test(val)
-                        );
-                        if (potentialImg) img = potentialImg;
+                    if (fName || fSize) {
+                        fileInfo = `<div style="font-size:0.65rem; color:#888; margin-top:2px; word-break:break-all;">${fName || ''} ${fSize ? `(${fSize})` : ''}</div>`;
                     }
                     
                     if (img && img.toLowerCase().startsWith('http')) {
@@ -533,6 +532,7 @@
                     ${imgHtml}
                     <div style="font-weight:bold; color:#fff; font-size:0.8rem;">${name}</div>
                     <div style="font-size:0.7rem; color:#aaa;">v${version} | ${author}</div>
+                    ${fileInfo}
                     ${downloadUrl ? '<div style="margin-top:8px; font-size:0.7rem; color:#ffd700; text-align:right; font-weight:bold;">⬇ DOWNLOAD</div>' : ''}
                 `;
 
@@ -601,21 +601,13 @@
 
                 container.innerHTML = rows.map(row => {
                     const keys = Object.keys(row);
-                    const findKey = (k) => keys.find(key => key.toLowerCase().includes(k));
+                    // Layout: 0:Name, 1:Version, 2:Author, 3:Filename, 4:Size, 5:URL, 6:Image
                     
-                    const name = row[findKey('name') || findKey('mod') || keys[0]] || 'Unknown';
-                    let img = row[findKey('image') || findKey('img') || findKey('pic') || findKey('screenshot')] || '';
-                    const desc = row[findKey('desc') || findKey('author') || findKey('version') || keys[1]] || '';
-                    const downloadUrl = row[findKey('url') || findKey('link') || findKey('download') || findKey('href')] || '';
-                    
-                    // Fallback: Scan all columns for image URL if not found by header
-                    if (!img || !img.startsWith('http')) {
-                        const potentialImg = Object.values(row).find(val => 
-                            val && typeof val === 'string' && val.startsWith('http') && 
-                            /\.(jpg|jpeg|png|webp|gif)$/i.test(val)
-                        );
-                        if (potentialImg) img = potentialImg;
-                    }
+                    const name = row[keys[0]] || 'Unknown';
+                    const version = row[keys[1]] || '';
+                    const author = row[keys[2]] || '';
+                    const downloadUrl = row[keys[5]] || '';
+                    let img = row[keys[6]] || '';
                     
                     // Upgrade HTTP to HTTPS to prevent mixed content blocking and handle case sensitivity
                     if (img && img.toLowerCase().startsWith('http')) {
@@ -628,7 +620,7 @@
                     const cardContent = `
                         ${imgHtml}
                         <div style="font-weight:900; color:#fff; font-size:0.85rem; margin-bottom:4px;">${name}</div>
-                        <div style="font-size:0.75rem; color:#aaa;">${desc}</div>
+                        <div style="font-size:0.75rem; color:#aaa;">v${version} | ${author}</div>
                     `;
 
                     if (downloadUrl && downloadUrl.toLowerCase().startsWith('http')) {
@@ -646,6 +638,7 @@
                 }).join('');
                 
                 return rows;
+                return parseCSV(text);
             } catch(e) { 
                 console.warn("Sheet Sync Failed", e);
                 document.getElementById('sheetModsLog').innerHTML = '<div style="padding:10px; color:#ff4d4d;">Failed to load sheet data</div>';
