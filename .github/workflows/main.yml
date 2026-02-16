@@ -22,15 +22,15 @@ jobs:
         run: |
           sudo apt-get update && sudo apt-get install -y lftp
           mkdir -p dedicated_server
-          lftp -c "open -u ${{ secrets.FTP_USERNAME }},${{ secrets.FTP_PASSWORD }} ${{ secrets.FTP_SERVER }}; \
+          lftp -c "open -u ${{ secrets.FTP_USERNAME }},${{ secrets.FTP_PASSWORD }} -p ${{ secrets.PORT }} ${{ secrets.FTP_SERVER }}; \
           mirror --verbose --parallel=2 /savegame1 ./saved-game-1; \
           mirror --verbose --parallel=2 /savegame2 ./saved-game-2; \
           mirror --verbose --parallel=2 /savegame3 ./saved-game-3; \
           mirror --verbose --parallel=2 /savegame4 ./saved-game-4; \
           mirror --verbose --parallel=2 /savegame5 ./saved-game-5; \
           mirror --verbose --parallel=2 /savegame6 ./saved-game-6"
-          wget -O dedicated_server/dedicated-server-stats.xml "http://176.57.165.81:8080/feed/dedicated-server-stats.xml?code=DIaoyx8jutkGtlDr"
-          wget -O dedicated_server/map.jpg "http://176.57.165.81:8080/feed/dedicated-server-stats-map.jpg?code=DIaoyx8jutkGtlDr&quality=60&size=512"
+          wget -O dedicated_server/dedicated-server-stats.xml "http://${{ secrets.FTP_SERVER }}:8080/feed/dedicated-server-stats.xml?code=DIaoyx8jutkGtlDr"
+          wget -O dedicated_server/map.jpg "http://${{ secrets.FTP_SERVER }}:8080/feed/dedicated-server-stats-map.jpg?code=DIaoyx8jutkGtlDr&quality=60&size=512"
 
       - name:  Commit & Push Live Data
         run: |

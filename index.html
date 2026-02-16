@@ -210,6 +210,7 @@
         async function updateServerStats() {
             try {
                 const res = await fetch(`${REPO_ROOT}/dedicated_server/dedicated-server-stats.xml?v=${Date.now()}`);
+                if (!res.ok) throw new Error("Stats missing");
                 const xml = new DOMParser().parseFromString(await res.text(), "text/xml");
                 const server = xml.getElementsByTagName("Server")[0];
 
@@ -250,6 +251,7 @@
         async function updateFinancials(path) {
             try {
                 const res = await fetch(`${path}/farms.xml?v=${Date.now()}`);
+                if (!res.ok) throw new Error("Farms missing");
                 const xml = new DOMParser().parseFromString(await res.text(), "text/xml");
                 const farms = Array.from(xml.getElementsByTagName("farm"));
                 
@@ -274,6 +276,7 @@
                     fetch(`${gitPath}/fields.xml?v=${Date.now()}`),
                     fetch(`${gitPath}/farmland.xml?v=${Date.now()}`)
                 ]);
+                if (!fieldsRes.ok || !landRes.ok) throw new Error("Field data missing");
                 const fieldsXml = new DOMParser().parseFromString(await fieldsRes.text(), "text/xml");
                 const fieldData = Array.from(fieldsXml.getElementsByTagName("field"));
                 
@@ -333,6 +336,7 @@
                     fetch(`${gitPath}/animals.xml?v=${Date.now()}`),
                     fetch(`${gitPath}/placeables.xml?v=${Date.now()}`)
                 ]);
+                if (!animRes.ok || !placeRes.ok) throw new Error("Animal data missing");
                 const xml = new DOMParser().parseFromString(await animRes.text(), "text/xml");
                 const placeXml = new DOMParser().parseFromString(await placeRes.text(), "text/xml");
                 
@@ -380,6 +384,7 @@
         async function syncFactoryBlade(gitPath) {
             try {
                 const res = await fetch(`${gitPath}/placeables.xml?v=${Date.now()}`);
+                if (!res.ok) throw new Error("Factory data missing");
                 const xml = new DOMParser().parseFromString(await res.text(), "text/xml");
                 const factories = Array.from(xml.getElementsByTagName("productionPoint"));
                 
@@ -421,6 +426,7 @@
         async function syncFleet(gitPath) {
             try {
                 const res = await fetch(`${gitPath}/vehicles.xml?v=${Date.now()}`);
+                if (!res.ok) throw new Error("Fleet data missing");
                 const xml = new DOMParser().parseFromString(await res.text(), "text/xml");
                 const vehicles = Array.from(xml.getElementsByTagName("vehicle")).filter(v => v.getAttribute("farmId") !== "0");
                 
