@@ -25,7 +25,7 @@
             <param name="dmId" type="integer" desc="id for density map to use for the foliage layer, or a dataplane that shares this density map"/>
             <param name="name" type="string" desc="name of new layer"/>
             <param name="xmlFilename" type="string" desc="XML filename containing the layer definition"/>
-            <param name="" type="string" desc=""/>
+            <param name="baseDirectory" type="string" desc="baseDirectory"/>
         </input>
         <output>
             <param name="densityMapTypeId" type="integer" desc="the type ID the density map will use for this layer, or 0 if the call failed"/>
@@ -102,16 +102,16 @@
             <param name="x" type="float" desc="x"/>
             <param name="y" type="float" desc="y"/>
             <param name="z" type="float" desc="z"/>
-            <param name="x" type="float" desc="x"/>
-            <param name="y" type="float" desc="y"/>
-            <param name="z" type="float" desc="z"/>
+            <param name="dirX" type="float" desc="dirX"/>
+            <param name="dirY" type="float" desc="dirY"/>
+            <param name="dirZ" type="float" desc="dirZ"/>
             <param name="r" type="float" desc="r"/>
             <param name="g" type="float" desc="g"/>
             <param name="b" type="float" desc="b"/>
             <param name="a" type="float" desc="a"/>
             <param name="uw" type="float" desc="uw"/>
             <param name="dTheta" type="float" desc="dTheta"/>
-            <param name="" type="unknown" desc=""/>
+            <param name="width" type="float" desc="width"/>
         </input>
         <output/>
     </function>
@@ -2925,8 +2925,8 @@
             <param name="wheelShapeIndex" type="integer" desc="wheelShapeIndex"/>
         </input>
         <output>
-            <param name="wheelShapeSlip" type="float" desc="wheelShapeSlip"/>
-            <param name="wheelShapeSlip" type="float" desc="wheelShapeSlip"/>
+            <param name="longSlip" type="float" desc="longSlip"/>
+            <param name="latSlip" type="float" desc="latSlip"/>
         </output>
     </function>
     <function name="getWorldQuaternion" desc="Gets world quaternion" category="Scenegraph">
@@ -4862,10 +4862,10 @@
             <param name="value" type="integer" desc="value"/>
         </output>
     </function>
-    <function name="streamReadIntN" desc="Stream read 32bit signed integer" category="Network">
+    <function name="streamReadIntN" desc="Stream read N bit signed integer" category="Network">
         <input>
             <param name="streamId" type="integer" desc="streamId"/>
-            <param name="numberofBits" type="integer" desc="numberofBits"/>
+            <param name="numberOfBits" type="integer" desc="numberOfBits"/>
         </input>
         <output>
             <param name="value" type="integer" desc="value"/>
@@ -4903,7 +4903,7 @@
             <param name="uint8" type="integer" desc="uint8"/>
         </output>
     </function>
-    <function name="streamReadUIntN" desc="Stream write N-bit unsigned integer. 0&amp;lt;N&amp;lt;32." category="Network">
+    <function name="streamReadUIntN" desc="Stream read N-bit unsigned integer. 0&lt;N&lt;32." category="Network">
         <input>
             <param name="streamId" type="integer" desc="streamId"/>
             <param name="numberOfBits" type="integer" desc="numberOfBits"/>
@@ -5032,7 +5032,7 @@
         <input>
             <param name="streamId" type="integer" desc="streamId"/>
             <param name="value" type="integer" desc="value"/>
-            <param name="numberofBits" type="integer" desc="numberofBits"/>
+            <param name="numberOfBits" type="integer" desc="numberOfBits"/>
         </input>
         <output/>
     </function>
