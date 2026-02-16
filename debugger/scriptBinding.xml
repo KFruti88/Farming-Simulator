@@ -354,7 +354,9 @@
             <param name="loops" type="integer" desc="loops"/>
         </input>
         <output>
-            <param name="" type="integer" desc=""/>
+            <param name="audioSourceId" type="integer" desc="audioSourceId"/>
+            <param name="conditionalAnimationId" type="integer" desc="conditionalAnimationId"/>
+            <param name="overlayId" type="integer" desc="overlayId"/>
         </output>
     </function>
     <function name="createCamera" desc="Create camera" category="">
@@ -1241,8 +1243,8 @@
     </function>
     <function name="getAnimTrackTime" desc="Get animation track loop state" category="Animation">
         <input>
+            <param name="characterSetId" type="integer" desc="characterSetId"/>
             <param name="trackId" type="integer" desc="trackId"/>
-            <param name="" type="integer" desc=""/>
         </input>
         <output>
             <param name="time" type="float" desc="time"/>
@@ -1253,7 +1255,8 @@
             <param name="" type="integer" desc=""/>
         </input>
         <output>
-            <param name="" type="boolean" desc=""/>
+            <param name="hasTrigger" type="boolean" desc="hasTrigger"/>
+            <param name="success" type="boolean" desc="success"/>
         </output>
     </function>
     <function name="getAudioSourceInnerRange" desc="" category="">
@@ -4879,7 +4882,7 @@
             <param name="timestamp" type="integer" desc="timestamp"/>
         </output>
     </function>
-    <function name="streamReadString" desc="Stream read 32bit float" category="Network">
+    <function name="streamReadString" desc="Stream read string" category="Network">
         <input>
             <param name="streamId" type="integer" desc="streamId"/>
         </input>
@@ -4945,9 +4948,7 @@
             <param name="streamId" type="integer" desc="streamId"/>
             <param name="value" type="boolean" desc="value"/>
         </input>
-        <output>
-            <param name="value" type="boolean" desc="value"/>
-        </output>
+        <output/>
     </function>
     <function name="streamWriteFloat32" desc="Stream write 32bit float" category="Network">
         <input>
@@ -5280,7 +5281,7 @@
             <param name="streamId" type="integer" desc="streamId"/>
         </input>
         <output>
-            <param name="" type="boolean" desc=""/>
+            <param name="success" type="boolean" desc="success"/>
         </output>
     </function>
     <function name="writeTerrainUpdateStream" desc="" category="">
