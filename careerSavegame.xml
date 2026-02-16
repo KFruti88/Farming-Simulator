@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<careerSavegame revision="2" valid="true">
+    <settings>
+        <savegameName>My game save</savegameName>
+        <creationDate>2026-02-14</creationDate>
+        <mapId>FS22_fourFields.fourFields</mapId>
+        <mapTitle>Four Fields</mapTitle>
+        <saveDateFormatted>2026-02-16</saveDateFormatted>
+        <saveDate>2026-02-16</saveDate>
+        <resetVehicles>false</resetVehicles>
+        <trafficEnabled>true</trafficEnabled>
+        <stopAndGoBraking>true</stopAndGoBraking>
+        <trailerFillLimit>false</trailerFillLimit>
+        <automaticMotorStartEnabled>true</automaticMotorStartEnabled>
+        <growthMode>1</growthMode>
+        <plannedDaysPerPeriod>1</plannedDaysPerPeriod>
+        <fruitDestruction>true</fruitDestruction>
+        <plowingRequiredEnabled>true</plowingRequiredEnabled>
+        <stonesEnabled>true</stonesEnabled>
+        <weedsEnabled>true</weedsEnabled>
+        <limeRequired>true</limeRequired>
+        <isSnowEnabled>true</isSnowEnabled>
+        <fuelUsage>2</fuelUsage>
+        <helperBuyFuel>true</helperBuyFuel>
+        <helperBuySeeds>true</helperBuySeeds>
+        <helperBuyFertilizer>true</helperBuyFertilizer>
+        <helperSlurrySource>2</helperSlurrySource>
+        <helperManureSource>2</helperManureSource>
+        <densityMapRevision>3</densityMapRevision>
+        <terrainTextureRevision>1</terrainTextureRevision>
+        <terrainLodTextureRevision>2</terrainLodTextureRevision>
+        <splitShapesRevision>2</splitShapesRevision>
+        <tipCollisionRevision>2</tipCollisionRevision>
+        <placementCollisionRevision>2</placementCollisionRevision>
+        <navigationCollisionRevision>2</navigationCollisionRevision>
+        <mapDensityMapRevision>1</mapDensityMapRevision>
+        <mapTerrainTextureRevision>1</mapTerrainTextureRevision>
+        <mapTerrainLodTextureRevision>1</mapTerrainLodTextureRevision>
+        <mapSplitShapesRevision>1</mapSplitShapesRevision>
+        <mapTipCollisionRevision>1</mapTipCollisionRevision>
+        <mapPlacementCollisionRevision>1</mapPlacementCollisionRevision>
+        <mapNavigationCollisionRevision>1</mapNavigationCollisionRevision>
+        <difficulty>2</difficulty>
+        <economicDifficulty>2</economicDifficulty>
+        <dirtInterval>3</dirtInterval>
+        <timeScale>5.000000</timeScale>
+        <autoSaveInterval>15.000000</autoSaveInterval>
+    </settings>
+    <guidedTour active="false" currentStepIndex="0" state=""/>
+    <map>
+        <foundHelpIcons>00000000000000000000</foundHelpIcons>
+    </map>
+    <statistics>
+        <money>0</money>
+        <playTime>0.000000</playTime>
+    </statistics>
+    <slotSystem slotUsage="1996"/>
+    <mapsSplitShapeFileIds count="1">
+        <id id="0"/>
+    </mapsSplitShapeFileIds>
+    <mod modName="FS22_powerLines" title="Placeable Power Line" version="1.0.1.0" required="false" fileHash="ac5bb0b05add91e634b4707ae7846a7e"/>
+    <mod modName="FS22_SolarFarmsLizard" title="Solar Farms Lizard" version="1.0.0.0" required="false" fileHash="228d234d70c67982804803896e06b674"/>
+    <mod modName="FS22_dropdeckTrailer53Ft_AutoPack_crossplay" title="53' Dropdeck Trailer Autoload Bales" version="2.0.0.1" required="false" fileHash="42ee58b6cb4fc1f476612f868d8688e9"/>
+    <mod modName="FS22_precisionFarming" title="Precision Farming DLC" version="1.0.2.1" required="false" fileHash="5359be9ae727974edde9f964b4739661"/>
+    <mod modName="FS22_Pack_Autoload" title="Autoload Pack" version="1.0.1.0" required="false" fileHash="df64c6f23ca595e49e6f3ea8056336a8"/>
+    <mod modName="FS22_KuhnAxis402" title="Kuhn Axis 402" version="1.0.0.0" required="false" fileHash="bca2c3b7dd8c9f7ef9e428db71149dba"/>
+    <mod modName="FS22_strawHarvestPack" title="Straw Harvest Pack" version="1.2.0.1" required="false" fileHash="1597574bd52d68be39b78f6122c95714"/>
+    <mod modName="FS22_Lizard_Trex_600" title="LIZARD Trex600" version="1.0.0.0" required="false" fileHash="f18efe711c76416b6fd05e5165297b01"/>
+    <mod modName="FS22_AutomaticWater_Animals_Greenhouses" title="Automatic Water For Animals And Greenhouses" version="1.0.0.0" required="false" fileHash="2fb0a448516ab94aa2f01289c08ec42e"/>
+    <mod modName="FS22_sellEverything" title="Sell Everything" version="1.0.0.3" required="false" fileHash="2be24ccbc8390491d1394eddaf5f3ac5"/>
+    <mod modName="FS22_Refillable_Tanks" title="Refillable Tanks" version="1.1.0.0" required="false" fileHash="87af19430d7becb04f46c16ea3147582"/>
+    <mod modName="FS22_freefuel" title="Free Fuel" version="1.0.1.0" required="false" fileHash="5f82fd33dbb32974b533f28c8e6ebb10"/>
+    <mod modName="FS22_R3_HarvestProfit" title="Harvest Profit" version="1.0.0.0" required="false" fileHash="23b3d06aacd5b2b14b5db0f4cf44d9a5"/>
+    <mod modName="FS22_The_White_Farm_Buildingpack" title="USA White Farm Buildingpack" version="1.0.0.1" required="false" fileHash="4a9798a45124acc32a70773bc754af8c"/>
+    <mod modName="FS22_John_Deere_CP_770" title="John Deere CP 770" version="1.0.0.0" required="false" fileHash="4d17bb93ae095aabf30e91266663c635"/>
+    <mod modName="FS22_Pro_Bale_Fork_Autoload" title="Pro Bale Grab Autoload" version="1.0.0.0" required="false" fileHash="34773893028a75ced63dc2b8d10b6c43"/>
+    <mod modName="FS22_Rake_Lizard_R90" title="Lizard Front Windrower" version="2.0.0.0" required="false" fileHash="19a63f813c088682d3dc55e42bfc0b8d"/>
+    <mod modName="FS22_RM_Subsidy" title="Government Subsidy" version="1.0.0.0" required="false" fileHash="8a6b59d79f29f13b76e80eb699b9417c"/>
+    <mod modName="FS22_precisionFarming_extension" title="ISARIA Color And Range Extension" version="1.0.0.0" required="false" fileHash="167dca57362bc13bbf10e2275fe2313e"/>
+    <mod modName="FS22_PlaceableSymbols" title="Placeable Glowing Symbols Pack" version="1.0.0.0" required="false" fileHash="0e685b2c7447757b63ed3310091690ba"/>
+    <mod modName="FS22_Multifruit_Buying_Station" title="Multifruit Buying Station" version="1.0.3.2" required="false" fileHash="fa4e9962891aea7a1b54e06cd01ec934"/>
+    <mod modName="FS22_fourFields" title="Four Fields" version="1.0.1.0" required="true" fileHash="78c601dd08d8969657fccec86e9ddcfc"/>
+    <mod modName="FS22_TLX_X52_Tipper" title="TLX X52 Tipper" version="1.0.0.0" required="false" fileHash="2fd4039965d12ea66912ff9f5a652ff2"/>
+    <mod modName="FS22_T4_40_Multi_Harvester_Pack" title="T4-40 Multi Harvester Pack" version="1.0.0.1" required="false" fileHash="599ca59f3208a512b03e0ade4b3eb6d6"/>
+    <mod modName="FS22_kinzeMultiFruitPlanterPack" title="Kinze Multi-Fruit Planter Pack" version="1.2.0.0" required="false" fileHash="c2e3f0d18c557453752a7abe648520aa"/>
+    <mod modName="FS22_Quickbale" title="QuickBale" version="1.0.0.4" required="false" fileHash="13a3954c97920a6fdc02bc945873e2c9"/>
+    <mod modName="pdlc_forestryPack" title="Platinum Expansion" version="1.3.0.0" required="false" fileHash="329e90792fd90c2ca716253d202aa7a4"/>
+    <mod modName="FS22_TreeBGone" title="Tree-B-Gone" version="1.0.1.0" required="false" fileHash="7906892fe3238fe887dbc8bda96e22cc"/>
+    <mod modName="FS22_WirelessWasher" title="Wireless High Pressure Washer" version="1.0.0.0" required="false" fileHash="56956c9b5dabdad3a0cc7dc3d212b27d"/>
+    <mod modName="FS22_CaseIH_Puma_Series" title="Case Puma 240 CVX Powerdrive" version="1.0.1.0" required="false" fileHash="30a4e21bcd6b3b605870206aa6a6820c"/>
+    <mod modName="FS22_AmericanShedWithLounge" title="American Shed With Lounge" version="1.0.0.0" required="false" fileHash="04df4ad978bd172a12a9797ad191daed"/>
+    <mod modName="FS22_WindTurbinePackage" title="Wind Turbine Package" version="1.3.0.0" required="false" fileHash="30b628376b3e3d91a537513b713cd83b"/>
+    <mod modName="FS22_OldMill" title="Old Grain Mills" version="1.2.0.0" required="false" fileHash="9f22a2fd5f32ec11d5b6eb688b727225"/>
+    <mod modName="FS22_Silo_Pack" title="Silo And Containers" version="1.0.0.0" required="false" fileHash="ac9967e3702cfed37232d2fbc0e85b42"/>
+    <mod modName="FS22_Lizard_SM72_SM82" title="Lizard SM 72 / SM 82" version="1.0.0.0" required="false" fileHash="84e136d8e2d4e6a0057fe281b53899bb"/>
+    <mod modName="FS22_tardisLoader" title="Lizard Tardis XL" version="1.3.1.0" required="false" fileHash="586eaccb2b3d9a8ad5b00d45d1e07e30"/>
+</careerSavegame>

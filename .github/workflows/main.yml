@@ -27,7 +27,8 @@ jobs:
           mirror --verbose --parallel=2 /savegame2 ./saved-game-2; \
           mirror --verbose --parallel=2 /savegame3 ./saved-game-3; \
           mirror --verbose --parallel=2 /savegame4 ./saved-game-4; \
-          mirror --verbose --parallel=2 /savegame5 ./saved-game-5"
+          mirror --verbose --parallel=2 /savegame5 ./saved-game-5; \
+          mirror --verbose --parallel=2 /savegame6 ./saved-game-6"
           wget -O dedicated_server/dedicated-server-stats.xml "http://176.57.165.81:8080/feed/dedicated-server-stats.xml?code=DIaoyx8jutkGtlDr"
           wget -O dedicated_server/map.jpg "http://176.57.165.81:8080/feed/dedicated-server-stats-map.jpg?code=DIaoyx8jutkGtlDr&quality=60&size=512"
 
@@ -35,7 +36,7 @@ jobs:
         run: |
           git config --global user.name "Werewolf-Automation"
           git config --global user.email "kevin@ourflora.com"
-          git add saved-game-1/ saved-game-2/ saved-game-3/ saved-game-4/ saved-game-5/ dedicated_server/
+          git add saved-game-1/ saved-game-2/ saved-game-3/ saved-game-4/ saved-game-5/ saved-game-6/ dedicated_server/
           # Only commit if actual game changes (money, hours, etc.) are detected
           git commit -m "Live Update: All 5 Save Slots Synchronized from G-Portal" || exit 0
           git push
