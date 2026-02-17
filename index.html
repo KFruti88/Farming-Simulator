@@ -73,6 +73,7 @@
                         <div class="status-bar">
                             <span id="mapDisplay">Map: Detecting...</span> | <span id="gameClock">Time: 00:00</span> | <span id="lastSyncDisplay" style="color: #00d4ff; font-weight: bold;">Syncing...</span>
                             <span id="mapDisplay">Map: Connecting...</span> | <span id="gameClock">Time: --:--</span> | <span id="lastSyncDisplay" style="color: #00d4ff; font-weight: bold;">Awaiting Server Response</span>
+                            <span id="mapDisplay">Map: --</span> | <span id="gameClock">Time: --:--</span> | <span id="lastSyncDisplay" style="color: #00d4ff; font-weight: bold;">System Ready</span>
                         </div>
                     </div>
                 </div>
@@ -88,6 +89,9 @@
         </header>
 
         <section class="ops-matrix">
+            <div id="farmCardsContainer" style="display: contents;">
+                <!-- Dynamic Farm Cards -->
+            </div>
             <article class="glass-panel card">
                 <div class="card-tag"> werewolf3788 (FARM 1)</div>
                 <div id="kevinFinance" class="telemetry-body">$0.00</div>
@@ -98,8 +102,15 @@
             </article>
             <article class="glass-panel card">
                 <div class="card-tag">👨‍🌾 ACTIVE FARMERS</div>
-                <div id="playerLog" class="telemetry-body">Scanning...</div>
                 <div id="playerLog" class="telemetry-body">No Players Online</div>
+                <div id="playerLog" class="telemetry-body">
+                    <table style="width:100%; text-align:left; font-size:0.8rem; border-collapse: collapse;">
+                        <thead><tr style="border-bottom:1px solid rgba(255,255,255,0.1); color:#aaa;"><th>Name</th><th>Time</th><th>Admin</th></tr></thead>
+                        <tbody id="playerTableBody">
+                            <tr><td colspan="3" style="padding:10px; text-align:center; color:#666;">No Players Online</td></tr>
+                        </tbody>
+                    </table>
+                </div>
             </article>
         </section>
 
@@ -110,6 +121,7 @@
                         <h2>🌱 MODULE 1: CROP & SOIL MATRIX</h2>
                         <span id="fieldCount" class="badge">INITIALIZING DEEP SCAN...</span>
                         <span id="fieldCount" class="badge">STATUS: PENDING</span>
+                        <span id="fieldCount" class="badge">0 ZONES</span>
                     </div>
                     <div id="fieldMatrixContainer" class="matrix-grid scroll-list main-scroll"></div>
                     <div id="fieldMatrixContainer" class="matrix-grid scroll-list main-scroll">
@@ -123,6 +135,7 @@
                         <h2>🐄 MODULE 2: LIVESTOCK</h2>
                         <span id="animalCount" class="badge">INITIALIZING SCAN...</span>
                         <span id="animalCount" class="badge">STATUS: PENDING</span>
+                        <span id="animalCount" class="badge">0 HEAD</span>
                     </div>
                     <div id="animalMatrixContainer" class="matrix-grid scroll-list main-scroll"></div>
                     <div id="animalMatrixContainer" class="matrix-grid scroll-list main-scroll">
@@ -136,6 +149,7 @@
                         <h2>🏭 MODULE 3: FACTORIES</h2>
                         <span id="factoryCount" class="badge">ANALYZING WAREHOUSES...</span>
                         <span id="factoryCount" class="badge">STATUS: PENDING</span>
+                        <span id="factoryCount" class="badge">0 FACILITIES</span>
                     </div>
                     <div id="factoryMatrixContainer" class="matrix-grid scroll-list main-scroll"></div>
                     <div id="factoryMatrixContainer" class="matrix-grid scroll-list main-scroll">
@@ -151,6 +165,7 @@
             <div id="fleetLog" class="telemetry-grid">
                 <div style="padding:20px; color:#aaa; text-align:center;">Server has not been accessed yet. Fleet data unavailable.</div>
             </div>
+            <div id="fleetLog" class="telemetry-grid">Fleet Standby</div>
         </section>
 
         <section class="glass-panel card server-info-section" style="margin-top: 20px;">
@@ -158,12 +173,17 @@
             <div class="server-details-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; padding: 15px; color: #fff;">
                 <div><label style="color:#aaa; font-size:0.7rem; font-weight:900; display:block; margin-bottom:4px;">SERVER NAME</label><div id="detail-name" style="font-weight:bold;">Loading...</div></div>
                 <div><label style="color:#aaa; font-size:0.7rem; font-weight:900; display:block; margin-bottom:4px;">SERVER NAME</label><div id="detail-name" style="font-weight:bold;">Waiting for Data...</div></div>
+                <div><label style="color:#aaa; font-size:0.7rem; font-weight:900; display:block; margin-bottom:4px;">SERVER NAME</label><div id="detail-name" style="font-weight:bold;">618 crew</div></div>
                 <div><label style="color:#aaa; font-size:0.7rem; font-weight:900; display:block; margin-bottom:4px;">GAME</label><div id="detail-game">Farming Simulator 22</div></div>
                 <div><label style="color:#aaa; font-size:0.7rem; font-weight:900; display:block; margin-bottom:4px;">LOCATION</label><div>United States</div></div>
                 <div><label style="color:#aaa; font-size:0.7rem; font-weight:900; display:block; margin-bottom:4px;">MAP</label><div id="detail-map">Loading...</div></div>
                 <div><label style="color:#aaa; font-size:0.7rem; font-weight:900; display:block; margin-bottom:4px;">MAP SIZE</label><div id="detail-size">Loading...</div></div>
+                <div><label style="color:#aaa; font-size:0.7rem; font-weight:900; display:block; margin-bottom:4px;">IP ADDRESS</label><div>176.57.165.81 : 10823</div></div>
                 <div><label style="color:#aaa; font-size:0.7rem; font-weight:900; display:block; margin-bottom:4px;">MAP</label><div id="detail-map">--</div></div>
                 <div><label style="color:#aaa; font-size:0.7rem; font-weight:900; display:block; margin-bottom:4px;">MAP SIZE</label><div id="detail-size">--</div></div>
+                <div><label style="color:#aaa; font-size:0.7rem; font-weight:900; display:block; margin-bottom:4px;">SLOTS</label><div id="detail-slots">6 Players</div></div>
+                <div><label style="color:#aaa; font-size:0.7rem; font-weight:900; display:block; margin-bottom:4px;">LANGUAGE</label><div>English</div></div>
+                <div><label style="color:#aaa; font-size:0.7rem; font-weight:900; display:block; margin-bottom:4px;">CROSSPLAY</label><div style="color:#22c55e; font-weight:bold;">Enabled</div></div>
                 <div><label style="color:#aaa; font-size:0.7rem; font-weight:900; display:block; margin-bottom:4px;">DISCORD</label><div><a href="https://discord.gg/sMeYydGGyb" target="_blank" style="color:#ffd700; text-decoration:none;">Join Community</a></div></div>
                 <div style="grid-column: 1 / -1;"><label style="color:#aaa; font-size:0.7rem; font-weight:900; display:block; margin-bottom:4px;">TAGS</label><div style="font-size:0.8rem;">Farming, Grain, Easy Mode, Crossplay, PC, Console, Mods</div></div>
                 <div style="grid-column: 1 / -1; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 10px;">
@@ -173,16 +193,19 @@
                             <div style="color:#aaa; font-weight:900; margin-bottom:2px;">📄 CAREER</div>
                             <div id="feed-career" style="color:#fff; line-height:1.2;">Loading...</div>
                             <div id="feed-career" style="color:#fff; line-height:1.2;">Not Accessed</div>
+                            <div id="feed-career" style="color:#fff; line-height:1.2;">--</div>
                         </div>
                         <div style="background:rgba(255,255,255,0.05); padding:8px; border-radius:4px;">
                             <div style="color:#aaa; font-weight:900; margin-bottom:2px;">🚜 VEHICLES</div>
                             <div id="feed-vehicles" style="color:#fff;">Scanning...</div>
                             <div id="feed-vehicles" style="color:#fff;">Not Accessed</div>
+                            <div id="feed-vehicles" style="color:#fff;">--</div>
                         </div>
                         <div style="background:rgba(255,255,255,0.05); padding:8px; border-radius:4px;">
                             <div style="color:#aaa; font-weight:900; margin-bottom:2px;">💰 ECONOMY</div>
                             <div id="feed-economy" style="color:#ffd700;">Calculating...</div>
                             <div id="feed-economy" style="color:#ffd700;">Not Accessed</div>
+                            <div id="feed-economy" style="color:#ffd700;">$0.00</div>
                         </div>
                     </div>
                 </div>
@@ -192,6 +215,7 @@
         <section class="glass-panel card mods-section" style="margin-top: 20px;">
             <div class="card-tag">🛠️ MODS & DLC WORKSHOP</div>
             <div id="modsLog" class="telemetry-grid" style="max-height: 300px; overflow-y: auto; display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 10px;">Scanning Library...</div>
+            <div id="modsLog" class="telemetry-grid" style="max-height: 300px; overflow-y: auto; display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 10px;">Mod Library Empty</div>
         </section>
 
         <section class="glass-panel card trophy-section" style="margin-top: 20px;">
@@ -214,6 +238,7 @@
     <script>
         // Main Dashboard Logic
         const REPO_ROOT = "."; // Relative path to root
+        let activeFarms = {}; // Global registry of farm IDs to Names
         
         document.addEventListener('DOMContentLoaded', () => {
             const selector = document.getElementById('saveSelector');
@@ -233,9 +258,11 @@
 
             // 0. Sync Mod Sheet (Fetch first to use data in server stats)
             const sheetData = await syncModSheet();
+            window.sheetData = await syncModSheet();
 
             // 1. Update Header & Money
             await updateServerStats(sheetData); // Wait for live stats first
+            await updateFinancials(path); // Await to populate activeFarms for other modules
             updateFinancials(path);
             syncCareerStats(path);
 
@@ -246,6 +273,9 @@
             
             // 3. Sync Fleet (Custom implementation for index.html)
             syncFleet(path);
+            
+            // 4. Sync Mods from Save (Correct source for active mods)
+            syncModsFromSave(path);
 
             // 4. Sync Trophies
             syncTrophies();
@@ -326,10 +356,23 @@
                     document.getElementById('gameClock').textContent = `Time: ${hours.toString().padStart(2,'0')}:${minutes.toString().padStart(2,'0')}`;
                     
                     // Update Players
+                    // Update Players Table
                     const slots = xml.getElementsByTagName("Slots")[0];
                     if (slots) {
                         const used = slots.getAttribute("numUsed");
                         document.getElementById('playerLog').textContent = `${used} / ${slots.getAttribute("capacity")} ONLINE`;
+                        const players = Array.from(slots.getElementsByTagName("Player")).filter(p => p.getAttribute("isUsed") === "true");
+                        const tbody = document.getElementById('playerTableBody');
+                        if (players.length > 0) {
+                            tbody.innerHTML = players.map(p => `
+                                <tr style="border-bottom:1px solid rgba(255,255,255,0.05);">
+                                    <td style="padding:6px; font-weight:bold; color:#fff;">${p.textContent}</td>
+                                    <td style="padding:6px; color:#ffd700;">${p.getAttribute("uptime")}m</td>
+                                    <td style="padding:6px; color:${p.getAttribute("isAdmin")==='true'?'#ff4d4d':'#aaa'};">${p.getAttribute("isAdmin")==='true'?'ADMIN':'-'}</td>
+                                </tr>`).join('');
+                        } else {
+                            tbody.innerHTML = '<tr><td colspan="3" style="padding:10px; text-align:center; color:#666;">No Players Online</td></tr>';
+                        }
                     }
 
                     // Update Server Details Module
@@ -358,6 +401,8 @@
                 const res = await fetch(`${path}/careerSavegame.xml?v=${Date.now()}`);
                 if (res.ok) {
                     const xml = new DOMParser().parseFromString(await res.text(), "text/xml");
+                    const mapTitle = xml.getElementsByTagName("mapTitle")[0]?.textContent || "Unknown Map";
+                    const saveName = xml.getElementsByTagName("savegameName")[0]?.textContent || "My game save";
                     const saveDate = xml.getElementsByTagName("saveDateFormatted")[0]?.textContent || "-";
                     const playTimeMin = parseFloat(xml.getElementsByTagName("playTime")[0]?.textContent || 0);
                     const hours = Math.floor(playTimeMin / 60);
@@ -365,6 +410,7 @@
                     const difficulty = xml.getElementsByTagName("difficulty")[0]?.textContent;
                     const diffMap = {1: "Easy", 2: "Normal", 3: "Hard"};
                     
+
                     document.getElementById('feed-career').innerHTML = `<span style="color:#ffd700">${saveDate}</span><br>${hours}h ${mins}m • ${diffMap[difficulty]||'Custom'}`;
                 }
             } catch(e) {
@@ -380,6 +426,9 @@
                 const xml = new DOMParser().parseFromString(await res.text(), "text/xml");
                 const farms = Array.from(xml.getElementsByTagName("farm"));
                 
+                activeFarms = {}; // Reset global registry
+                let html = '';
+                let totalMoney = 0;
                 const f1 = farms.find(f => f.getAttribute("farmId") === "1");
                 const f2 = farms.find(f => f.getAttribute("farmId") === "2");
                 
@@ -388,17 +437,37 @@
                 document.getElementById('kevinFinance').textContent = fmt(f1?.getAttribute("money"));
                 document.getElementById('rayFinance').textContent = fmt(f2?.getAttribute("money"));
 
+                farms.forEach(f => {
+                    const id = f.getAttribute("farmId");
+                    const name = f.getAttribute("name");
+                    const money = parseFloat(f.getAttribute("money") || 0);
+                    
+                    if (id !== "0") { // Ignore Spectator/System farm
+                        activeFarms[id] = name;
+                        totalMoney += money;
+                        const fmtMoney = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(money);
+                        html += `
+                        <article class="glass-panel card">
+                            <div class="card-tag">💵 ${name} (FARM ${id})</div>
+                            <div class="telemetry-body">${fmtMoney}</div>
+                        </article>`;
+                    }
+                });
+
+                document.getElementById('farmCardsContainer').innerHTML = html;
+
                 // Update Summary Feed
+                const fmt = (val) => new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(val || 0);
+                document.getElementById('feed-economy').textContent = fmt(totalMoney);
                 const total = (parseFloat(f1?.getAttribute("money")||0) + parseFloat(f2?.getAttribute("money")||0));
                 document.getElementById('feed-economy').textContent = fmt(total);
             } catch(e) { 
                 console.warn("Financial Sync Failed", e); 
+                document.getElementById('farmCardsContainer').innerHTML = `<article class="glass-panel card"><div class="card-tag">💵 FARM DATA</div><div class="telemetry-body">Not Accessed</div></article>`;
+                document.getElementById('feed-economy').textContent = "Not Accessed";
                 document.getElementById('kevinFinance').textContent = "---";
                 document.getElementById('rayFinance').textContent = "---";
                 document.getElementById('feed-economy').textContent = "---";
-                document.getElementById('kevinFinance').textContent = "Not Accessed";
-                document.getElementById('rayFinance').textContent = "Not Accessed";
-                document.getElementById('feed-economy').textContent = "Not Accessed";
             }
         }
 
@@ -430,6 +499,7 @@
                     const isMulched = f.getAttribute("isMulched") === "true";
                     
                     const ownerId = f.getAttribute("owner");
+                    const ownerName = activeFarms[ownerId] || (ownerId === "0" ? "VACANT" : `FARM ${ownerId}`);
                     const ownerName = ownerId === "2" ? "raymystro" : (ownerId === "1" ? "werewolf3788" : "VACANT");
                     const isReady = stage >= 6; 
 
@@ -449,6 +519,7 @@
                     return `<div class="field-card ${isReady ? 'harvest-ready' : ''}">
                         <div class="field-top">
                             <span class="field-id">ZONE ${id}</span>
+                            <span class="owner-tag ${ownerId === '1' ? 'green' : 'gold'}">${ownerName}</span>
                             <span class="owner-tag ${ownerName === 'raymystro' ? 'gold' : 'green'}">${ownerName}</span>
                         </div>
                         <div class="field-main-info">
@@ -472,6 +543,8 @@
                 document.getElementById('fieldCount').textContent = "NO DATA";
                 document.getElementById('fieldMatrixContainer').innerHTML = "<div style='padding:15px; color:#aaa;'>Waiting for field data...</div>";
                 document.getElementById('fieldMatrixContainer').innerHTML = "<div style='padding:20px; color:#aaa; text-align:center;'>Server has not been accessed yet. Field data unavailable.</div>";
+                document.getElementById('fieldCount').textContent = "0 ZONES";
+                document.getElementById('fieldMatrixContainer').innerHTML = "<div style='padding:15px; color:#aaa;'>No Field Data Available</div>";
             }
         }
 
@@ -524,6 +597,8 @@
                 document.getElementById('animalCount').textContent = "NO DATA";
                 document.getElementById('animalMatrixContainer').innerHTML = "<div style='padding:15px; color:#aaa;'>Waiting for animal data...</div>";
                 document.getElementById('animalMatrixContainer').innerHTML = "<div style='padding:20px; color:#aaa; text-align:center;'>Server has not been accessed yet. Livestock data unavailable.</div>";
+                document.getElementById('animalCount').textContent = "0 HEAD";
+                document.getElementById('animalMatrixContainer').innerHTML = "<div style='padding:15px; color:#aaa;'>No Livestock Data Available</div>";
             }
         }
 
@@ -540,12 +615,14 @@
                     const parent = f.parentElement;
                     const name = parent.getAttribute("filename").split('/').pop().replace('.xml','').toUpperCase();
                     const ownerId = parent.getAttribute("farmId");
+                    const ownerName = activeFarms[ownerId] || `FARM ${ownerId}`;
                     const ownerName = ownerId === "2" ? "raymystro" : "werewolf3788";
                     
                     const productions = Array.from(f.getElementsByTagName("production"));
                     const storage = Array.from(f.getElementsByTagName("storage")[0]?.children || []);
 
                     return `<div class="factory-card">
+                        <div class="card-top"><span class="factory-id">${name}</span><span class="owner-tag ${ownerId === '1' ? 'green' : 'gold'}">${ownerName}</span></div>
                         <div class="card-top"><span class="factory-id">${name}</span><span class="owner-tag ${ownerName === 'raymystro' ? 'gold' : 'green'}">${ownerName}</span></div>
                         <div class="production-lines">
                             ${productions.map(p => {
@@ -572,6 +649,8 @@
                 document.getElementById('factoryCount').textContent = "NO DATA";
                 document.getElementById('factoryMatrixContainer').innerHTML = "<div style='padding:15px; color:#aaa;'>Waiting for production data...</div>";
                 document.getElementById('factoryMatrixContainer').innerHTML = "<div style='padding:20px; color:#aaa; text-align:center;'>Server has not been accessed yet. Production data unavailable.</div>";
+                document.getElementById('factoryCount').textContent = "0 FACILITIES";
+                document.getElementById('factoryMatrixContainer').innerHTML = "<div style='padding:15px; color:#aaa;'>No Production Data Available</div>";
             }
         }
 
@@ -588,6 +667,8 @@
 
                 document.getElementById('fleetLog').innerHTML = vehicles.map(v => {
                     let name = v.getAttribute("filename").split('/').pop().replace('.xml','').toUpperCase();
+                    const farmId = v.getAttribute("farmId");
+                    const farmName = activeFarms[farmId] || `FARM ${farmId}`;
                     const farm = v.getAttribute("farmId") === "1" ? "werewolf3788" : "raymystro";
                     
                     // Enhanced Naming for Pallets/Bags/Bales
@@ -604,6 +685,7 @@
                     const damage = (parseFloat(v.getElementsByTagName("wearable")[0]?.getAttribute("damage") || 0) * 100).toFixed(0);
                     
                     return `<div style="display:flex; justify-content:space-between; border-bottom:1px solid #333; padding:5px;">
+                        <span>🚜 ${name}</span><span style="color:${farmId==='1'?'#7cfc00':'#ffd700'}">${farmName}</span>
                         <span>🚜 ${name}</span><span style="color:${farm==='werewolf3788'?'#7cfc00':'#ffd700'}">${farm}</span>
                         <span>⛽ ${fuelGal} gal</span><span style="color:${damage>10?'#ff4d4d':'#22c55e'}">🔧 ${damage}%</span>
                     </div>`;
@@ -614,6 +696,8 @@
                 document.getElementById('feed-vehicles').textContent = "Offline";
                 document.getElementById('fleetLog').innerHTML = "<div style='padding:20px; color:#aaa; text-align:center;'>Server has not been accessed yet. Fleet data unavailable.</div>";
                 document.getElementById('feed-vehicles').textContent = "Not Accessed";
+                document.getElementById('fleetLog').innerHTML = "<div style='padding:10px; color:#aaa;'>No Fleet Data Available</div>";
+                document.getElementById('feed-vehicles').textContent = "0 Units";
             }
         }
 
@@ -633,6 +717,7 @@
 
                 // Find matching row in your Google Sheet (Column G is index 6)
                 const sheetMod = sheetRows.find(row => {
+                    const values = row; // Row is now a direct array
                     const values = Object.values(row);
                     const sName = (values[0] || '').trim().toLowerCase(); // Mod Name (Col A)
                     const sFile = (values[3] || '').trim().toLowerCase(); // Filename (Col D)
@@ -644,6 +729,7 @@
                 let fileInfo = '';
 
                 if (sheetMod) {
+                    const values = sheetMod;
                     const values = Object.values(sheetMod);
                     // MAPPING: 0:Name, 1:Ver, 2:Author, 3:Filename, 4:Size, 5:URL, 6:IMAGE (Col G)
                     downloadUrl = values[5] || '';
@@ -694,18 +780,30 @@
 
         // --- TROPHY SYNC ---
         async function syncTrophies() {
-            // Load feed URLs from the config files you created
-            const [rayFeed, kevFeed] = await Promise.all([
-                fetch('rss-feed/Ray.yaml').then(r => r.ok ? r.text() : '').catch(() => ''),
-                fetch('rss-feed/Werewolf.yaml').then(r => r.ok ? r.text() : '').catch(() => '')
-            ]);
+            // Default feeds (Fallback)
+            let rayFeed = "https://psntrophyleaders.com/user/view/OneLIVIDMAN/rss";
+            let kevFeed = "https://psntrophyleaders.com/user/view/Werewolf3788/rss";
 
-            if(rayFeed.trim()) await fetchTrophies(rayFeed.trim(), "trophyLogRay");
-            if(kevFeed.trim()) await fetchTrophies(kevFeed.trim(), "trophyLogKevin");
+            // Try to load from config files
+            try {
+                const [r, k] = await Promise.all([
+                    fetch('rss-feed/Ray.yaml').then(res => res.ok ? res.text() : null).catch(() => null),
+                    fetch('rss-feed/Werewolf.yaml').then(res => res.ok ? res.text() : null).catch(() => null)
+                ]);
+                if (r && r.trim().startsWith('http')) rayFeed = r.trim();
+                if (k && k.trim().startsWith('http')) kevFeed = k.trim();
+            } catch (e) { console.warn("Config load failed, using defaults"); }
+
+            await fetchTrophies(rayFeed, "trophyLogRay");
+            await fetchTrophies(kevFeed, "trophyLogKevin");
+            await fetchTrophies("OneLIVIDMAN", "trophyLogRay");
+            await fetchTrophies("Werewolf3788", "trophyLogKevin");
         }
 
         async function fetchTrophies(feedUrl, elementId) {
+        async function fetchTrophies(username, elementId) {
             try {
+                const feedUrl = `https://psntrophyleaders.com/user/view/${username}/rss`;
                 const res = await fetch(`https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(feedUrl)}`);
                 const data = await res.json();
                 
@@ -715,6 +813,7 @@
                         (item.description && item.description.includes("Farming Simulator")) || 
                         (item.title && item.title.includes("Farming Simulator")) ||
                         (item.content && item.content.includes("Farming Simulator"))
+                        (item.title && item.title.includes("Farming Simulator"))
                     );
 
                     document.getElementById(elementId).innerHTML = fsTrophies.map(item => {
@@ -728,14 +827,21 @@
                                 <div style="color:#fff; font-size:0.8rem; line-height:1.2;">${item.title}</div>
                                 <div style="color:#ffd700; font-size:0.65rem; margin-top:2px;">${date}</div>
                             </div>
+                        return `<div style="display:flex; justify-content:space-between; border-bottom:1px solid rgba(255,255,255,0.1); padding:8px;">
+                            <span style="color:#fff; font-size:0.8rem;">${item.title}</span>
+                            <span style="color:#ffd700; font-size:0.7rem;">${date}</span>
                         </div>`;
                     }).join('') || '<div style="padding:10px; color:#aaa; font-size:0.8rem;">No Recent Farming Simulator Trophies Found</div>';
+                    }).join('') || '<div style="padding:10px; color:#aaa;">No Recent Farming Simulator Trophies Found</div>';
                 } else {
                     document.getElementById(elementId).innerHTML = '<div style="padding:10px; color:#ff4d4d; font-size:0.8rem;">Feed Unavailable</div>';
+                    document.getElementById(elementId).innerHTML = '<div style="padding:10px; color:#ff4d4d;">Uplink Failed (Profile Private or Not Found)</div>';
                 }
             } catch(e) { 
                 console.warn(`Trophy Sync Failed`, e);
                 document.getElementById(elementId).innerHTML = '<div style="padding:10px; color:#ff4d4d; font-size:0.8rem;">Connection Error</div>';
+                console.warn(`Trophy Sync Failed for ${username}`);
+                document.getElementById(elementId).innerHTML = '<div style="padding:10px; color:#ff4d4d;">Connection Error</div>';
             }
         }
 
@@ -743,6 +849,7 @@
         async function syncModSheet() {
             const url = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTZipdOjDkX5aeUvTiJHGSc9EVkhC_12IimhVXPCNDPwQlVq5759RIXRBKtZpWPkSoQN-gi7hIkblS2/pub?output=csv";
             try {
+                const res = await fetch(url);
                 const controller = new AbortController();
                 const timeoutId = setTimeout(() => controller.abort(), 3000); // 3s Timeout
                 const res = await fetch(url, { signal: controller.signal });
@@ -764,6 +871,7 @@
             });
             
             return lines.slice(1).map(line => {
+                return line.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/).map(v => v.trim().replace(/^"|"$/g, ''));
                 const values = line.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/).map(v => v.trim().replace(/^"|"$/g, ''));
                 return headers.reduce((obj, header, i) => {
                     obj[header] = values[i] || '';
